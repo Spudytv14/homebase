@@ -1,741 +1,1827 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HomeBase · 3 Dashboards</title>
-  <!-- Font Awesome 6 (Free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* ----- RESET & BASE ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    body {
-      background: #f4f7fb;
-      color: #1a2634;
-      padding: 16px;
-    }
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      padding: 8px 16px;
-      background: #eef2f6;
-      transition: 0.15s;
-    }
-    button:hover { opacity: 0.8; transform: scale(0.97); }
-    input, select, textarea {
-      border: 1px solid #d0d9e4;
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.95rem;
-      width: 100%;
-      background: #fff;
-    }
-    input:focus, select:focus { outline: 2px solid #2a7de1; border-color: transparent; }
-    .container { max-width: 1400px; margin: 0 auto; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeBase — Premium Rental Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+               ROOT VARIABLES & RESET
+            ============================================================ */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --primary-glow: rgba(37, 99, 235, 0.25);
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --card-border: #e9edf2;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #f8fafc;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --ecocash: #00aae7;
+            --paypal: #0070ba;
+            --inbucks: #f39c12;
+        }
 
-    /* ----- HEADER / TOP NAV ----- */
-    .topbar {
-      background: #0a1a2b;
-      color: white;
-      padding: 12px 28px;
-      border-radius: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-    .topbar .logo {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-    .topbar .logo span { color: #ffb347; }
-    .topbar .role-switcher {
-      display: flex;
-      gap: 8px;
-      background: #1e3347;
-      padding: 6px 10px;
-      border-radius: 40px;
-    }
-    .topbar .role-switcher button {
-      background: transparent;
-      color: #a0b8ce;
-      padding: 6px 18px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-    .topbar .role-switcher button.active {
-      background: #ffb347;
-      color: #0a1a2b;
-    }
-    .topbar .user-badge {
-      background: #1e3347;
-      padding: 6px 16px 6px 12px;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9rem;
-    }
-    .topbar .user-badge i { color: #ffb347; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* ----- DASHBOARD WRAPPER ----- */
-    .dash-section {
-      display: none;
-      animation: fade 0.25s ease;
-    }
-    .dash-section.active { display: block; }
-    @keyframes fade { from { opacity: 0.3; } to { opacity: 1; } }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.3s;
+        }
 
-    /* cards */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-    .stat-card {
-      background: white;
-      padding: 20px 18px;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-      border: 1px solid #e9edf2;
-    }
-    .stat-card h3 { font-size: 0.85rem; font-weight: 500; color: #5b6f82; letter-spacing: 0.3px; }
-    .stat-card .number { font-size: 2.2rem; font-weight: 700; margin-top: 4px; color: #0a1a2b; }
+        /* ============================================================
+               SCROLLBAR
+            ============================================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
 
-    .panel {
-      background: white;
-      border-radius: 16px;
-      padding: 20px 24px;
-      border: 1px solid #e9edf2;
-      margin-bottom: 28px;
-      overflow-x: auto;
-    }
-    .panel h2 {
-      font-size: 1.25rem;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .panel h2 i { color: #2a7de1; }
+        /* ============================================================
+               BUTTONS & BADGES
+            ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #15803d;
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--card-border);
+            color: var(--text-muted);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+        }
+        .btn-ghost:hover {
+            background: var(--bg);
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    th {
-      text-align: left;
-      padding: 12px 8px 12px 0;
-      border-bottom: 2px solid #e9edf2;
-      color: #3f5568;
-      font-weight: 600;
-    }
-    td {
-      padding: 12px 8px 12px 0;
-      border-bottom: 1px solid #f0f3f7;
-      vertical-align: middle;
-    }
-    .badge {
-      background: #e5f0ff;
-      color: #1f5eb7;
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .badge.green { background: #dff0e0; color: #1f7840; }
-    .badge.red { background: #ffe7e5; color: #b33c34; }
-    .badge.orange { background: #ffefe0; color: #b36b1f; }
+        .badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .badge-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+        .badge-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+        .badge-info {
+            background: #dbeafe;
+            color: var(--primary);
+        }
 
-    .btn-primary { background: #2a7de1; color: white; }
-    .btn-success { background: #1f8b4c; color: white; }
-    .btn-danger { background: #d1453b; color: white; }
-    .btn-outline { background: transparent; border: 1px solid #d0d9e4; }
+        /* ============================================================
+               LOGIN / ROLE SELECTOR
+            ============================================================ */
+        #role-selector {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #0b1e3a, #1a3a6b);
+            padding: 30px 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        #role-selector::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+        #role-selector::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.10) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+        }
+        #role-selector .brand {
+            position: relative;
+            z-index: 1;
+        }
+        #role-selector .brand h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+        #role-selector .brand h1 span {
+            color: #fbbf24;
+        }
+        #role-selector .brand p {
+            font-size: 1.15rem;
+            opacity: 0.8;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+        #role-selector .brand .tagline {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+        .role-cards {
+            display: flex;
+            gap: 18px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .role-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 28px 40px;
+            border-radius: var(--radius);
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .role-btn i {
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+        .role-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .role-btn .sub {
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.5;
+        }
+        .role-btn.admin-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .role-btn.admin-btn:hover {
+            background: rgba(15, 23, 42, 0.8);
+        }
 
-    /* ----- TENANT DASHBOARD ----- */
-    .filter-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-      background: white;
-      padding: 18px 20px;
-      border-radius: 16px;
-      border: 1px solid #e9edf2;
-      margin-bottom: 24px;
-      align-items: end;
-    }
-    .filter-bar label { font-size: 0.75rem; font-weight: 600; color: #3f5568; display: block; margin-bottom: 4px; }
-    .filter-bar .vacancy-toggle {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-top: 6px;
-    }
-    .filter-bar .vacancy-toggle input { width: auto; margin-right: 4px; }
+        /* ============================================================
+               DASHBOARD LAYOUT
+            ============================================================ */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+        .dashboard.active-dash {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .property-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .property-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #e9edf2;
-      transition: 0.15s;
-    }
-    .property-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-    .property-card .img-placeholder {
-      height: 160px;
-      background: #d9e2ed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #5b6f82;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    .property-card .body {
-      padding: 16px 18px 18px;
-    }
-    .property-card .body .price { font-size: 1.4rem; font-weight: 700; color: #0a1a2b; }
-    .property-card .body .title { font-weight: 600; margin: 6px 0 4px; }
-    .property-card .body .meta { color: #5b6f82; font-size: 0.85rem; display: flex; gap: 16px; }
-    .property-card .body .status-badge {
-      margin-top: 12px;
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 30px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
+        /* ============================================================
+               NAVBAR
+            ============================================================ */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 28px;
+            background: var(--card);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+        .navbar .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .navbar .logo span {
+            color: var(--primary);
+        }
+        .navbar .logo i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        .navbar .right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .navbar .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 16px 6px 12px;
+            background: var(--bg);
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .navbar .user-chip .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            display: inline-block;
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1.5px solid var(--card-border);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
 
-    /* ----- LANDLORD DASHBOARD ----- */
-    .landlord-props {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .lprop-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      background: #fafcff;
-      padding: 14px 18px;
-      border-radius: 12px;
-      border: 1px solid #e9edf2;
-    }
-    .lprop-item .info { flex: 2; min-width: 180px; }
-    .lprop-item .info strong { display: block; }
-    .lprop-item .info span { font-size: 0.85rem; color: #3f5568; }
-    .lprop-item .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        /* ============================================================
+               CONTAINER
+            ============================================================ */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px 28px 40px;
+        }
 
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(3px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .modal.active { display: flex; }
-    .modal-content {
-      background: white;
-      max-width: 520px;
-      width: 94%;
-      padding: 28px 30px;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      position: relative;
-    }
-    .modal-content .close {
-      position: absolute;
-      top: 16px;
-      right: 22px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #6f8aa3;
-    }
-    .modal-content form { display: flex; flex-direction: column; gap: 16px; }
+        /* ============================================================
+               STAT GRID
+            ============================================================ */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: var(--card);
+            padding: 20px 22px;
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .stat-card .label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 6px;
+            color: var(--text);
+        }
+        .stat-card .value.green {
+            color: var(--success);
+        }
+        .stat-card .value.blue {
+            color: var(--primary);
+        }
+        .stat-card .value.orange {
+            color: var(--warning);
+        }
+        .stat-card .value.red {
+            color: var(--danger);
+        }
 
-    /* admin tabs */
-    .admin-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 20px;
-      background: #f0f4fa;
-      padding: 4px;
-      border-radius: 40px;
-      width: fit-content;
-    }
-    .admin-tabs button {
-      background: transparent;
-      padding: 8px 24px;
-      border-radius: 30px;
-      font-weight: 500;
-    }
-    .admin-tabs button.active { background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        /* ============================================================
+               PANEL
+            ============================================================ */
+        .panel {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            padding: 22px 26px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .panel-header h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .panel-header h2 i {
+            color: var(--primary);
+        }
 
-    .admin-pane { display: none; }
-    .admin-pane.active { display: block; }
+        /* ============================================================
+               TABLES
+            ============================================================ */
+        .table-wrap {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th {
+            text-align: left;
+            padding: 12px 10px 12px 0;
+            border-bottom: 2px solid var(--card-border);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        td {
+            padding: 12px 10px 12px 0;
+            border-bottom: 1px solid var(--card-border);
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
 
-    /* Responsive */
-    @media (max-width: 700px) {
-      .topbar { flex-direction: column; align-items: stretch; gap: 12px; }
-      .topbar .role-switcher { justify-content: center; }
-      .topbar .user-badge { justify-content: center; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-      .filter-bar { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .stat-grid { grid-template-columns: 1fr; }
-      .property-grid { grid-template-columns: 1fr; }
-    }
+        /* ============================================================
+               TENANT: FILTER BAR
+            ============================================================ */
+        .filter-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            background: var(--card);
+            padding: 18px 22px;
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            align-items: end;
+        }
+        .filter-bar .field label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+        .filter-bar .field input,
+        .filter-bar .field select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            background: var(--bg);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .filter-bar .field input:focus,
+        .filter-bar .field select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .filter-bar .vacancy-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 6px;
+        }
+        .filter-bar .vacancy-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .filter-bar .vacancy-toggle label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
 
-    .mt-2 { margin-top: 12px; }
-    .flex { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  </style>
+        /* ============================================================
+               TENANT: PROPERTY GRID
+            ============================================================ */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .property-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .property-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .property-card .img-wrap {
+            height: 200px;
+            overflow: hidden;
+            background: #d9e2ed;
+            position: relative;
+        }
+        .property-card .img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .property-card:hover .img-wrap img {
+            transform: scale(1.03);
+        }
+        .property-card .img-wrap .status-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+        }
+        .property-card .body {
+            padding: 16px 18px 18px;
+        }
+        .property-card .body .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .property-card .body .price span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .property-card .body .title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 4px 0 2px;
+        }
+        .property-card .body .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 16px;
+            margin: 6px 0 12px;
+        }
+        .property-card .body .meta i {
+            width: 16px;
+        }
+        .property-card .body .desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ============================================================
+               PAYMENT METHOD SELECTOR
+            ============================================================ */
+        .payment-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0 14px;
+        }
+        .payment-selector .pm-option {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 8px;
+            border: 2px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            background: var(--bg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .payment-selector .pm-option i {
+            font-size: 1.4rem;
+        }
+        .payment-selector .pm-option:hover {
+            border-color: var(--primary-light);
+        }
+        .payment-selector .pm-option.active {
+            border-color: var(--primary);
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .payment-selector .pm-option.eco i {
+            color: var(--ecocash);
+        }
+        .payment-selector .pm-option.paypal i {
+            color: var(--paypal);
+        }
+        .payment-selector .pm-option.inbucks i {
+            color: var(--inbucks);
+        }
+
+        /* ============================================================
+               LANDLORD DASHBOARD
+            ============================================================ */
+        .lprop-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--card-border);
+            background: var(--bg);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .lprop-item:hover {
+            border-color: var(--primary-light);
+        }
+        .lprop-item .info {
+            flex: 2;
+            min-width: 180px;
+        }
+        .lprop-item .info strong {
+            display: block;
+            font-size: 1rem;
+        }
+        .lprop-item .info .sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .lprop-item .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* Toggle switch */
+        .toggle-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 34px;
+            transition: var(--transition);
+        }
+        .toggle .slider::before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .toggle input:checked+.slider {
+            background: var(--success);
+        }
+        .toggle input:checked+.slider::before {
+            transform: translateX(20px);
+        }
+        .toggle-label {
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        /* ============================================================
+               ADMIN DASHBOARD (Dark Theme)
+            ============================================================ */
+        #admin-dash {
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        #admin-dash .navbar {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1e293b;
+        }
+        #admin-dash .navbar .logo {
+            color: #fff;
+        }
+        #admin-dash .navbar .logo span {
+            color: #60a5fa;
+        }
+        #admin-dash .navbar .user-chip {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        #admin-dash .navbar .logout-btn {
+            color: #94a3b8;
+            border-color: #1e293b;
+        }
+        #admin-dash .navbar .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        #admin-dash .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        #admin-dash .stat-card .label {
+            color: #94a3b8;
+        }
+        #admin-dash .stat-card .value {
+            color: #f1f5f9;
+        }
+        #admin-dash .panel {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        #admin-dash .panel-header h2 {
+            color: #f1f5f9;
+        }
+        #admin-dash .panel-header h2 i {
+            color: #60a5fa;
+        }
+        #admin-dash table th {
+            color: #94a3b8;
+            border-bottom-color: #334155;
+        }
+        #admin-dash table td {
+            border-bottom-color: #334155;
+            color: #e2e8f0;
+        }
+        #admin-dash table tr:last-child td {
+            border-bottom: none;
+        }
+        #admin-dash .filter-bar {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        #admin-dash .filter-bar .field label {
+            color: #94a3b8;
+        }
+        #admin-dash .filter-bar .field input,
+        #admin-dash .filter-bar .field select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        #admin-dash .filter-bar .field input:focus,
+        #admin-dash .filter-bar .field select:focus {
+            border-color: var(--primary-light);
+        }
+
+        /* Admin sub-tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 4px;
+            background: #0f172a;
+            padding: 4px;
+            border-radius: 40px;
+            width: fit-content;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+        .admin-tabs button {
+            background: transparent;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-tabs button.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 10px var(--primary-glow);
+        }
+        .admin-tabs button:hover:not(.active) {
+            color: #e2e8f0;
+        }
+        .admin-pane {
+            display: none;
+        }
+        .admin-pane.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        /* ============================================================
+               MODAL
+            ============================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--card);
+            max-width: 540px;
+            width: 100%;
+            border-radius: var(--radius);
+            padding: 32px 34px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-box .close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+        .modal-box .close:hover {
+            color: var(--text);
+            transform: rotate(90deg);
+        }
+        .modal-box h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-box h2 i {
+            color: var(--primary);
+        }
+        .modal-box form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .modal-box form .field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .modal-box form .field label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .modal-box form .field input,
+        .modal-box form .field select,
+        .modal-box form .field textarea {
+            padding: 10px 14px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: var(--bg);
+            transition: var(--transition);
+        }
+        .modal-box form .field input:focus,
+        .modal-box form .field select:focus,
+        .modal-box form .field textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .modal-box form .field textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .modal-box .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+
+        /* ============================================================
+               UTILITY
+            ============================================================ */
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .gap-2 {
+            gap: 8px;
+        }
+        .mt-2 {
+            margin-top: 12px;
+        }
+        .mb-2 {
+            margin-bottom: 12px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .w-full {
+            width: 100%;
+        }
+
+        /* ============================================================
+               RESPONSIVE
+            ============================================================ */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .navbar .right {
+                flex-wrap: wrap;
+            }
+            .container {
+                padding: 16px;
+            }
+            .role-btn {
+                padding: 20px 28px;
+                min-width: 140px;
+            }
+            #role-selector .brand h1 {
+                font-size: 2.6rem;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .filter-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+            .property-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .modal-box {
+                padding: 24px 20px;
+            }
+            .admin-tabs {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .admin-tabs button {
+                padding: 6px 16px;
+                font-size: 0.75rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-bar {
+                grid-template-columns: 1fr;
+            }
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+            .role-btn {
+                min-width: 100%;
+            }
+            .lprop-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .lprop-item .actions {
+                justify-content: stretch;
+            }
+            .lprop-item .actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .payment-selector .pm-option {
+                min-width: 60px;
+                font-size: 0.7rem;
+            }
+            .payment-selector .pm-option i {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+        }
+        .no-results i {
+            font-size: 3rem;
+            opacity: 0.3;
+            margin-bottom: 12px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <div class="logo">Home<span>Base</span></div>
-    <div class="role-switcher">
-      <button class="active" data-role="tenant"><i class="fas fa-search"></i> Tenant</button>
-      <button data-role="landlord"><i class="fas fa-building"></i> Landlord</button>
-      <button data-role="admin"><i class="fas fa-user-cog"></i> Admin</button>
-    </div>
-    <div class="user-badge">
-      <i class="fas fa-circle" style="color:#2ecc71; font-size: 0.6rem;"></i>
-      <span id="activeUserDisplay">Tenant · Tinashe M.</span>
-    </div>
-  </header>
-
-  <!-- ============================================================ -->
-  <!-- TENANT DASHBOARD -->
-  <!-- ============================================================ -->
-  <section id="tenantDash" class="dash-section active">
-    <div class="filter-bar">
-      <div>
-        <label><i class="fas fa-search"></i> Search</label>
-        <input type="text" id="tenantSearch" placeholder="e.g. Borrowdale, Flat..." oninput="renderTenant()">
-      </div>
-      <div>
-        <label><i class="fas fa-map-pin"></i> Location</label>
-        <select id="tenantLocation" onchange="renderTenant()">
-          <option value="all">All Cities</option>
-          <option value="Harare">Harare</option>
-          <option value="Bulawayo">Bulawayo</option>
-          <option value="Gweru">Gweru</option>
-          <option value="Mutare">Mutare</option>
-        </select>
-      </div>
-      <div>
-        <label><i class="fas fa-dollar-sign"></i> Max Price</label>
-        <input type="number" id="tenantMaxPrice" placeholder="e.g. 800" oninput="renderTenant()">
-      </div>
-      <div>
-        <label><i class="fas fa-bed"></i> Rooms</label>
-        <select id="tenantRooms" onchange="renderTenant()">
-          <option value="any">Any</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4+</option>
-        </select>
-      </div>
-      <div class="vacancy-toggle">
-        <label style="margin:0; display:flex; align-items:center; gap:6px;">
-          <input type="checkbox" id="tenantVacantOnly" checked onchange="renderTenant()">
-          <span style="font-weight:500;">Vacant only</span>
-        </label>
-      </div>
-    </div>
-
-    <div id="tenantPropertyGrid" class="property-grid"></div>
-    <div id="tenantNoResult" style="display:none; text-align:center; padding:40px; color:#5b6f82;">No properties match your filters.</div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- LANDLORD DASHBOARD -->
-  <!-- ============================================================ -->
-  <section id="landlordDash" class="dash-section">
-    <div class="stat-grid" id="landlordStats"></div>
-    <div class="panel">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <h2><i class="fas fa-list-ul"></i> My Properties</h2>
-        <button class="btn-primary" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Property</button>
-      </div>
-      <div id="landlordPropertyList" class="landlord-props mt-2"></div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- ADMIN DASHBOARD -->
-  <!-- ============================================================ -->
-  <section id="adminDash" class="dash-section">
-    <div class="stat-grid" id="adminStats"></div>
-
-    <div class="panel">
-      <div class="admin-tabs">
-        <button class="active" data-admin-tab="transactions"><i class="fas fa-receipt"></i> Transactions</button>
-        <button data-admin-tab="users"><i class="fas fa-users"></i> Users</button>
-        <button data-admin-tab="verifications"><i class="fas fa-check-circle"></i> Verifications</button>
-      </div>
-
-      <div id="adminPaneTransactions" class="admin-pane active">
-        <h3 style="margin-bottom:12px;">All Transactions</h3>
-        <table><thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>EcoCash Ref</th><th>Status</th></tr></thead><tbody id="adminTransactionTable"></tbody></table>
-      </div>
-
-      <div id="adminPaneUsers" class="admin-pane">
-        <h3 style="margin-bottom:12px;">User Registry</h3>
-        <table><thead><tr><th>Name</th><th>Email/Phone</th><th>Role</th><th>Status</th></tr></thead><tbody id="adminUserTable"></tbody></table>
-      </div>
-
-      <div id="adminPaneVerifications" class="admin-pane">
-        <h3 style="margin-bottom:12px;">Verification Queue</h3>
-        <table><thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="adminVerificationTable"></tbody></table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- MODAL: Add Property (Landlord) -->
-  <!-- ============================================================ -->
-  <div id="addPropertyModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeAddProperty()">&times;</span>
-      <h2><i class="fas fa-home"></i> List New Property</h2>
-      <form id="addPropertyForm" onsubmit="handleAddProperty(event)">
-        <input type="text" id="propTitle" placeholder="Property title (e.g. Cozy 2-bed flat)" required>
-        <input type="text" id="propLocation" placeholder="City (e.g. Harare)" required>
-        <input type="number" id="propPrice" placeholder="Monthly rent (USD)" required>
-        <input type="number" id="propRooms" placeholder="Bedrooms" required min="1">
-        <select id="propStatus" required>
-          <option value="vacant">Vacant</option>
-          <option value="occupied">Occupied</option>
-        </select>
-        <textarea id="propDesc" placeholder="Short description" rows="2"></textarea>
-        <div style="display:flex; gap:12px; justify-content:flex-end;">
-          <button type="button" class="btn-outline" onclick="closeAddProperty()">Cancel</button>
-          <button type="submit" class="btn-success"><i class="fas fa-plus"></i> Add Property</button>
+    <!-- ============================================================
+    ROLE SELECTOR (LOGIN)
+    ============================================================ -->
+    <div id="role-selector">
+        <div class="brand">
+            <h1>Home<span>Base</span></h1>
+            <p>Verified Rentals. No Phantoms. No Scams.</p>
+            <div class="tagline">Find your next home directly · <strong>$2</strong> unlock · Save up to 90%</div>
         </div>
-      </form>
+        <div class="role-cards">
+            <button class="role-btn" onclick="loadDashboard('tenant-dash')">
+                <i class="fas fa-search"></i>
+                Tenant
+                <span class="sub">Find &amp; unlock homes</span>
+            </button>
+            <button class="role-btn" onclick="loadDashboard('landlord-dash')">
+                <i class="fas fa-building"></i>
+                Landlord
+                <span class="sub">Manage your properties</span>
+            </button>
+            <button class="role-btn admin-btn" onclick="loadDashboard('admin-dash')">
+                <i class="fas fa-user-cog"></i>
+                Admin
+                <span class="sub">Full system control</span>
+            </button>
+        </div>
     </div>
-  </div>
 
-</div>
-<script>
-// ========================================================================
-//  DATA STORE (simulated)
-// ========================================================================
-let properties = [
-  { id: 1, landlordId: 1, title: 'Modern 2-bed Apartment', location: 'Harare', price: 450, rooms: 2, status: 'vacant', desc: 'Secure complex, solar backup.' },
-  { id: 2, landlordId: 1, title: 'Spacious Family House', location: 'Bulawayo', price: 780, rooms: 4, status: 'occupied', desc: 'Large yard, 3 baths.' },
-  { id: 3, landlordId: 2, title: 'Cozy Studio', location: 'Harare', price: 220, rooms: 1, status: 'vacant', desc: 'Ideal for student, near campus.' },
-  { id: 4, landlordId: 2, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant', desc: 'Furnished, backup water.' },
-  { id: 5, landlordId: 1, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant', desc: 'Quiet area, parking.' },
-  { id: 6, landlordId: 3, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied', desc: 'Premium security estate.' },
-  { id: 7, landlordId: 3, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1, status: 'vacant', desc: 'Shared kitchen, water incl.' },
-  { id: 8, landlordId: 2, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3, status: 'vacant', desc: 'Near CBD, tiled floors.' },
-];
-let users = [
-  { id: 1, name: 'Tinashe M.', contact: 'tinashe@email.com', role: 'tenant', status: 'active' },
-  { id: 2, name: 'Tanaka D.', contact: 'tanaka@email.com', role: 'tenant', status: 'active' },
-  { id: 3, name: 'Landlord John', contact: 'john@prop.co.zw', role: 'landlord', status: 'verified' },
-  { id: 4, name: 'Landlord Grace', contact: 'grace@rentals.co.zw', role: 'landlord', status: 'pending' },
-  { id: 5, name: 'Admin Prime', contact: 'admin@homebase.co.zw', role: 'admin', status: 'active' },
-];
-let transactions = [
-  { id: 'TXN001', tenant: 'Tinashe M.', landlord: 'Landlord John', property: 'Modern 2-bed Apartment', amount: 2, ref: 'EC123456', status: 'Success' },
-  { id: 'TXN002', tenant: 'Tanaka D.', landlord: 'Landlord Grace', property: 'Cozy Studio', amount: 2, ref: 'EC987654', status: 'Success' },
-  { id: 'TXN003', tenant: 'Tinashe M.', landlord: 'Landlord John', property: 'Spacious Family House', amount: 2, ref: 'EC456789', status: 'Failed' },
-  { id: 'TXN004', tenant: 'Tafadzwa R.', landlord: 'Landlord Grace', property: 'Executive 3-bed', amount: 2, ref: 'EC111222', status: 'Success' },
-  { id: 'TXN005', tenant: 'Kudzai P.', landlord: 'Landlord John', property: 'Garden Cottage', amount: 2, ref: 'EC333444', status: 'Success' },
-];
-let verifications = [
-  { id: 1, landlord: 'Landlord Grace', document: 'Title Deed (Uploaded)', submitted: '2026-07-08', status: 'pending' },
-  { id: 2, landlord: 'Landlord Peter', document: 'Rates Bill (Uploaded)', submitted: '2026-07-09', status: 'pending' },
-];
+    <!-- ============================================================
+    TENANT DASHBOARD
+    ============================================================ -->
+    <div id="tenant-dash" class="dashboard">
+        <nav class="navbar">
+            <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span></div>
+            <div class="right">
+                <span class="user-chip"><span class="dot"></span> Tenant · Tinashe M.</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
+            </div>
+        </nav>
 
-// helper: generate unique id
-let nextPropId = 9;
-let nextVerifId = 3;
+        <div class="container">
+            <h2 style="margin-bottom:4px;">Find your next home</h2>
+            <p style="color:var(--text-muted); margin-bottom:20px;">Browse verified properties from trusted landlords across Zimbabwe.</p>
 
-// current logged in landlord for demo (fixed to ID 3 = Landlord Grace)
-const CURRENT_LANDLORD_ID = 3; 
+            <!-- Filters -->
+            <div class="filter-bar" id="tenantFilters">
+                <div class="field">
+                    <label><i class="fas fa-search"></i> Keyword</label>
+                    <input type="text" id="tenantSearch" placeholder="e.g. Borrowdale, flat..." oninput="renderTenant()" />
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-map-pin"></i> Location</label>
+                    <select id="tenantLocation" onchange="renderTenant()">
+                        <option value="all">All Cities</option>
+                        <option value="Harare">Harare</option>
+                        <option value="Bulawayo">Bulawayo</option>
+                        <option value="Gweru">Gweru</option>
+                        <option value="Mutare">Mutare</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-dollar-sign"></i> Max Price</label>
+                    <input type="number" id="tenantMaxPrice" placeholder="e.g. 800" oninput="renderTenant()" />
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-bed"></i> Rooms</label>
+                    <select id="tenantRooms" onchange="renderTenant()">
+                        <option value="any">Any</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+                <div class="field vacancy-toggle">
+                    <label style="display:flex; align-items:center; gap:10px; margin:0; cursor:pointer;">
+                        <input type="checkbox" id="tenantVacantOnly" checked onchange="renderTenant()" />
+                        <span style="font-weight:600;">Vacant only</span>
+                    </label>
+                </div>
+            </div>
 
-// ========================================================================
-//  RENDER: TENANT
-// ========================================================================
-function renderTenant() {
-  const search = document.getElementById('tenantSearch').value.toLowerCase();
-  const location = document.getElementById('tenantLocation').value;
-  const maxPrice = parseFloat(document.getElementById('tenantMaxPrice').value) || Infinity;
-  const rooms = document.getElementById('tenantRooms').value;
-  const vacantOnly = document.getElementById('tenantVacantOnly').checked;
-
-  let filtered = properties.filter(p => {
-    if (vacantOnly && p.status !== 'vacant') return false;
-    if (location !== 'all' && p.location !== location) return false;
-    if (p.price > maxPrice) return false;
-    if (rooms !== 'any') {
-      const roomNum = parseInt(rooms);
-      if (roomNum === 4 && p.rooms < 4) return false;
-      if (roomNum < 4 && p.rooms !== roomNum) return false;
-    }
-    if (search && !p.title.toLowerCase().includes(search) && !p.location.toLowerCase().includes(search)) return false;
-    return true;
-  });
-
-  const grid = document.getElementById('tenantPropertyGrid');
-  const noResult = document.getElementById('tenantNoResult');
-  if (!filtered.length) { grid.innerHTML = ''; noResult.style.display = 'block'; return; }
-  noResult.style.display = 'none';
-
-  grid.innerHTML = filtered.map(p => `
-    <div class="property-card">
-      <div class="img-placeholder"><i class="fas fa-image" style="margin-right:6px;"></i> ${p.location}</div>
-      <div class="body">
-        <div class="price">$${p.price}</div>
-        <div class="title">${p.title}</div>
-        <div class="meta"><span><i class="fas fa-bed"></i> ${p.rooms} bed</span> <span><i class="fas fa-map-pin"></i> ${p.location}</span></div>
-        <span class="status-badge ${p.status === 'vacant' ? 'badge green' : 'badge red'}">${p.status.toUpperCase()}</span>
-        <div style="margin-top:12px;"><button class="btn-primary" style="width:100%;">Unlock Contact · $2</button></div>
-        <div style="font-size:0.75rem; color:#6f8aa3; margin-top:6px;">${p.desc || ''}</div>
-      </div>
+            <!-- Property Grid -->
+            <div id="tenantPropertyGrid" class="property-grid"></div>
+            <div id="tenantNoResult" class="no-results" style="display:none;">
+                <i class="fas fa-home"></i>
+                <h3>No properties match your filters</h3>
+                <p>Try adjusting your search or location.</p>
+            </div>
+        </div>
     </div>
-  `).join('');
-}
 
-// ========================================================================
-//  RENDER: LANDLORD
-// ========================================================================
-function renderLandlord() {
-  const myProps = properties.filter(p => p.landlordId === CURRENT_LANDLORD_ID);
-  const vacant = myProps.filter(p => p.status === 'vacant').length;
-  const occupied = myProps.filter(p => p.status === 'occupied').length;
+    <!-- ============================================================
+    LANDLORD DASHBOARD
+    ============================================================ -->
+    <div id="landlord-dash" class="dashboard">
+        <nav class="navbar">
+            <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
+            <div class="right">
+                <span class="user-chip"><span class="dot"></span> Landlord · Grace (ID 3)</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
+            </div>
+        </nav>
 
-  document.getElementById('landlordStats').innerHTML = `
-    <div class="stat-card"><h3>Total Properties</h3><div class="number">${myProps.length}</div></div>
-    <div class="stat-card"><h3>Vacant</h3><div class="number" style="color:#1f7840;">${vacant}</div></div>
-    <div class="stat-card"><h3>Occupied</h3><div class="number" style="color:#b33c34;">${occupied}</div></div>
-  `;
+        <div class="container">
+            <div class="panel-header">
+                <h2><i class="fas fa-building"></i> My Properties</h2>
+                <button class="btn btn-primary" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Listing</button>
+            </div>
 
-  const list = document.getElementById('landlordPropertyList');
-  if (!myProps.length) { list.innerHTML = '<p style="color:#5b6f82;">You have not listed any properties yet.</p>'; return; }
+            <!-- Stats -->
+            <div class="stat-grid" id="landlordStats"></div>
 
-  list.innerHTML = myProps.map(p => `
-    <div class="lprop-item">
-      <div class="info">
-        <strong>${p.title}</strong>
-        <span><i class="fas fa-dollar-sign"></i> ${p.price} · ${p.rooms} bed · ${p.location}</span>
-        <span style="display:inline-block; margin-left:12px;" class="badge ${p.status === 'vacant' ? 'green' : 'red'}">${p.status}</span>
-      </div>
-      <div class="actions">
-        <button class="btn-outline" style="font-size:0.8rem;" onclick="togglePropertyStatus(${p.id})">
-          <i class="fas fa-sync-alt"></i> Mark ${p.status === 'vacant' ? 'Occupied' : 'Vacant'}
-        </button>
-        <button class="btn-danger" style="font-size:0.8rem;" onclick="removeProperty(${p.id})">
-          <i class="fas fa-trash"></i> Remove
-        </button>
-      </div>
+            <!-- Property List -->
+            <div class="panel">
+                <div id="landlordPropertyList" class="landlord-props"></div>
+            </div>
+        </div>
     </div>
-  `).join('');
-}
 
-function togglePropertyStatus(id) {
-  const prop = properties.find(p => p.id === id);
-  if (!prop) return;
-  prop.status = prop.status === 'vacant' ? 'occupied' : 'vacant';
-  renderLandlord();
-  renderTenant(); // keep tenant view in sync
-}
+    <!-- ============================================================
+    ADMIN DASHBOARD
+    ============================================================ -->
+    <div id="admin-dash" class="dashboard">
+        <nav class="navbar">
+            <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:#94a3b8;">| Superuser</span></div>
+            <div class="right">
+                <span class="user-chip"><span class="dot"></span> Admin · Prime</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
+            </div>
+        </nav>
 
-function removeProperty(id) {
-  if (!confirm('Remove this property listing?')) return;
-  properties = properties.filter(p => p.id !== id);
-  renderLandlord();
-  renderTenant();
-}
+        <div class="container">
+            <h2 style="margin-bottom:20px; color:#f1f5f9;">System Overview</h2>
 
-// ========================================================================
-//  MODAL: ADD PROPERTY (Landlord)
-// ========================================================================
-function openAddProperty() {
-  document.getElementById('addPropertyModal').classList.add('active');
-}
-function closeAddProperty() {
-  document.getElementById('addPropertyModal').classList.remove('active');
-  document.getElementById('addPropertyForm').reset();
-}
-function handleAddProperty(e) {
-  e.preventDefault();
-  const title = document.getElementById('propTitle').value.trim();
-  const location = document.getElementById('propLocation').value.trim();
-  const price = parseFloat(document.getElementById('propPrice').value);
-  const rooms = parseInt(document.getElementById('propRooms').value);
-  const status = document.getElementById('propStatus').value;
-  const desc = document.getElementById('propDesc').value.trim();
+            <!-- Stats -->
+            <div class="stat-grid" id="adminStats"></div>
 
-  if (!title || !location || !price || !rooms) return alert('Please fill all required fields.');
+            <!-- Admin Tabs -->
+            <div class="panel">
+                <div class="admin-tabs">
+                    <button class="active" data-admin-tab="transactions"><i class="fas fa-receipt"></i> Transactions</button>
+                    <button data-admin-tab="users"><i class="fas fa-users"></i> Users</button>
+                    <button data-admin-tab="verifications"><i class="fas fa-check-circle"></i> Verifications</button>
+                </div>
 
-  const newProp = {
-    id: nextPropId++,
-    landlordId: CURRENT_LANDLORD_ID,
-    title,
-    location,
-    price,
-    rooms,
-    status,
-    desc: desc || 'New listing.',
-  };
-  properties.push(newProp);
-  closeAddProperty();
-  renderLandlord();
-  renderTenant();
-  alert('Property added successfully!');
-}
+                <div id="adminPaneTransactions" class="admin-pane active">
+                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-list"></i> All Transactions</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>EcoCash Ref</th><th>Status</th></tr></thead>
+                            <tbody id="adminTransactionTable"></tbody>
+                        </table>
+                    </div>
+                </div>
 
-// ========================================================================
-//  RENDER: ADMIN
-// ========================================================================
-function renderAdmin() {
-  // stats
-  const totalUsers = users.length;
-  const totalProps = properties.length;
-  const totalRevenue = transactions.filter(t => t.status === 'Success').reduce((sum, t) => sum + t.amount, 0);
-  document.getElementById('adminStats').innerHTML = `
-    <div class="stat-card"><h3>Total Users</h3><div class="number">${totalUsers}</div></div>
-    <div class="stat-card"><h3>Total Properties</h3><div class="number">${totalProps}</div></div>
-    <div class="stat-card"><h3>Revenue (USD)</h3><div class="number">$${totalRevenue}</div></div>
-    <div class="stat-card"><h3>Pending Verifications</h3><div class="number">${verifications.filter(v=>v.status==='pending').length}</div></div>
-  `;
+                <div id="adminPaneUsers" class="admin-pane">
+                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Name</th><th>Contact</th><th>Role</th><th>Status</th></tr></thead>
+                            <tbody id="adminUserTable"></tbody>
+                        </table>
+                    </div>
+                </div>
 
-  // transactions
-  const tbody = document.getElementById('adminTransactionTable');
-  tbody.innerHTML = transactions.map(t => `
-    <tr>
-      <td><strong>${t.id}</strong></td>
-      <td>${t.tenant}</td>
-      <td>${t.landlord}</td>
-      <td>${t.property}</td>
-      <td>$${t.amount}</td>
-      <td>${t.ref}</td>
-      <td><span class="badge ${t.status === 'Success' ? 'green' : 'red'}">${t.status}</span></td>
-    </tr>
-  `).join('');
+                <div id="adminPaneVerifications" class="admin-pane">
+                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-clock"></i> Verification Queue</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead>
+                            <tbody id="adminVerificationTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  // users
-  const ubody = document.getElementById('adminUserTable');
-  ubody.innerHTML = users.map(u => `
-    <tr>
-      <td><strong>${u.name}</strong></td>
-      <td>${u.contact}</td>
-      <td><span class="badge">${u.role}</span></td>
-      <td><span class="badge ${u.status === 'active' || u.status === 'verified' ? 'green' : 'orange'}">${u.status}</span></td>
-    </tr>
-  `).join('');
+    <!-- ============================================================
+    MODAL: Add Property (Landlord)
+    ============================================================ -->
+    <div id="addPropertyModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeAddProperty()">&times;</button>
+            <h2><i class="fas fa-home"></i> List New Property</h2>
+            <form id="addPropertyForm" onsubmit="handleAddProperty(event)">
+                <div class="field">
+                    <label>Property Title *</label>
+                    <input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required />
+                </div>
+                <div class="field">
+                    <label>City *</label>
+                    <input type="text" id="propLocation" placeholder="e.g. Harare" required />
+                </div>
+                <div class="field">
+                    <label>Monthly Rent (USD) *</label>
+                    <input type="number" id="propPrice" placeholder="e.g. 450" required min="1" />
+                </div>
+                <div class="field">
+                    <label>Bedrooms *</label>
+                    <input type="number" id="propRooms" placeholder="e.g. 2" required min="1" />
+                </div>
+                <div class="field">
+                    <label>Status</label>
+                    <select id="propStatus">
+                        <option value="vacant">Vacant</option>
+                        <option value="occupied">Occupied</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea id="propDesc" placeholder="Amenities, features, etc." rows="2"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-  // verifications
-  const vbody = document.getElementById('adminVerificationTable');
-  vbody.innerHTML = verifications.map(v => `
-    <tr>
-      <td><strong>${v.landlord}</strong></td>
-      <td>${v.document}</td>
-      <td>${v.submitted}</td>
-      <td>
-        ${v.status === 'pending' ? `
-          <button class="btn-success" style="font-size:0.75rem; padding:4px 12px;" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i> Approve</button>
-          <button class="btn-danger" style="font-size:0.75rem; padding:4px 12px;" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i> Reject</button>
-        ` : `<span class="badge">${v.status}</span>`}
-      </td>
-    </tr>
-  `).join('');
-}
+    <!-- ============================================================
+    MODAL: Payment (Tenant)
+    ============================================================ -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closePaymentModal()">&times;</button>
+            <h2><i class="fas fa-lock"></i> Unlock Landlord Contact</h2>
+            <p style="color:var(--text-muted); margin-bottom:12px;">Pay just <strong>$2.00</strong> to get the verified landlord's phone number and email.</p>
 
-function approveVerification(id) {
-  const v = verifications.find(v => v.id === id);
-  if (v) { v.status = 'approved'; 
-    // also update user status
-    const user = users.find(u => u.name === v.landlord);
-    if (user) user.status = 'verified';
-  }
-  renderAdmin();
-}
-function rejectVerification(id) {
-  const v = verifications.find(v => v.id === id);
-  if (v) { v.status = 'rejected'; }
-  renderAdmin();
-}
+            <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; font-weight:500;">
+                    <span>Property:</span>
+                    <span id="paymentPropertyName">—</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;">
+                    <span>Amount:</span>
+                    <span style="color:var(--primary);">$2.00</span>
+                </div>
+            </div>
 
-// ========================================================================
-//  NAVIGATION & TAB SWITCHING
-// ========================================================================
-function switchDashboard(role) {
-  document.querySelectorAll('.dash-section').forEach(el => el.classList.remove('active'));
-  document.getElementById(role + 'Dash').classList.add('active');
+            <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:8px;">Select Payment Method</label>
+            <div class="payment-selector" id="paymentMethodSelector">
+                <div class="pm-option eco active" data-method="ecocash" onclick="selectPayment('ecocash')">
+                    <i class="fas fa-mobile-alt"></i>
+                    EcoCash
+                </div>
+                <div class="pm-option paypal" data-method="paypal" onclick="selectPayment('paypal')">
+                    <i class="fab fa-paypal"></i>
+                    PayPal
+                </div>
+                <div class="pm-option inbucks" data-method="inbucks" onclick="selectPayment('inbucks')">
+                    <i class="fas fa-coins"></i>
+                    InBucks
+                </div>
+            </div>
 
-  document.querySelectorAll('.role-switcher button').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.role-switcher button[data-role="${role}"]`).classList.add('active');
+            <div id="paymentEcoCashFields" style="margin-top:14px;">
+                <div class="field">
+                    <label>EcoCash Number</label>
+                    <input type="tel" id="ecoPhone" placeholder="e.g. 077 123 4567" />
+                </div>
+            </div>
+            <div id="paymentPaypalFields" style="display:none; margin-top:14px;">
+                <div class="field">
+                    <label>PayPal Email</label>
+                    <input type="email" id="paypalEmail" placeholder="you@example.com" />
+                </div>
+            </div>
+            <div id="paymentInbucksFields" style="display:none; margin-top:14px;">
+                <div class="field">
+                    <label>InBucks Account</label>
+                    <input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" />
+                </div>
+            </div>
 
-  // update user display
-  const names = { tenant: 'Tenant · Tinashe M.', landlord: 'Landlord · Grace (ID 3)', admin: 'Admin · Prime' };
-  document.getElementById('activeUserDisplay').innerText = names[role] || 'User';
+            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processPayment()">
+                <i class="fas fa-check-circle"></i> Pay $2.00 &amp; Unlock
+            </button>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;">
+                <i class="fas fa-shield-alt"></i> Your payment is secure. Landlord details revealed instantly.
+            </p>
+        </div>
+    </div>
 
-  // re-render specific dashboards
-  if (role === 'tenant') renderTenant();
-  if (role === 'landlord') renderLandlord();
-  if (role === 'admin') renderAdmin();
-}
 
-// Admin sub-tabs
-document.querySelectorAll('[data-admin-tab]').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('[data-admin-tab]').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const target = this.dataset.adminTab;
-    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
-    document.getElementById('adminPane' + target.charAt(0).toUpperCase() + target.slice(1)).classList.add('active');
-  });
-});
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // DATA STORE
+        // ============================================================
+        const PROPERTY_IMAGES = [
+            'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80',
+        ];
 
-// Role switcher
-document.querySelectorAll('.role-switcher button').forEach(btn => {
-  btn.addEventListener('click', function() {
-    switchDashboard(this.dataset.role);
-  });
-});
+        let properties = [
+            { id: 1, landlordId: 3, title: '2 Bed Cottage', location: 'Harare', price: 450, rooms: 2, status: 'vacant',
+                desc: 'Solar, borehole, secure parking. Quiet neighborhood.', imgIdx: 0 },
+            { id: 2, landlordId: 3, title: '1 Bed Apartment', location: 'Harare', price: 250, rooms: 1, status: 'vacant',
+                desc: 'CBD, WiFi included, backup water.', imgIdx: 1 },
+            { id: 3, landlordId: 4, title: '4 Bed Family House', location: 'Bulawayo', price: 800, rooms: 4,
+                status: 'occupied', desc: 'Pool, walled & gated, staff quarters.', imgIdx: 2 },
+            { id: 4, landlordId: 4, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant',
+                desc: 'Furnished, backup water, secure estate.', imgIdx: 3 },
+            { id: 5, landlordId: 3, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant',
+                desc: 'Quiet, private garden, parking.', imgIdx: 4 },
+            { id: 6, landlordId: 4, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied',
+                desc: 'Premium estate, 24/7 security.', imgIdx: 5 },
+            { id: 7, landlordId: 3, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1, status: 'vacant',
+                desc: 'Shared kitchen, water included.', imgIdx: 6 },
+            { id: 8, landlordId: 4, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3, status: 'vacant',
+                desc: 'Near CBD, tiled floors, fenced.', imgIdx: 7 },
+        ];
 
-// ========================================================================
-//  INIT
-// ========================================================================
-// start with tenant
-switchDashboard('tenant');
+        let users = [
+            { id: 1, name: 'Tinashe M.', contact: 'tinashe@email.com', role: 'tenant', status: 'active' },
+            { id: 2, name: 'Tanaka D.', contact: 'tanaka@email.com', role: 'tenant', status: 'active' },
+            { id: 3, name: 'Landlord Grace', contact: 'grace@props.co.zw', role: 'landlord', status: 'verified' },
+            { id: 4, name: 'Landlord Peter', contact: 'peter@rentals.co.zw', role: 'landlord', status: 'pending' },
+            { id: 5, name: 'Admin Prime', contact: 'admin@homebase.co.zw', role: 'admin', status: 'active' },
+        ];
 
-// Close modal on outside click
-document.getElementById('addPropertyModal').addEventListener('click', function(e) {
-  if (e.target === this) closeAddProperty();
-});
-</script>
+        let transactions = [
+            { id: 'TXN001', tenant: 'Tinashe M.', landlord: 'Landlord Grace', property: '2 Bed Cottage', amount: 2,
+                ref: 'EC123456', status: 'Success' },
+            { id: 'TXN002', tenant: 'Tanaka D.', landlord: 'Landlord Grace', property: '1 Bed Apartment', amount: 2,
+                ref: 'EC987654', status: 'Success' },
+            { id: 'TXN003', tenant: 'Tinashe M.', landlord: 'Landlord Peter', property: '4 Bed House', amount: 2,
+                ref: 'EC456789', status: 'Failed' },
+            { id: 'TXN004', tenant: 'Tafadzwa R.', landlord: 'Landlord Grace', property: 'Executive 3-bed', amount: 2,
+                ref: 'EC111222', status: 'Success' },
+            { id: 'TXN005', tenant: 'Kudzai P.', landlord: 'Landlord Peter', property: 'Garden Cottage', amount: 2,
+                ref: 'EC333444', status: 'Success' },
+        ];
+
+        let verifications = [
+            { id: 1, landlord: 'Landlord Peter', document: 'Title Deed (Uploaded)', submitted: '2026-07-08',
+            status: 'pending' },
+            { id: 2, landlord: 'Landlord Grace', document: 'Rates Bill (Uploaded)', submitted: '2026-07-09',
+            status: 'approved' },
+        ];
+
+        let nextPropId = 9;
+        let nextVerifId = 3;
+        const CURRENT_LANDLORD_ID = 3;
+        let selectedPayment = 'ecocash';
+        let paymentTargetPropertyId = null;
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function loadDashboard(dashId) {
+            document.getElementById('role-selector').style.display = 'none';
+            document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
+            document.getElementById(dashId).classList.add('active-dash');
+
+            if (dashId === 'admin-dash') {
+                document.body.style.backgroundColor = '#0f172a';
+            } else {
+                document.body.style.backgroundColor = '#f1f5f9';
+            }
+
+            if (dashId === 'tenant-dash') renderTenant();
+            if (dashId === 'landlord-dash') renderLandlord();
+            if (dashId === 'admin-dash') renderAdmin();
+        }
+
+        function logout() {
+            document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
+            document.getElementById('role-selector').style.display = 'flex';
+            document.body.style.backgroundColor = '#f1f5f9';
+        }
+
+        // ============================================================
+        // TENANT RENDER
+        // ============================================================
+        function renderTenant() {
+            const search = document.getElementById('tenantSearch').value.toLowerCase().trim();
+            const location = document.getElementById('tenantLocation').value;
+            const maxPrice = parseFloat(document.getElementById('tenantMaxPrice').value) || Infinity;
+            const rooms = document.getElementById('tenantRooms').value;
+            const vacantOnly = document.getElementById('tenantVacantOnly').checked;
+
+            let filtered = properties.filter(p => {
+                if (vacantOnly && p.status !== 'vacant') return false;
+                if (location !== 'all' && p.location !== location) return false;
+                if (p.price > maxPrice) return false;
+                if (rooms !== 'any') {
+                    const r = parseInt(rooms);
+                    if (r === 4 && p.rooms < 4) return false;
+                    if (r < 4 && p.rooms !== r) return false;
+                }
+                if (search && !p.title.toLowerCase().includes(search) && !p.location.toLowerCase().includes(search))
+                return false;
+                return true;
+            });
+
+            const grid = document.getElementById('tenantPropertyGrid');
+            const noResult = document.getElementById('tenantNoResult');
+
+            if (!filtered.length) {
+                grid.innerHTML = '';
+                noResult.style.display = 'block';
+                return;
+            }
+            noResult.style.display = 'none';
+
+            grid.innerHTML = filtered.map(p => {
+                const imgUrl = PROPERTY_IMAGES[p.imgIdx % PROPERTY_IMAGES.length];
+                const statusClass = p.status === 'vacant' ? 'badge-success' : 'badge-danger';
+                const statusLabel = p.status.toUpperCase();
+                return `
+                        <div class="property-card">
+                            <div class="img-wrap">
+                                <img src="${imgUrl}" alt="${p.title}" loading="lazy" />
+                                <span class="badge ${statusClass} status-badge">${statusLabel}</span>
+                            </div>
+                            <div class="body">
+                                <div class="price">$${p.price} <span>/ month</span></div>
+                                <div class="title">${p.title}</div>
+                                <div class="meta">
+                                    <span><i class="fas fa-bed"></i> ${p.rooms} bed</span>
+                                    <span><i class="fas fa-map-pin"></i> ${p.location}</span>
+                                </div>
+                                <div class="desc">${p.desc || ''}</div>
+                                ${p.status === 'vacant'
+                                    ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title}')">
+                                            <i class="fas fa-unlock"></i> Unlock Contact · $2
+                                       </button>`
+                                    : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;">
+                                            <i class="fas fa-lock"></i> Currently Unavailable
+                                       </button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+            }).join('');
+        }
+
+        // ============================================================
+        // PAYMENT MODAL
+        // ============================================================
+        function openPayment(propertyId, propertyTitle) {
+            paymentTargetPropertyId = propertyId;
+            document.getElementById('paymentPropertyName').textContent = propertyTitle;
+            document.getElementById('paymentModal').classList.add('active');
+            // reset fields
+            document.getElementById('ecoPhone').value = '';
+            document.getElementById('paypalEmail').value = '';
+            document.getElementById('inbucksAccount').value = '';
+            selectPayment('ecocash');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            paymentTargetPropertyId = null;
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.pm-option').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.pm-option[data-method="${method}"]`).classList.add('active');
+
+            document.getElementById('paymentEcoCashFields').style.display = method === 'ecocash' ? 'block' : 'none';
+            document.getElementById('paymentPaypalFields').style.display = method === 'paypal' ? 'block' : 'none';
+            document.getElementById('paymentInbucksFields').style.display = method === 'inbucks' ? 'block' : 'none';
+        }
+
+        function processPayment() {
+            let identifier = '';
+            let methodName = '';
+
+            if (selectedPayment === 'ecocash') {
+                identifier = document.getElementById('ecoPhone').value.trim();
+                methodName = 'EcoCash';
+                if (!identifier) return alert('Please enter your EcoCash number.');
+            } else if (selectedPayment === 'paypal') {
+                identifier = document.getElementById('paypalEmail').value.trim();
+                methodName = 'PayPal';
+                if (!identifier) return alert('Please enter your PayPal email.');
+            } else if (selectedPayment === 'inbucks') {
+                identifier = document.getElementById('inbucksAccount').value.trim();
+                methodName = 'InBucks';
+                if (!identifier) return alert('Please enter your InBucks account.');
+            }
+
+            // Simulate payment
+            const prop = properties.find(p => p.id === paymentTargetPropertyId);
+            if (!prop) return alert('Property not found.');
+
+            alert(
+                `✅ Payment of $2.00 via ${methodName} (${identifier}) successful!\n\nLandlord contact for "${prop.title}" has been unlocked.\n📞 Phone: +263 77 123 4567\n📧 Email: ${users.find(u => u.id === prop.landlordId)?.contact || 'landlord@props.co.zw'}`);
+
+            // Record transaction
+            const tenantName = users.find(u => u.role === 'tenant')?.name || 'Tenant';
+            transactions.push({
+                id: 'TXN' + String(transactions.length + 1).padStart(3, '0'),
+                tenant: tenantName,
+                landlord: users.find(u => u.id === prop.landlordId)?.name || 'Landlord',
+                property: prop.title,
+                amount: 2,
+                ref: 'EC' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+                status: 'Success'
+            });
+
+            closePaymentModal();
+            renderTenant();
+            if (document.getElementById('admin-dash').classList.contains('active-dash')) renderAdmin();
+        }
+
+        // ============================================================
+        // LANDLORD RENDER
+        // ============================================================
+        function renderLandlord() {
+            const myProps = properties.filter(p => p.landlordId === CURRENT_LANDLORD_ID);
+            const vacant = myProps.filter(p => p.status === 'vacant').length;
+            const occupied = myProps.filter(p => p.status === 'occupied').length;
+            const totalUnlocks = transactions.filter(t => t.landlord === 'Landlord Grace' || t.landlord === 'Landlord Peter')
+                .length;
+
+            document.getElementById('landlordStats').innerHTML = `
+                    <div class="stat-card"><div class="label">Total Properties</div><div class="value">${myProps.length}</div></div>
+                    <div class="stat-card"><div class="label">Vacant</div><div class="value green">${vacant}</div></div>
+                    <div class="stat-card"><div class="label">Occupied</div><div class="value red">${occupied}</div></div>
+                    <div class="stat-card"><div class="label">Total Unlocks</div><div class="value blue">${totalUnlocks}</div></div>
+                `;
+
+            const list = document.getElementById('landlordPropertyList');
+            if (!myProps.length) {
+                list.innerHTML = `
+                        <div class="text-center text-muted" style="padding:30px;">
+                            <i class="fas fa-building" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
+                            You haven't listed any properties yet.
+                        </div>
+                    `;
+                return;
+            }
+
+            list.innerHTML = myProps.map(p => {
+                const isVacant = p.status === 'vacant';
+                return `
+                        <div class="lprop-item">
+                            <div class="info">
+                                <strong>${p.title}</strong>
+                                <div class="sub">
+                                    <i class="fas fa-dollar-sign"></i> ${p.price} · ${p.rooms} bed · ${p.location}
+                                    <span class="badge ${isVacant ? 'badge-success' : 'badge-danger'}" style="margin-left:8px;">${p.status.toUpperCase()}</span>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <div class="toggle-wrap">
+                                    <label class="toggle">
+                                        <input type="checkbox" ${isVacant ? 'checked' : ''} onchange="togglePropertyStatus(${p.id})" />
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span class="toggle-label" style="font-size:0.8rem;">${isVacant ? 'Vacant' : 'Occupied'}</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm" onclick="removeProperty(${p.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+            }).join('');
+        }
+
+        function togglePropertyStatus(id) {
+            const prop = properties.find(p => p.id === id);
+            if (!prop) return;
+            prop.status = prop.status === 'vacant' ? 'occupied' : 'vacant';
+            renderLandlord();
+            renderTenant();
+        }
+
+        function removeProperty(id) {
+            if (!confirm('Remove this property listing?')) return;
+            properties = properties.filter(p => p.id !== id);
+            renderLandlord();
+            renderTenant();
+        }
+
+        // ============================================================
+        // MODAL: Add Property
+        // ============================================================
+        function openAddProperty() {
+            document.getElementById('addPropertyModal').classList.add('active');
+        }
+
+        function closeAddProperty() {
+            document.getElementById('addPropertyModal').classList.remove('active');
+            document.getElementById('addPropertyForm').reset();
+        }
+
+        function handleAddProperty(e) {
+            e.preventDefault();
+            const title = document.getElementById('propTitle').value.trim();
+            const location = document.getElementById('propLocation').value.trim();
+            const price = parseFloat(document.getElementById('propPrice').value);
+            const rooms = parseInt(document.getElementById('propRooms').value);
+            const status = document.getElementById('propStatus').value;
+            const desc = document.getElementById('propDesc').value.trim();
+
+            if (!title || !location || !price || !rooms) return alert('Please fill all required fields.');
+
+            const newProp = {
+                id: nextPropId++,
+                landlordId: CURRENT_LANDLORD_ID,
+                title,
+                location,
+                price,
+                rooms,
+                status,
+                desc: desc || 'New listing.',
+                imgIdx: Math.floor(Math.random() * PROPERTY_IMAGES.length),
+            };
+            properties.push(newProp);
+            closeAddProperty();
+            renderLandlord();
+            renderTenant();
+            alert('✅ Property added successfully!');
+        }
+
+        // ============================================================
+        // ADMIN RENDER
+        // ============================================================
+        function renderAdmin() {
+            const totalUsers = users.length;
+            const totalProps = properties.length;
+            const totalRevenue = transactions.filter(t => t.status === 'Success').reduce((s, t) => s + t.amount, 0);
+            const pendingVerifications = verifications.filter(v => v.status === 'pending').length;
+
+            document.getElementById('adminStats').innerHTML = `
+                    <div class="stat-card"><div class="label">Total Users</div><div class="value">${totalUsers}</div></div>
+                    <div class="stat-card"><div class="label">Properties</div><div class="value">${totalProps}</div></div>
+                    <div class="stat-card"><div class="label">Revenue (USD)</div><div class="value green">$${totalRevenue}</div></div>
+                    <div class="stat-card"><div class="label">Pending Verifications</div><div class="value orange">${pendingVerifications}</div></div>
+                `;
+
+            // Transactions
+            const tbody = document.getElementById('adminTransactionTable');
+            tbody.innerHTML = transactions.map(t => `
+                    <tr>
+                        <td><strong>${t.id}</strong></td>
+                        <td>${t.tenant}</td>
+                        <td>${t.landlord}</td>
+                        <td>${t.property}</td>
+                        <td>$${t.amount}</td>
+                        <td>${t.ref}</td>
+                        <td><span class="badge ${t.status === 'Success' ? 'badge-success' : 'badge-danger'}">${t.status}</span></td>
+                    </tr>
+                `).join('');
+
+            // Users
+            const ubody = document.getElementById('adminUserTable');
+            ubody.innerHTML = users.map(u => `
+                    <tr>
+                        <td><strong>${u.name}</strong></td>
+                        <td>${u.contact}</td>
+                        <td><span class="badge badge-info">${u.role}</span></td>
+                        <td><span class="badge ${u.status === 'active' || u.status === 'verified' ? 'badge-success' : 'badge-warning'}">${u.status}</span></td>
+                    </tr>
+                `).join('');
+
+            // Verifications
+            const vbody = document.getElementById('adminVerificationTable');
+            vbody.innerHTML = verifications.map(v => `
+                    <tr>
+                        <td><strong>${v.landlord}</strong></td>
+                        <td>${v.document}</td>
+                        <td>${v.submitted}</td>
+                        <td>
+                            ${v.status === 'pending' ? `
+                                <button class="btn btn-success btn-sm" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i></button>
+                            ` : `<span class="badge ${v.status === 'approved' ? 'badge-success' : 'badge-danger'}">${v.status}</span>`}
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        function approveVerification(id) {
+            const v = verifications.find(v => v.id === id);
+            if (v) {
+                v.status = 'approved';
+                const user = users.find(u => u.name === v.landlord);
+                if (user) user.status = 'verified';
+            }
+            renderAdmin();
+        }
+
+        function rejectVerification(id) {
+            const v = verifications.find(v => v.id === id);
+            if (v) v.status = 'rejected';
+            renderAdmin();
+        }
+
+        // ============================================================
+        // ADMIN TABS
+        // ============================================================
+        document.querySelectorAll('[data-admin-tab]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('[data-admin-tab]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const target = this.dataset.adminTab;
+                document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+                document.getElementById('adminPane' + target.charAt(0).toUpperCase() + target.slice(1))
+                    .classList.add('active');
+            });
+        });
+
+        // ============================================================
+        // CLOSE MODALS ON OVERLAY CLICK
+        // ============================================================
+        document.getElementById('addPropertyModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAddProperty();
+        });
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closePaymentModal();
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        // Start with tenant dashboard visible (but hidden behind login)
+        // Actually we start with login screen, so no auto-load.
+        // But we pre-render data.
+        console.log('HomeBase ready.');
+    </script>
+
 </body>
 </html>
