@@ -1398,7 +1398,7 @@
             <div class="tagline">Find your next home directly · <strong>$2</strong> or <strong>10 Points</strong> to unlock · Save up to 90%</div>
         </div>
         <div class="role-cards">
-            <button class="role-btn" onclick="loadDashboard('tenant-dash')"><i class="fas fa-search"></i> Tenant<span class="sub">Find &amp; unlock homes</span></button>
+            <button class="role-btn" onclick="promptTenantAuth()"><i class="fas fa-search"></i> Tenant<span class="sub">Find &amp; unlock homes</span></button>
             <button class="role-btn" onclick="loadDashboard('landlord-dash')"><i class="fas fa-building"></i> Landlord<span class="sub">Manage your properties</span></button>
             <button class="role-btn admin-btn" onclick="promptAdminLogin()"><i class="fas fa-user-cog"></i> Admin<span class="sub">Full system control</span></button>
         </div>
@@ -1759,6 +1759,27 @@
             }
         }
 
+        function promptTenantAuth() {
+            const action = prompt("Type 'login' or 'signup' to continue:");
+            if (action && action.toLowerCase() === 'signup') {
+                const email = prompt("Enter your Gmail address:");
+                if (!email || !email.toLowerCase().endsWith('@gmail.com')) {
+                    alert("Registration rejected: Only @gmail.com emails are allowed.");
+                    return;
+                }
+                const password = prompt("Enter a strong password (min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special character):");
+                const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\\\$%\\\\^&\\\\*])(?=.{8,})");
+                if (!password || !strongRegex.test(password)) {
+                    alert("Registration rejected: Password is too weak.");
+                    return;
+                }
+                alert("Signup successful!");
+                loadDashboard('tenant-dash');
+            } else if (action && action.toLowerCase() === 'login') {
+                loadDashboard('tenant-dash');
+            }
+        }
+
         function loadDashboard(dashId) {
             document.getElementById('role-selector').style.display = 'none';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
@@ -1884,10 +1905,28 @@
                             </div>
                             <div class="landlord-info"><i class="fas fa-user"></i> ${landlordName} ${isVerified ? '<i class="fas fa-check-circle verified-check-sm"></i>' : ''}</div>
                             <div class="desc">${p.desc || ''}</div>
-                            ${p.status === 'vacant'
-                                ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title.replace(/'/g, "\\'")}')"><i class="fas fa-unlock"></i> Unlock Contact · $2 or 10pts</button>`
-                                : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Currently Unavailable</button>`
-                            }
+                            ${(() => {
+                                const unlockTime = unlockedProperties[p.id];
+                                const isUnlocked = unlockTime !== undefined && (Date.now() - unlockTime <= 120000);
+                                if (isUnlocked) {
+                                    const timeRemaining = Math.max(0, Math.ceil((120000 - (Date.now() - unlockTime)) / 1000));
+                                    if (landlord) {
+                                        return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--success); margin-top: 10px;">
+                                                    <div style="font-weight: 600; color: var(--success); margin-bottom: 6px;"><i class="fas fa-unlock"></i> Contact Unlocked</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Name:</strong> ${landlord.name}</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Contact:</strong> ${landlord.contact}</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>ID:</strong> ${landlord.nationalId || 'N/A'}</div>
+                                                    <div style="font-size: 0.75rem; color: var(--danger); margin-top: 6px; text-align: center;">Hides in ${timeRemaining}s</div>
+                                                </div>`;
+                                    } else {
+                                        return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--danger); margin-top: 10px; text-align: center; color: var(--danger);">Landlord details unavailable</div>`;
+                                    }
+                                } else {
+                                    return p.status === 'vacant'
+                                        ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title.replace(/'/g, "\\'")}')"><i class="fas fa-unlock"></i> Unlock Contact · $2 or 10pts</button>`
+                                        : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Currently Unavailable</button>`;
+                                }
+                            })()}
                         </div>
                     </div>`;
             }).join('');
