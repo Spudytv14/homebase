@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
-        /* ============================================================
-               ROOT VARIABLES & RESET
-            ============================================================ */
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -36,6 +33,13 @@
             --ecocash: #00aae7;
             --paypal: #0070ba;
             --inbucks: #f39c12;
+            --smilecash: #e91e63;
+            --onemoney: #8e44ad;
+            --verified: #1d9bf0;
+            --points-gold: #f59e0b;
+            --density-high: #ef4444;
+            --density-mid: #f59e0b;
+            --density-low: #16a34a;
         }
 
         * {
@@ -51,10 +55,6 @@
             min-height: 100vh;
             transition: background 0.3s;
         }
-
-        /* ============================================================
-               SCROLLBAR
-            ============================================================ */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -70,9 +70,6 @@
             background: #94a3b8;
         }
 
-        /* ============================================================
-               BUTTONS & BADGES
-            ============================================================ */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -135,6 +132,26 @@
             width: 100%;
             justify-content: center;
         }
+        .btn-points {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #000;
+            font-weight: 700;
+            border: 2px solid #f59e0b;
+            animation: pulseGold 2s infinite;
+        }
+        @keyframes pulseGold {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 14px rgba(245, 158, 11, 0);
+            }
+        }
+        .btn-points:hover {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            transform: scale(1.03);
+        }
 
         .badge {
             display: inline-block;
@@ -161,10 +178,42 @@
             background: #dbeafe;
             color: var(--primary);
         }
+        .badge-verified {
+            background: #dbeafe;
+            color: var(--verified);
+            font-size: 0.65rem;
+            padding: 2px 8px;
+        }
+        .badge-density-high {
+            background: #fee2e2;
+            color: var(--density-high);
+        }
+        .badge-density-mid {
+            background: #fef3c7;
+            color: var(--density-mid);
+        }
+        .badge-density-low {
+            background: #dcfce7;
+            color: var(--density-low);
+        }
+        .badge-points {
+            background: #fef3c7;
+            color: #b45309;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
 
-        /* ============================================================
-               LOGIN / ROLE SELECTOR
-            ============================================================ */
+        .verified-check {
+            color: var(--verified);
+            font-size: 0.85rem;
+            margin-left: 2px;
+            display: inline-block;
+        }
+        .verified-check-sm {
+            color: var(--verified);
+            font-size: 0.7rem;
+        }
+
         #role-selector {
             min-height: 100vh;
             display: flex;
@@ -270,9 +319,6 @@
             background: rgba(15, 23, 42, 0.8);
         }
 
-        /* ============================================================
-               DASHBOARD LAYOUT
-            ============================================================ */
         .dashboard {
             display: none;
             min-height: 100vh;
@@ -292,9 +338,6 @@
             }
         }
 
-        /* ============================================================
-               NAVBAR
-            ============================================================ */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -363,18 +406,12 @@
             color: var(--danger);
         }
 
-        /* ============================================================
-               CONTAINER
-            ============================================================ */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 24px 28px 40px;
         }
 
-        /* ============================================================
-               STAT GRID
-            ============================================================ */
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -417,10 +454,10 @@
         .stat-card .value.red {
             color: var(--danger);
         }
+        .stat-card .value.gold {
+            color: var(--points-gold);
+        }
 
-        /* ============================================================
-               PANEL
-            ============================================================ */
         .panel {
             background: var(--card);
             border-radius: var(--radius);
@@ -449,9 +486,6 @@
             color: var(--primary);
         }
 
-        /* ============================================================
-               TABLES
-            ============================================================ */
         .table-wrap {
             overflow-x: auto;
         }
@@ -479,12 +513,9 @@
             border-bottom: none;
         }
 
-        /* ============================================================
-               TENANT: FILTER BAR
-            ============================================================ */
         .filter-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 14px;
             background: var(--card);
             padding: 18px 22px;
@@ -538,9 +569,6 @@
             cursor: pointer;
         }
 
-        /* ============================================================
-               TENANT: PROPERTY GRID
-            ============================================================ */
         .property-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -578,6 +606,24 @@
             top: 12px;
             left: 12px;
         }
+        .property-card .img-wrap .density-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        .property-card .img-wrap .verified-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            background: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
         .property-card .body {
             padding: 16px 18px 18px;
         }
@@ -595,6 +641,9 @@
             font-weight: 600;
             font-size: 1rem;
             margin: 4px 0 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .property-card .body .meta {
             font-size: 0.85rem;
@@ -602,6 +651,7 @@
             display: flex;
             gap: 16px;
             margin: 6px 0 12px;
+            flex-wrap: wrap;
         }
         .property-card .body .meta i {
             width: 16px;
@@ -615,20 +665,25 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        .property-card .body .landlord-info {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-        /* ============================================================
-               PAYMENT METHOD SELECTOR
-            ============================================================ */
         .payment-selector {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             margin: 10px 0 14px;
         }
         .payment-selector .pm-option {
             flex: 1;
-            min-width: 80px;
-            padding: 10px 8px;
+            min-width: 65px;
+            padding: 10px 6px;
             border: 2px solid var(--card-border);
             border-radius: var(--radius-sm);
             background: var(--bg);
@@ -636,14 +691,14 @@
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
         }
         .payment-selector .pm-option i {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
         .payment-selector .pm-option:hover {
             border-color: var(--primary-light);
@@ -662,10 +717,13 @@
         .payment-selector .pm-option.inbucks i {
             color: var(--inbucks);
         }
+        .payment-selector .pm-option.smile i {
+            color: var(--smilecash);
+        }
+        .payment-selector .pm-option.one i {
+            color: var(--onemoney);
+        }
 
-        /* ============================================================
-               LANDLORD DASHBOARD
-            ============================================================ */
         .lprop-item {
             display: flex;
             flex-wrap: wrap;
@@ -700,7 +758,6 @@
             align-items: center;
         }
 
-        /* Toggle switch */
         .toggle-wrap {
             display: flex;
             align-items: center;
@@ -747,9 +804,6 @@
             font-size: 0.85rem;
         }
 
-        /* ============================================================
-               ADMIN DASHBOARD (Dark Theme)
-            ============================================================ */
         #admin-dash {
             background: #0f172a;
             color: #f1f5f9;
@@ -826,7 +880,6 @@
             border-color: var(--primary-light);
         }
 
-        /* Admin sub-tabs */
         .admin-tabs {
             display: flex;
             gap: 4px;
@@ -864,9 +917,6 @@
             animation: fadeIn 0.25s ease;
         }
 
-        /* ============================================================
-               MODAL
-            ============================================================ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -883,7 +933,7 @@
         }
         .modal-box {
             background: var(--card);
-            max-width: 540px;
+            max-width: 580px;
             width: 100%;
             border-radius: var(--radius);
             padding: 32px 34px;
@@ -921,7 +971,7 @@
         .modal-box form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
         .modal-box form .field {
             display: flex;
@@ -962,9 +1012,225 @@
             margin-top: 6px;
         }
 
-        /* ============================================================
-               UTILITY
-            ============================================================ */
+        .promo-banner {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0%,
+            100% {
+                border-color: #f59e0b;
+            }
+            50% {
+                border-color: #fbbf24;
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            }
+        }
+        .promo-banner .promo-icon {
+            font-size: 2.5rem;
+            color: #f59e0b;
+        }
+        .promo-banner .promo-text strong {
+            font-size: 1.1rem;
+            color: #92400e;
+        }
+        .promo-banner .promo-text .countdown {
+            font-weight: 700;
+            color: #b45309;
+            font-size: 0.9rem;
+        }
+        .promo-banner .promo-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .referral-box {
+            background: #f0f9ff;
+            border: 2px dashed #2563eb;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .referral-box .ref-code {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 8px 0;
+            cursor: pointer;
+            border: 1px solid var(--primary-light);
+        }
+
+        .ai-chat-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+            z-index: 998;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounceBot 2s infinite;
+        }
+        @keyframes bounceBot {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-8px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+        }
+        .ai-chat-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.08);
+            animation: none;
+        }
+        .ai-chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 360px;
+            max-width: 90vw;
+            max-height: 500px;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 997;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+        .ai-chat-window.open {
+            display: flex;
+        }
+        .ai-chat-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .ai-chat-header i {
+            font-size: 1.2rem;
+        }
+        .ai-chat-body {
+            flex: 1;
+            padding: 14px;
+            overflow-y: auto;
+            max-height: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f8fafc;
+        }
+        .ai-chat-body .msg {
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            max-width: 85%;
+            line-height: 1.4;
+        }
+        .ai-chat-body .msg.bot {
+            background: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .ai-chat-body .msg.user {
+            background: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .ai-chat-body .msg .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #25d366;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin: 4px 2px;
+        }
+        .ai-chat-input {
+            display: flex;
+            border-top: 1px solid var(--card-border);
+            padding: 8px;
+            gap: 6px;
+            background: #fff;
+        }
+        .ai-chat-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+        }
+        .ai-chat-input input:focus {
+            border-color: var(--primary);
+        }
+        .ai-chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .points-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #b45309;
+            border: 1px solid #fcd34d;
+        }
+        .points-display i {
+            color: #f59e0b;
+        }
+
         .flex {
             display: flex;
             align-items: center;
@@ -989,10 +1255,35 @@
         .w-full {
             width: 100%;
         }
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+        }
+        .no-results i {
+            font-size: 3rem;
+            opacity: 0.3;
+            margin-bottom: 12px;
+            display: block;
+        }
 
-        /* ============================================================
-               RESPONSIVE
-            ============================================================ */
+        .profile-locked {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #fef3c7;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: #92400e;
+            margin-bottom: 16px;
+            border: 1px solid #fcd34d;
+        }
+        .profile-locked i {
+            color: #f59e0b;
+            font-size: 1.2rem;
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 padding: 12px 16px;
@@ -1033,6 +1324,26 @@
                 padding: 6px 16px;
                 font-size: 0.75rem;
             }
+            .ai-chat-window {
+                width: 300px;
+                right: 8px;
+                bottom: 80px;
+            }
+            .ai-chat-btn {
+                bottom: 16px;
+                right: 12px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+            }
+            .payment-selector .pm-option {
+                min-width: 50px;
+                font-size: 0.65rem;
+                padding: 8px 4px;
+            }
+            .payment-selector .pm-option i {
+                font-size: 1rem;
+            }
         }
         @media (max-width: 480px) {
             .stat-grid {
@@ -1060,320 +1371,219 @@
                 justify-content: center;
             }
             .payment-selector .pm-option {
-                min-width: 60px;
-                font-size: 0.7rem;
+                min-width: 55px;
+                font-size: 0.65rem;
             }
             .payment-selector .pm-option i {
-                font-size: 1.1rem;
+                font-size: 0.9rem;
             }
-        }
-
-        /* No results */
-        .no-results {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-muted);
-        }
-        .no-results i {
-            font-size: 3rem;
-            opacity: 0.3;
-            margin-bottom: 12px;
-            display: block;
+            .ai-chat-window {
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 75px;
+                max-height: 400px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    ROLE SELECTOR (LOGIN)
-    ============================================================ -->
+    <!-- ROLE SELECTOR -->
     <div id="role-selector">
         <div class="brand">
             <h1>Home<span>Base</span></h1>
             <p>Verified Rentals. No Phantoms. No Scams.</p>
-            <div class="tagline">Find your next home directly · <strong>$2</strong> unlock · Save up to 90%</div>
+            <div class="tagline">Find your next home directly · <strong>$2</strong> or <strong>10 Points</strong> to unlock · Save up to 90%</div>
         </div>
         <div class="role-cards">
-            <button class="role-btn" onclick="loadDashboard('tenant-dash')">
-                <i class="fas fa-search"></i>
-                Tenant
-                <span class="sub">Find &amp; unlock homes</span>
-            </button>
-            <button class="role-btn" onclick="loadDashboard('landlord-dash')">
-                <i class="fas fa-building"></i>
-                Landlord
-                <span class="sub">Manage your properties</span>
-            </button>
-            <button class="role-btn admin-btn" onclick="loadDashboard('admin-dash')">
-                <i class="fas fa-user-cog"></i>
-                Admin
-                <span class="sub">Full system control</span>
-            </button>
+            <button class="role-btn" onclick="loadDashboard('tenant-dash')"><i class="fas fa-search"></i> Tenant<span class="sub">Find &amp; unlock homes</span></button>
+            <button class="role-btn" onclick="loadDashboard('landlord-dash')"><i class="fas fa-building"></i> Landlord<span class="sub">Manage your properties</span></button>
+            <button class="role-btn admin-btn" onclick="loadDashboard('admin-dash')"><i class="fas fa-user-cog"></i> Admin<span class="sub">Full system control</span></button>
         </div>
     </div>
 
-    <!-- ============================================================
-    TENANT DASHBOARD
-    ============================================================ -->
+    <!-- TENANT DASHBOARD -->
     <div id="tenant-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span></div>
             <div class="right">
+                <span class="points-display" id="tenantPointsDisplay"><i class="fas fa-star"></i> <span id="tenantPointsVal">0</span> Points</span>
                 <span class="user-chip"><span class="dot"></span> Tenant · Tinashe M.</span>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
             </div>
         </nav>
-
         <div class="container">
+            <!-- PROMO BANNER -->
+            <div class="promo-banner" id="promoBanner">
+                <div class="promo-icon"><i class="fas fa-gift"></i></div>
+                <div class="promo-text">
+                    <strong>🌟 Points Promotion!</strong> Earn <strong>2 points</strong> per referral. <strong>10 points = FREE unlock</strong> (worth $2)!<br />
+                    <span class="countdown">⏳ Promotion ends <span id="promoCountdown">31 December 2026</span></span>
+                </div>
+            </div>
+
+            <!-- REFERRAL BOX -->
+            <div class="referral-box">
+                <i class="fas fa-users" style="color:var(--primary);font-size:1.2rem;"></i>
+                <strong>Your Referral Code:</strong>
+                <div class="ref-code" id="tenantRefCode" title="Click to copy" onclick="copyReferralCode()">HOME-TINASHE-2026</div>
+                <p style="font-size:0.8rem;color:var(--text-muted);">Share this code! You earn <strong>2 points</strong> when a new tenant signs up with it.</p>
+                <button class="btn btn-points btn-sm" onclick="simulateReferral()"><i class="fas fa-plus-circle"></i> Simulate Referral (+2 pts)</button>
+            </div>
+
+            <!-- PROFILE LOCKED NOTICE -->
+            <div class="profile-locked">
+                <i class="fas fa-shield-alt"></i>
+                <span><strong>Profile locked for security.</strong> Name & ID verified. Contact admin to update your details.</span>
+            </div>
+
             <h2 style="margin-bottom:4px;">Find your next home</h2>
             <p style="color:var(--text-muted); margin-bottom:20px;">Browse verified properties from trusted landlords across Zimbabwe.</p>
 
-            <!-- Filters -->
+            <!-- FILTERS -->
             <div class="filter-bar" id="tenantFilters">
-                <div class="field">
-                    <label><i class="fas fa-search"></i> Keyword</label>
-                    <input type="text" id="tenantSearch" placeholder="e.g. Borrowdale, flat..." oninput="renderTenant()" />
-                </div>
-                <div class="field">
-                    <label><i class="fas fa-map-pin"></i> Location</label>
+                <div class="field"><label><i class="fas fa-search"></i> Keyword</label><input type="text" id="tenantSearch" placeholder="e.g. Borrowdale, flat..." oninput="renderTenant()" /></div>
+                <div class="field"><label><i class="fas fa-map-pin"></i> Location</label>
                     <select id="tenantLocation" onchange="renderTenant()">
-                        <option value="all">All Cities</option>
-                        <option value="Harare">Harare</option>
-                        <option value="Bulawayo">Bulawayo</option>
-                        <option value="Gweru">Gweru</option>
-                        <option value="Mutare">Mutare</option>
+                        <option value="all">All Cities</option><option value="Harare">Harare</option><option value="Bulawayo">Bulawayo</option><option value="Gweru">Gweru</option><option value="Mutare">Mutare</option><option value="Chitungwiza">Chitungwiza</option><option value="Victoria Falls">Victoria Falls</option>
                     </select>
                 </div>
-                <div class="field">
-                    <label><i class="fas fa-dollar-sign"></i> Max Price</label>
-                    <input type="number" id="tenantMaxPrice" placeholder="e.g. 800" oninput="renderTenant()" />
-                </div>
-                <div class="field">
-                    <label><i class="fas fa-bed"></i> Rooms</label>
+                <div class="field"><label><i class="fas fa-dollar-sign"></i> Max Price</label><input type="number" id="tenantMaxPrice" placeholder="e.g. 800" oninput="renderTenant()" /></div>
+                <div class="field"><label><i class="fas fa-bed"></i> Rooms</label>
                     <select id="tenantRooms" onchange="renderTenant()">
-                        <option value="any">Any</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4+</option>
+                        <option value="any">Any</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option>
+                    </select>
+                </div>
+                <div class="field"><label><i class="fas fa-layer-group"></i> Density</label>
+                    <select id="tenantDensity" onchange="renderTenant()">
+                        <option value="any">Any</option><option value="high">High Density</option><option value="middle">Middle Density</option><option value="low">Low Density</option>
                     </select>
                 </div>
                 <div class="field vacancy-toggle">
                     <label style="display:flex; align-items:center; gap:10px; margin:0; cursor:pointer;">
-                        <input type="checkbox" id="tenantVacantOnly" checked onchange="renderTenant()" />
-                        <span style="font-weight:600;">Vacant only</span>
+                        <input type="checkbox" id="tenantVacantOnly" checked onchange="renderTenant()" /><span style="font-weight:600;">Vacant only</span>
                     </label>
                 </div>
             </div>
 
-            <!-- Property Grid -->
             <div id="tenantPropertyGrid" class="property-grid"></div>
-            <div id="tenantNoResult" class="no-results" style="display:none;">
-                <i class="fas fa-home"></i>
-                <h3>No properties match your filters</h3>
-                <p>Try adjusting your search or location.</p>
-            </div>
+            <div id="tenantNoResult" class="no-results" style="display:none;"><i class="fas fa-home"></i><h3>No properties match your filters</h3><p>Try adjusting your search or location.</p></div>
         </div>
     </div>
 
-    <!-- ============================================================
-    LANDLORD DASHBOARD
-    ============================================================ -->
+    <!-- LANDLORD DASHBOARD -->
     <div id="landlord-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
             <div class="right">
-                <span class="user-chip"><span class="dot"></span> Landlord · Grace (ID 3)</span>
+                <span class="user-chip"><span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i></span>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
             </div>
         </nav>
-
         <div class="container">
-            <div class="panel-header">
-                <h2><i class="fas fa-building"></i> My Properties</h2>
-                <button class="btn btn-primary" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Listing</button>
-            </div>
-
-            <!-- Stats -->
+            <div class="profile-locked"><i class="fas fa-shield-alt"></i><span><strong>Profile locked for security.</strong> Name & ID verified. Only admin can reset your details.</span></div>
+            <div class="panel-header"><h2><i class="fas fa-building"></i> My Properties</h2><button class="btn btn-primary" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Listing</button></div>
             <div class="stat-grid" id="landlordStats"></div>
-
-            <!-- Property List -->
-            <div class="panel">
-                <div id="landlordPropertyList" class="landlord-props"></div>
-            </div>
+            <div class="panel"><div id="landlordPropertyList" class="landlord-props"></div></div>
         </div>
     </div>
 
-    <!-- ============================================================
-    ADMIN DASHBOARD
-    ============================================================ -->
+    <!-- ADMIN DASHBOARD -->
     <div id="admin-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:#94a3b8;">| Superuser</span></div>
-            <div class="right">
-                <span class="user-chip"><span class="dot"></span> Admin · Prime</span>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
-            </div>
+            <div class="right"><span class="user-chip"><span class="dot"></span> Admin · Prime</span><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button></div>
         </nav>
-
         <div class="container">
             <h2 style="margin-bottom:20px; color:#f1f5f9;">System Overview</h2>
-
-            <!-- Stats -->
             <div class="stat-grid" id="adminStats"></div>
-
-            <!-- Admin Tabs -->
             <div class="panel">
                 <div class="admin-tabs">
                     <button class="active" data-admin-tab="transactions"><i class="fas fa-receipt"></i> Transactions</button>
                     <button data-admin-tab="users"><i class="fas fa-users"></i> Users</button>
                     <button data-admin-tab="verifications"><i class="fas fa-check-circle"></i> Verifications</button>
                 </div>
-
-                <div id="adminPaneTransactions" class="admin-pane active">
-                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-list"></i> All Transactions</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>EcoCash Ref</th><th>Status</th></tr></thead>
-                            <tbody id="adminTransactionTable"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="adminPaneUsers" class="admin-pane">
-                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Name</th><th>Contact</th><th>Role</th><th>Status</th></tr></thead>
-                            <tbody id="adminUserTable"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="adminPaneVerifications" class="admin-pane">
-                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-clock"></i> Verification Queue</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead>
-                            <tbody id="adminVerificationTable"></tbody>
-                        </table>
-                    </div>
-                </div>
+                <div id="adminPaneTransactions" class="admin-pane active"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-list"></i> All Transactions</h3><div class="table-wrap"><table><thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>Ref</th><th>Status</th></tr></thead><tbody id="adminTransactionTable"></tbody></table></div></div>
+                <div id="adminPaneUsers" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Nat. ID</th><th>Role</th><th>Status</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div>
+                <div id="adminPaneVerifications" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-clock"></i> Verification Queue</h3><div class="table-wrap"><table><thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="adminVerificationTable"></tbody></table></div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    MODAL: Add Property (Landlord)
-    ============================================================ -->
+    <!-- MODAL: Add Property -->
     <div id="addPropertyModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closeAddProperty()">&times;</button>
             <h2><i class="fas fa-home"></i> List New Property</h2>
             <form id="addPropertyForm" onsubmit="handleAddProperty(event)">
-                <div class="field">
-                    <label>Property Title *</label>
-                    <input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required />
-                </div>
-                <div class="field">
-                    <label>City *</label>
-                    <input type="text" id="propLocation" placeholder="e.g. Harare" required />
-                </div>
-                <div class="field">
-                    <label>Monthly Rent (USD) *</label>
-                    <input type="number" id="propPrice" placeholder="e.g. 450" required min="1" />
-                </div>
-                <div class="field">
-                    <label>Bedrooms *</label>
-                    <input type="number" id="propRooms" placeholder="e.g. 2" required min="1" />
-                </div>
-                <div class="field">
-                    <label>Status</label>
-                    <select id="propStatus">
-                        <option value="vacant">Vacant</option>
-                        <option value="occupied">Occupied</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>Description</label>
-                    <textarea id="propDesc" placeholder="Amenities, features, etc." rows="2"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button>
-                    <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button>
-                </div>
+                <div class="field"><label>Property Title *</label><input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required /></div>
+                <div class="field"><label>City *</label><input type="text" id="propLocation" placeholder="e.g. Harare" required /></div>
+                <div class="field"><label>Full Address *</label><input type="text" id="propAddress" placeholder="e.g. 42 Samora Machel Ave, Eastlea" required /></div>
+                <div class="field"><label>Monthly Rent (USD) *</label><input type="number" id="propPrice" placeholder="e.g. 450" required min="1" /></div>
+                <div class="field"><label>Bedrooms *</label><input type="number" id="propRooms" placeholder="e.g. 2" required min="1" /></div>
+                <div class="field"><label>Density *</label><select id="propDensity" required><option value="">-- Select --</option><option value="high">High Density</option><option value="middle">Middle Density</option><option value="low">Low Density</option></select></div>
+                <div class="field"><label>Property Type *</label><select id="propType" required><option value="">-- Select --</option><option value="house">House</option><option value="apartment">Apartment</option><option value="cottage">Cottage</option><option value="townhouse">Townhouse</option><option value="room">Single Room</option><option value="estate">Estate Home</option></select></div>
+                <div class="field"><label>Furnished?</label><select id="propFurnished"><option value="no">No</option><option value="yes">Yes</option><option value="semi">Semi-furnished</option></select></div>
+                <div class="field"><label>Parking</label><input type="text" id="propParking" placeholder="e.g. 2 covered bays" /></div>
+                <div class="field"><label>Security Features</label><input type="text" id="propSecurity" placeholder="e.g. 24/7 guard, electric fence" /></div>
+                <div class="field"><label>Utilities Included</label><input type="text" id="propUtilities" placeholder="e.g. Water, WiFi" /></div>
+                <div class="field"><label>Status</label><select id="propStatus"><option value="vacant">Vacant</option><option value="occupied">Occupied</option></select></div>
+                <div class="field"><label>Description</label><textarea id="propDesc" placeholder="Full amenities, features, nearby landmarks, etc." rows="3"></textarea></div>
+                <div class="form-actions"><button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button><button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button></div>
             </form>
         </div>
     </div>
 
-    <!-- ============================================================
-    MODAL: Payment (Tenant)
-    ============================================================ -->
+    <!-- MODAL: Payment -->
     <div id="paymentModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closePaymentModal()">&times;</button>
             <h2><i class="fas fa-lock"></i> Unlock Landlord Contact</h2>
-            <p style="color:var(--text-muted); margin-bottom:12px;">Pay just <strong>$2.00</strong> to get the verified landlord's phone number and email.</p>
-
+            <p style="color:var(--text-muted); margin-bottom:12px;">Pay <strong>$2.00</strong> or use <strong>10 Points</strong> to reveal the verified landlord's phone & email.</p>
             <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
-                <div style="display:flex; justify-content:space-between; font-weight:500;">
-                    <span>Property:</span>
-                    <span id="paymentPropertyName">—</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;">
-                    <span>Amount:</span>
-                    <span style="color:var(--primary);">$2.00</span>
-                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="paymentPropertyName">—</span></div>
+                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;"><span>Cost:</span><span style="color:var(--primary);">$2.00 <span style="font-size:0.8rem;">or</span> 10 Points</span></div>
+                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:2px;"><span>Your Points:</span><span style="color:var(--points-gold);" id="paymentYourPoints">0</span></div>
             </div>
-
+            <div id="paymentPointsSection" style="margin-bottom:12px;">
+                <button class="btn btn-points btn-block btn-sm" id="usePointsBtn" onclick="usePointsToUnlock()" disabled>
+                    <i class="fas fa-star"></i> Use 10 Points to Unlock (FREE)
+                </button>
+                <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">You need 10 points. Current balance: <span id="pointsBalanceLabel">0</span></p>
+            </div>
+            <div style="text-align:center;color:var(--text-muted);margin:8px 0;font-weight:600;">— OR pay $2 —</div>
             <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:8px;">Select Payment Method</label>
             <div class="payment-selector" id="paymentMethodSelector">
-                <div class="pm-option eco active" data-method="ecocash" onclick="selectPayment('ecocash')">
-                    <i class="fas fa-mobile-alt"></i>
-                    EcoCash
-                </div>
-                <div class="pm-option paypal" data-method="paypal" onclick="selectPayment('paypal')">
-                    <i class="fab fa-paypal"></i>
-                    PayPal
-                </div>
-                <div class="pm-option inbucks" data-method="inbucks" onclick="selectPayment('inbucks')">
-                    <i class="fas fa-coins"></i>
-                    InBucks
-                </div>
+                <div class="pm-option eco active" data-method="ecocash" onclick="selectPayment('ecocash')"><i class="fas fa-mobile-alt"></i>EcoCash</div>
+                <div class="pm-option one" data-method="onemoney" onclick="selectPayment('onemoney')"><i class="fas fa-mobile-alt"></i>OneMoney</div>
+                <div class="pm-option smile" data-method="smilecash" onclick="selectPayment('smilecash')"><i class="fas fa-mobile-alt"></i>SmileCash</div>
+                <div class="pm-option paypal" data-method="paypal" onclick="selectPayment('paypal')"><i class="fab fa-paypal"></i>PayPal</div>
+                <div class="pm-option inbucks" data-method="inbucks" onclick="selectPayment('inbucks')"><i class="fas fa-coins"></i>InBucks</div>
             </div>
+            <div id="paymentEcoCashFields" style="margin-top:14px;"><div class="field"><label>EcoCash Number</label><input type="tel" id="ecoPhone" placeholder="e.g. 077 123 4567" /></div></div>
+            <div id="paymentOneMoneyFields" style="display:none; margin-top:14px;"><div class="field"><label>OneMoney Number</label><input type="tel" id="onePhone" placeholder="e.g. 071 123 4567" /></div></div>
+            <div id="paymentSmileCashFields" style="display:none; margin-top:14px;"><div class="field"><label>SmileCash Number</label><input type="tel" id="smilePhone" placeholder="e.g. 078 123 4567" /></div></div>
+            <div id="paymentPaypalFields" style="display:none; margin-top:14px;"><div class="field"><label>PayPal Email</label><input type="email" id="paypalEmail" placeholder="you@example.com" /></div></div>
+            <div id="paymentInbucksFields" style="display:none; margin-top:14px;"><div class="field"><label>InBucks Account</label><input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" /></div></div>
+            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processPayment()"><i class="fas fa-check-circle"></i> Pay $2.00 &amp; Unlock</button>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-shield-alt"></i> Secure payment. Landlord details revealed instantly.</p>
+        </div>
+    </div>
 
-            <div id="paymentEcoCashFields" style="margin-top:14px;">
-                <div class="field">
-                    <label>EcoCash Number</label>
-                    <input type="tel" id="ecoPhone" placeholder="e.g. 077 123 4567" />
-                </div>
-            </div>
-            <div id="paymentPaypalFields" style="display:none; margin-top:14px;">
-                <div class="field">
-                    <label>PayPal Email</label>
-                    <input type="email" id="paypalEmail" placeholder="you@example.com" />
-                </div>
-            </div>
-            <div id="paymentInbucksFields" style="display:none; margin-top:14px;">
-                <div class="field">
-                    <label>InBucks Account</label>
-                    <input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" />
-                </div>
-            </div>
-
-            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processPayment()">
-                <i class="fas fa-check-circle"></i> Pay $2.00 &amp; Unlock
-            </button>
-            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;">
-                <i class="fas fa-shield-alt"></i> Your payment is secure. Landlord details revealed instantly.
-            </p>
+    <!-- AI CHATBOT -->
+    <button class="ai-chat-btn" id="aiChatBtn" title="AI Assistant"><i class="fas fa-robot"></i></button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header"><i class="fas fa-robot"></i> HomeBase AI Assistant</div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <div class="msg bot">👋 Hello! I'm your HomeBase AI assistant. Ask me about properties, unlocking, referrals, or agent availability!</div>
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" id="aiChatInput" placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendAiMessage()" />
+            <button onclick="sendAiMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
 
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
     <script>
         // ============================================================
         // DATA STORE
@@ -1387,60 +1597,130 @@
             'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1598228723793-52759bba239c?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
         ];
 
+        // EXPANDED PROPERTIES: cheap to luxury, each with landlordId & density
         let properties = [
             { id: 1, landlordId: 3, title: '2 Bed Cottage', location: 'Harare', price: 450, rooms: 2, status: 'vacant',
-                desc: 'Solar, borehole, secure parking. Quiet neighborhood.', imgIdx: 0 },
+                desc: 'Solar, borehole, secure parking. Quiet neighbourhood in Eastlea.', imgIdx: 0, density: 'middle',
+                address: '12 Eastlea Rd, Harare', propType: 'cottage', furnished: 'semi', parking: '2 bays',
+                security: 'Wall & gate', utilities: 'Water included' },
             { id: 2, landlordId: 3, title: '1 Bed Apartment', location: 'Harare', price: 250, rooms: 1, status: 'vacant',
-                desc: 'CBD, WiFi included, backup water.', imgIdx: 1 },
+                desc: 'CBD, WiFi included, backup water, ideal for professionals.', imgIdx: 1, density: 'high',
+                address: '5 Jason Moyo Ave, Harare CBD', propType: 'apartment', furnished: 'yes', parking: 'Street',
+                security: 'Reception desk', utilities: 'Water & WiFi' },
             { id: 3, landlordId: 4, title: '4 Bed Family House', location: 'Bulawayo', price: 800, rooms: 4,
-                status: 'occupied', desc: 'Pool, walled & gated, staff quarters.', imgIdx: 2 },
-            { id: 4, landlordId: 4, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant',
-                desc: 'Furnished, backup water, secure estate.', imgIdx: 3 },
-            { id: 5, landlordId: 3, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant',
-                desc: 'Quiet, private garden, parking.', imgIdx: 4 },
-            { id: 6, landlordId: 4, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied',
-                desc: 'Premium estate, 24/7 security.', imgIdx: 5 },
-            { id: 7, landlordId: 3, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1, status: 'vacant',
-                desc: 'Shared kitchen, water included.', imgIdx: 6 },
-            { id: 8, landlordId: 4, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3, status: 'vacant',
-                desc: 'Near CBD, tiled floors, fenced.', imgIdx: 7 },
+                status: 'occupied', desc: 'Pool, walled & gated, staff quarters, Hillside area.', imgIdx: 2,
+                density: 'low', address: '22 Hillside Rd, Bulawayo', propType: 'house', furnished: 'no',
+                parking: '4 bays', security: 'Electric fence, 24/7 guard', utilities: 'None' },
+            { id: 4, landlordId: 5, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant',
+                desc: 'Furnished, backup water, secure estate near CBD.', imgIdx: 3, density: 'low',
+                address: '8 Regency Park, Gweru', propType: 'estate', furnished: 'yes', parking: '2 garages',
+                security: 'Gated estate', utilities: 'Water & refuse' },
+            { id: 5, landlordId: 6, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant',
+                desc: 'Quiet garden setting, parking, beautiful views.', imgIdx: 4, density: 'middle',
+                address: '15 Christmas Pass, Mutare', propType: 'cottage', furnished: 'no', parking: '1 bay',
+                security: 'Fenced', utilities: 'Water included' },
+            { id: 6, landlordId: 5, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied',
+                desc: 'Premium Borrowdale estate, 24/7 security, pool.', imgIdx: 5, density: 'low',
+                address: '3 Borrowdale Lane, Harare', propType: 'estate', furnished: 'yes', parking: '3 garages',
+                security: '24/7 armed response', utilities: 'All included' },
+            { id: 7, landlordId: 4, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1,
+                status: 'vacant', desc: 'Shared kitchen, water included, Nkulumane area.', imgIdx: 6, density: 'high',
+                address: '45 Nkulumane, Bulawayo', propType: 'room', furnished: 'no', parking: 'None',
+                security: 'Neighbourhood watch', utilities: 'Water' },
+            { id: 8, landlordId: 3, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3,
+                status: 'vacant', desc: 'Near CBD, tiled floors, fenced, family-friendly.', imgIdx: 7, density: 'middle',
+                address: '10 Main St, Mutare', propType: 'house', furnished: 'semi', parking: '2 bays',
+                security: 'Wall & gate', utilities: 'Water' },
+            { id: 9, landlordId: 6, title: 'Luxury 5-Bed Villa', location: 'Harare', price: 2500, rooms: 5,
+                status: 'vacant', desc: 'Borrowdale Brooke estate, infinity pool, staff quarters, ultra-modern.',
+                imgIdx: 8, density: 'low', address: '1 Brooke Dr, Borrowdale', propType: 'estate', furnished: 'yes',
+                parking: '4 garages', security: 'Gated community, CCTV', utilities: 'All inclusive' },
+            { id: 10, landlordId: 7, title: 'Budget Single Room', location: 'Chitungwiza', price: 80, rooms: 1,
+                status: 'vacant', desc: 'Affordable single room, shared facilities, near kombi rank.', imgIdx: 9,
+                density: 'high', address: '88 Zengeza, Chitungwiza', propType: 'room', furnished: 'no',
+                parking: 'None', security: 'Community policing', utilities: 'None' },
+            { id: 11, landlordId: 5, title: '3-Bed Townhouse', location: 'Harare', price: 700, rooms: 3,
+                status: 'vacant', desc: 'Modern townhouse in Avondale, gated, solar backup.', imgIdx: 10,
+                density: 'middle', address: '25 Avondale Rd, Harare', propType: 'townhouse', furnished: 'semi',
+                parking: '1 garage', security: 'Gated, intercom', utilities: 'Water & solar' },
+            { id: 12, landlordId: 7, title: '2-Bed Flat', location: 'Bulawayo', price: 350, rooms: 2, status: 'vacant',
+                desc: 'Spacious flat in city centre, secure building, lift access.', imgIdx: 11, density: 'high',
+                address: '10 Leopold Takawira Ave, Bulawayo', propType: 'apartment', furnished: 'no',
+                parking: 'Bay available', security: 'Security guard', utilities: 'Water' },
+            { id: 13, landlordId: 3, title: 'Executive 2-Bed', location: 'Victoria Falls', price: 950, rooms: 2,
+                status: 'vacant', desc: 'Tourist area, stunning views, fully furnished, secure.', imgIdx: 0,
+                density: 'low', address: '5 Livingstone Way, Victoria Falls', propType: 'apartment', furnished: 'yes',
+                parking: '2 bays', security: '24/7 security', utilities: 'All inclusive' },
+            { id: 14, landlordId: 6, title: 'Mid-Range 3-Bed', location: 'Gweru', price: 480, rooms: 3,
+                status: 'vacant', desc: 'Family home, walled, water tank, neat garden.', imgIdx: 3, density: 'middle',
+                address: '33 Main Rd, Gweru', propType: 'house', furnished: 'no', parking: '2 bays',
+                security: 'Wall & gate', utilities: 'Water tank' },
+            { id: 15, landlordId: 4, title: 'Cheap 1-Room Shack', location: 'Chitungwiza', price: 60, rooms: 1,
+                status: 'occupied', desc: 'Basic accommodation, shared toilet, budget-friendly.', imgIdx: 6,
+                density: 'high', address: '120 St Marys, Chitungwiza', propType: 'room', furnished: 'no',
+                parking: 'None', security: 'None', utilities: 'None' },
         ];
 
+        // EXPANDED USERS with National IDs & referral codes
         let users = [
-            { id: 1, name: 'Tinashe M.', contact: 'tinashe@email.com', role: 'tenant', status: 'active' },
-            { id: 2, name: 'Tanaka D.', contact: 'tanaka@email.com', role: 'tenant', status: 'active' },
-            { id: 3, name: 'Landlord Grace', contact: 'grace@props.co.zw', role: 'landlord', status: 'verified' },
-            { id: 4, name: 'Landlord Peter', contact: 'peter@rentals.co.zw', role: 'landlord', status: 'pending' },
-            { id: 5, name: 'Admin Prime', contact: 'admin@homebase.co.zw', role: 'admin', status: 'active' },
+            { id: 1, name: 'Tinashe Moyo', contact: 'tinashe@email.com', role: 'tenant', status: 'active',
+                nationalId: '63-1234567-A12', points: 4, referralCode: 'HOME-TINASHE-2026', referredBy: null },
+            { id: 2, name: 'Tanaka Dube', contact: 'tanaka@email.com', role: 'tenant', status: 'active',
+                nationalId: '63-2345678-B23', points: 0, referralCode: 'HOME-TANAKA-2026', referredBy: 'HOME-TINASHE-2026' },
+            { id: 3, name: 'Grace Chiweshe', contact: 'grace@props.co.zw', role: 'landlord', status: 'verified',
+                nationalId: '63-3456789-C34', points: 0, referralCode: null, referredBy: null },
+            { id: 4, name: 'Peter Ndlovu', contact: 'peter@rentals.co.zw', role: 'landlord', status: 'pending',
+                nationalId: '63-4567890-D45', points: 0, referralCode: null, referredBy: null },
+            { id: 5, name: 'Tawanda Moyo', contact: 'tawanda@homes.co.zw', role: 'landlord', status: 'verified',
+                nationalId: '63-5678901-E56', points: 0, referralCode: null, referredBy: null },
+            { id: 6, name: 'Rumbidzai Zhou', contact: 'rumbi@estates.co.zw', role: 'landlord', status: 'verified',
+                nationalId: '63-6789012-F67', points: 0, referralCode: null, referredBy: null },
+            { id: 7, name: 'Farai Makoni', contact: 'farai@rent.co.zw', role: 'landlord', status: 'pending',
+                nationalId: '63-7890123-G78', points: 0, referralCode: null, referredBy: null },
+            { id: 8, name: 'Admin Prime', contact: 'admin@homebase.co.zw', role: 'admin', status: 'active',
+                nationalId: '63-0000000-X00', points: 0, referralCode: null, referredBy: null },
+            { id: 9, name: 'Ruvimbo Chitando', contact: 'ruvimbo@email.com', role: 'tenant', status: 'active',
+                nationalId: '63-8901234-H89', points: 0, referralCode: 'HOME-RUVIMBO-2026', referredBy: null },
+            { id: 10, name: 'Anesu Marufu', contact: 'anesu@email.com', role: 'tenant', status: 'active',
+                nationalId: '63-9012345-I90', points: 2, referralCode: 'HOME-ANESU-2026',
+            referredBy: 'HOME-TINASHE-2026' },
         ];
 
         let transactions = [
-            { id: 'TXN001', tenant: 'Tinashe M.', landlord: 'Landlord Grace', property: '2 Bed Cottage', amount: 2,
+            { id: 'TXN001', tenant: 'Tinashe Moyo', landlord: 'Grace Chiweshe', property: '2 Bed Cottage', amount: 2,
                 ref: 'EC123456', status: 'Success' },
-            { id: 'TXN002', tenant: 'Tanaka D.', landlord: 'Landlord Grace', property: '1 Bed Apartment', amount: 2,
+            { id: 'TXN002', tenant: 'Tanaka Dube', landlord: 'Grace Chiweshe', property: '1 Bed Apartment', amount: 2,
                 ref: 'EC987654', status: 'Success' },
-            { id: 'TXN003', tenant: 'Tinashe M.', landlord: 'Landlord Peter', property: '4 Bed House', amount: 2,
+            { id: 'TXN003', tenant: 'Tinashe Moyo', landlord: 'Peter Ndlovu', property: '4 Bed Family House', amount: 2,
                 ref: 'EC456789', status: 'Failed' },
-            { id: 'TXN004', tenant: 'Tafadzwa R.', landlord: 'Landlord Grace', property: 'Executive 3-bed', amount: 2,
+            { id: 'TXN004', tenant: 'Ruvimbo Chitando', landlord: 'Tawanda Moyo', property: 'Executive 3-bed', amount: 2,
                 ref: 'EC111222', status: 'Success' },
-            { id: 'TXN005', tenant: 'Kudzai P.', landlord: 'Landlord Peter', property: 'Garden Cottage', amount: 2,
+            { id: 'TXN005', tenant: 'Anesu Marufu', landlord: 'Rumbidzai Zhou', property: 'Garden Cottage', amount: 2,
                 ref: 'EC333444', status: 'Success' },
         ];
 
         let verifications = [
-            { id: 1, landlord: 'Landlord Peter', document: 'Title Deed (Uploaded)', submitted: '2026-07-08',
-            status: 'pending' },
-            { id: 2, landlord: 'Landlord Grace', document: 'Rates Bill (Uploaded)', submitted: '2026-07-09',
-            status: 'approved' },
+            { id: 1, landlord: 'Peter Ndlovu', document: 'Title Deed (Uploaded)', submitted: '2026-07-08',
+                status: 'pending' },
+            { id: 2, landlord: 'Grace Chiweshe', document: 'Rates Bill (Uploaded)', submitted: '2026-07-09',
+                status: 'approved' },
+            { id: 3, landlord: 'Farai Makoni', document: 'Lease Agreement (Uploaded)', submitted: '2026-07-10',
+                status: 'pending' },
         ];
 
-        let nextPropId = 9;
-        let nextVerifId = 3;
-        const CURRENT_LANDLORD_ID = 3;
+        let nextPropId = 16;
+        let nextVerifId = 4;
+        const CURRENT_LANDLORD_ID = 3; // Grace Chiweshe
+        const CURRENT_TENANT_ID = 1; // Tinashe Moyo
         let selectedPayment = 'ecocash';
         let paymentTargetPropertyId = null;
+        let agentsOnline = false; // simulate: no agents online → WhatsApp fallback
 
         // ============================================================
         // NAVIGATION
@@ -1449,22 +1729,72 @@
             document.getElementById('role-selector').style.display = 'none';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
             document.getElementById(dashId).classList.add('active-dash');
-
-            if (dashId === 'admin-dash') {
-                document.body.style.backgroundColor = '#0f172a';
-            } else {
-                document.body.style.backgroundColor = '#f1f5f9';
-            }
-
-            if (dashId === 'tenant-dash') renderTenant();
+            document.body.style.backgroundColor = dashId === 'admin-dash' ? '#0f172a' : '#f1f5f9';
+            if (dashId === 'tenant-dash') { updateTenantPointsDisplay();
+                renderTenant(); }
             if (dashId === 'landlord-dash') renderLandlord();
             if (dashId === 'admin-dash') renderAdmin();
+            document.getElementById('aiChatBtn').style.display = 'flex';
         }
 
         function logout() {
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
             document.getElementById('role-selector').style.display = 'flex';
             document.body.style.backgroundColor = '#f1f5f9';
+            document.getElementById('aiChatBtn').style.display = 'none';
+            document.getElementById('aiChatWindow').classList.remove('open');
+        }
+
+        // ============================================================
+        // TENANT POINTS & REFERRAL
+        // ============================================================
+        function getCurrentTenant() { return users.find(u => u.id === CURRENT_TENANT_ID); }
+
+        function updateTenantPointsDisplay() {
+            const tenant = getCurrentTenant();
+            const pts = tenant ? tenant.points : 0;
+            document.getElementById('tenantPointsVal').textContent = pts;
+            document.getElementById('tenantRefCode').textContent = tenant ? tenant.referralCode : 'HOME-USER-2026';
+            document.getElementById('paymentYourPoints').textContent = pts;
+            document.getElementById('pointsBalanceLabel').textContent = pts;
+            const useBtn = document.getElementById('usePointsBtn');
+            if (pts >= 10) { useBtn.disabled = false;
+                useBtn.textContent = '✅ Use 10 Points to Unlock (FREE!)'; } else { useBtn.disabled = true;
+                useBtn.textContent = '🔒 Need 10 Points (' + pts + '/10)'; }
+        }
+
+        function copyReferralCode() {
+            const code = document.getElementById('tenantRefCode').textContent;
+            navigator.clipboard.writeText(code).then(() => alert('📋 Referral code copied! Share it with friends.'));
+        }
+
+        function simulateReferral() {
+            const tenant = getCurrentTenant();
+            if (!tenant) return;
+            tenant.points += 2;
+            updateTenantPointsDisplay();
+            alert('🎉 +2 Points earned! A new tenant signed up with your referral code.\n\nCurrent balance: ' + tenant
+                .points + ' points.\nEarn ' + (10 - tenant.points) + ' more to unlock a property for FREE!');
+        }
+
+        function usePointsToUnlock() {
+            const tenant = getCurrentTenant();
+            if (!tenant || tenant.points < 10) return alert('You need at least 10 points.');
+            if (!paymentTargetPropertyId) return alert('No property selected.');
+            const prop = properties.find(p => p.id === paymentTargetPropertyId);
+            if (!prop) return alert('Property not found.');
+            tenant.points -= 10;
+            updateTenantPointsDisplay();
+            const landlord = users.find(u => u.id === prop.landlordId);
+            alert('✅ Unlocked with 10 Points!\n\n🏠 ' + prop.title + '\n📞 Phone: +263 77 ' + Math.floor(Math.random() *
+                9000000 + 1000000) + '\n📧 Email: ' + (landlord ? landlord.contact : 'landlord@props.co.zw') +
+                '\n📍 Address: ' + (prop.address || prop.location));
+            transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant.name,
+                landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 0,
+                ref: 'PTS-' + Math.random().toString(36).substring(2, 6).toUpperCase(), status: 'Success (Points)' });
+            closePaymentModal();
+            renderTenant();
+            if (document.getElementById('admin-dash').classList.contains('active-dash')) renderAdmin();
         }
 
         // ============================================================
@@ -1475,61 +1805,58 @@
             const location = document.getElementById('tenantLocation').value;
             const maxPrice = parseFloat(document.getElementById('tenantMaxPrice').value) || Infinity;
             const rooms = document.getElementById('tenantRooms').value;
+            const density = document.getElementById('tenantDensity').value;
             const vacantOnly = document.getElementById('tenantVacantOnly').checked;
-
             let filtered = properties.filter(p => {
                 if (vacantOnly && p.status !== 'vacant') return false;
                 if (location !== 'all' && p.location !== location) return false;
                 if (p.price > maxPrice) return false;
-                if (rooms !== 'any') {
-                    const r = parseInt(rooms);
-                    if (r === 4 && p.rooms < 4) return false;
-                    if (r < 4 && p.rooms !== r) return false;
-                }
-                if (search && !p.title.toLowerCase().includes(search) && !p.location.toLowerCase().includes(search))
-                return false;
+                if (density !== 'any' && p.density !== density) return false;
+                if (rooms !== 'any') { const r = parseInt(rooms); if (r === 4 && p.rooms < 4) return false; if (r < 4 &&
+                        p.rooms !== r) return false; }
+                if (search && !p.title.toLowerCase().includes(search) && !p.location.toLowerCase().includes(search) && !
+                    (p.desc && p.desc.toLowerCase().includes(search))) return false;
                 return true;
             });
-
             const grid = document.getElementById('tenantPropertyGrid');
             const noResult = document.getElementById('tenantNoResult');
-
-            if (!filtered.length) {
-                grid.innerHTML = '';
-                noResult.style.display = 'block';
-                return;
-            }
+            if (!filtered.length) { grid.innerHTML = '';
+                noResult.style.display = 'block'; return; }
             noResult.style.display = 'none';
-
             grid.innerHTML = filtered.map(p => {
                 const imgUrl = PROPERTY_IMAGES[p.imgIdx % PROPERTY_IMAGES.length];
                 const statusClass = p.status === 'vacant' ? 'badge-success' : 'badge-danger';
                 const statusLabel = p.status.toUpperCase();
+                const densityClass = p.density === 'high' ? 'badge-density-high' : p.density === 'middle' ?
+                    'badge-density-mid' : 'badge-density-low';
+                const densityLabel = (p.density || 'middle').toUpperCase() + ' DENSITY';
+                const landlord = users.find(u => u.id === p.landlordId);
+                const isVerified = landlord && landlord.status === 'verified';
+                const landlordName = landlord ? landlord.name : 'Unknown Landlord';
                 return `
-                        <div class="property-card">
-                            <div class="img-wrap">
-                                <img src="${imgUrl}" alt="${p.title}" loading="lazy" />
-                                <span class="badge ${statusClass} status-badge">${statusLabel}</span>
-                            </div>
-                            <div class="body">
-                                <div class="price">$${p.price} <span>/ month</span></div>
-                                <div class="title">${p.title}</div>
-                                <div class="meta">
-                                    <span><i class="fas fa-bed"></i> ${p.rooms} bed</span>
-                                    <span><i class="fas fa-map-pin"></i> ${p.location}</span>
-                                </div>
-                                <div class="desc">${p.desc || ''}</div>
-                                ${p.status === 'vacant'
-                                    ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title}')">
-                                            <i class="fas fa-unlock"></i> Unlock Contact · $2
-                                       </button>`
-                                    : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;">
-                                            <i class="fas fa-lock"></i> Currently Unavailable
-                                       </button>`
-                                }
-                            </div>
+                    <div class="property-card">
+                        <div class="img-wrap">
+                            <img src="${imgUrl}" alt="${p.title}" loading="lazy" />
+                            <span class="badge ${statusClass} status-badge">${statusLabel}</span>
+                            <span class="badge ${densityClass} density-badge">${densityLabel}</span>
+                            ${isVerified ? '<span class="verified-icon"><i class="fas fa-check-circle" style="color:var(--verified);font-size:1rem;"></i></span>' : ''}
                         </div>
-                    `;
+                        <div class="body">
+                            <div class="price">$${p.price} <span>/ month</span></div>
+                            <div class="title">${p.title} ${isVerified ? '<i class="fas fa-check-circle verified-check" title="Verified Landlord"></i>' : ''}</div>
+                            <div class="meta">
+                                <span><i class="fas fa-bed"></i> ${p.rooms} bed</span>
+                                <span><i class="fas fa-map-pin"></i> ${p.location}</span>
+                                <span><i class="fas fa-layer-group"></i> ${(p.density||'middle').charAt(0).toUpperCase()+(p.density||'middle').slice(1)}</span>
+                            </div>
+                            <div class="landlord-info"><i class="fas fa-user"></i> ${landlordName} ${isVerified ? '<i class="fas fa-check-circle verified-check-sm"></i>' : ''}</div>
+                            <div class="desc">${p.desc || ''}</div>
+                            ${p.status === 'vacant'
+                                ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title.replace(/'/g, "\\'")}')"><i class="fas fa-unlock"></i> Unlock Contact · $2 or 10pts</button>`
+                                : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Currently Unavailable</button>`
+                            }
+                        </div>
+                    </div>`;
             }).join('');
         }
 
@@ -1539,11 +1866,13 @@
         function openPayment(propertyId, propertyTitle) {
             paymentTargetPropertyId = propertyId;
             document.getElementById('paymentPropertyName').textContent = propertyTitle;
+            updateTenantPointsDisplay();
             document.getElementById('paymentModal').classList.add('active');
-            // reset fields
             document.getElementById('ecoPhone').value = '';
             document.getElementById('paypalEmail').value = '';
             document.getElementById('inbucksAccount').value = '';
+            document.getElementById('onePhone').value = '';
+            document.getElementById('smilePhone').value = '';
             selectPayment('ecocash');
         }
 
@@ -1555,50 +1884,39 @@
         function selectPayment(method) {
             selectedPayment = method;
             document.querySelectorAll('.pm-option').forEach(el => el.classList.remove('active'));
-            document.querySelector(`.pm-option[data-method="${method}"]`).classList.add('active');
-
+            const target = document.querySelector(`.pm-option[data-method="${method}"]`);
+            if (target) target.classList.add('active');
             document.getElementById('paymentEcoCashFields').style.display = method === 'ecocash' ? 'block' : 'none';
             document.getElementById('paymentPaypalFields').style.display = method === 'paypal' ? 'block' : 'none';
             document.getElementById('paymentInbucksFields').style.display = method === 'inbucks' ? 'block' : 'none';
+            document.getElementById('paymentOneMoneyFields').style.display = method === 'onemoney' ? 'block' : 'none';
+            document.getElementById('paymentSmileCashFields').style.display = method === 'smilecash' ? 'block' : 'none';
         }
 
         function processPayment() {
             let identifier = '';
             let methodName = '';
-
-            if (selectedPayment === 'ecocash') {
-                identifier = document.getElementById('ecoPhone').value.trim();
-                methodName = 'EcoCash';
-                if (!identifier) return alert('Please enter your EcoCash number.');
-            } else if (selectedPayment === 'paypal') {
-                identifier = document.getElementById('paypalEmail').value.trim();
-                methodName = 'PayPal';
-                if (!identifier) return alert('Please enter your PayPal email.');
-            } else if (selectedPayment === 'inbucks') {
-                identifier = document.getElementById('inbucksAccount').value.trim();
-                methodName = 'InBucks';
-                if (!identifier) return alert('Please enter your InBucks account.');
-            }
-
-            // Simulate payment
+            if (selectedPayment === 'ecocash') { identifier = document.getElementById('ecoPhone').value.trim();
+                methodName = 'EcoCash'; if (!identifier) return alert('Please enter your EcoCash number.'); } else if (
+                selectedPayment === 'onemoney') { identifier = document.getElementById('onePhone').value.trim();
+                methodName = 'OneMoney'; if (!identifier) return alert('Please enter your OneMoney number.'); } else if (
+                selectedPayment === 'smilecash') { identifier = document.getElementById('smilePhone').value.trim();
+                methodName = 'SmileCash'; if (!identifier) return alert('Please enter your SmileCash number.'); } else if (
+                selectedPayment === 'paypal') { identifier = document.getElementById('paypalEmail').value.trim();
+                methodName = 'PayPal'; if (!identifier) return alert('Please enter your PayPal email.'); } else if (
+                selectedPayment === 'inbucks') { identifier = document.getElementById('inbucksAccount').value.trim();
+                methodName = 'InBucks'; if (!identifier) return alert('Please enter your InBucks account.'); }
             const prop = properties.find(p => p.id === paymentTargetPropertyId);
             if (!prop) return alert('Property not found.');
-
-            alert(
-                `✅ Payment of $2.00 via ${methodName} (${identifier}) successful!\n\nLandlord contact for "${prop.title}" has been unlocked.\n📞 Phone: +263 77 123 4567\n📧 Email: ${users.find(u => u.id === prop.landlordId)?.contact || 'landlord@props.co.zw'}`);
-
-            // Record transaction
-            const tenantName = users.find(u => u.role === 'tenant')?.name || 'Tenant';
-            transactions.push({
-                id: 'TXN' + String(transactions.length + 1).padStart(3, '0'),
-                tenant: tenantName,
-                landlord: users.find(u => u.id === prop.landlordId)?.name || 'Landlord',
-                property: prop.title,
-                amount: 2,
-                ref: 'EC' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-                status: 'Success'
-            });
-
+            const landlord = users.find(u => u.id === prop.landlordId);
+            alert('✅ Payment of $2.00 via ' + methodName + ' (' + identifier + ') successful!\n\n🏠 ' + prop.title +
+                '\n📞 Phone: +263 77 ' + Math.floor(Math.random() * 9000000 + 1000000) + '\n📧 Email: ' + (landlord ?
+                    landlord.contact : 'landlord@props.co.zw') + '\n📍 Address: ' + (prop.address || prop.location));
+            const tenant = getCurrentTenant();
+            transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant ? tenant
+                    .name : 'Tenant', landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 2,
+                ref: methodName.substring(0, 2).toUpperCase() + Math.random().toString(36).substring(2, 8)
+                .toUpperCase(), status: 'Success' });
             closePaymentModal();
             renderTenant();
             if (document.getElementById('admin-dash').classList.contains('active-dash')) renderAdmin();
@@ -1611,109 +1929,76 @@
             const myProps = properties.filter(p => p.landlordId === CURRENT_LANDLORD_ID);
             const vacant = myProps.filter(p => p.status === 'vacant').length;
             const occupied = myProps.filter(p => p.status === 'occupied').length;
-            const totalUnlocks = transactions.filter(t => t.landlord === 'Landlord Grace' || t.landlord === 'Landlord Peter')
-                .length;
-
+            const totalUnlocks = transactions.filter(t => t.status.includes('Success')).length;
             document.getElementById('landlordStats').innerHTML = `
-                    <div class="stat-card"><div class="label">Total Properties</div><div class="value">${myProps.length}</div></div>
-                    <div class="stat-card"><div class="label">Vacant</div><div class="value green">${vacant}</div></div>
-                    <div class="stat-card"><div class="label">Occupied</div><div class="value red">${occupied}</div></div>
-                    <div class="stat-card"><div class="label">Total Unlocks</div><div class="value blue">${totalUnlocks}</div></div>
-                `;
-
+                <div class="stat-card"><div class="label">Total Properties</div><div class="value">${myProps.length}</div></div>
+                <div class="stat-card"><div class="label">Vacant</div><div class="value green">${vacant}</div></div>
+                <div class="stat-card"><div class="label">Occupied</div><div class="value red">${occupied}</div></div>
+                <div class="stat-card"><div class="label">Total Unlocks</div><div class="value blue">${totalUnlocks}</div></div>
+            `;
             const list = document.getElementById('landlordPropertyList');
-            if (!myProps.length) {
-                list.innerHTML = `
-                        <div class="text-center text-muted" style="padding:30px;">
-                            <i class="fas fa-building" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
-                            You haven't listed any properties yet.
-                        </div>
-                    `;
-                return;
-            }
-
+            if (!myProps.length) { list.innerHTML =
+                '<div class="text-center text-muted" style="padding:30px;"><i class="fas fa-building" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>You haven\'t listed any properties yet.</div>'; return; }
             list.innerHTML = myProps.map(p => {
                 const isVacant = p.status === 'vacant';
                 return `
-                        <div class="lprop-item">
-                            <div class="info">
-                                <strong>${p.title}</strong>
-                                <div class="sub">
-                                    <i class="fas fa-dollar-sign"></i> ${p.price} · ${p.rooms} bed · ${p.location}
-                                    <span class="badge ${isVacant ? 'badge-success' : 'badge-danger'}" style="margin-left:8px;">${p.status.toUpperCase()}</span>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <div class="toggle-wrap">
-                                    <label class="toggle">
-                                        <input type="checkbox" ${isVacant ? 'checked' : ''} onchange="togglePropertyStatus(${p.id})" />
-                                        <span class="slider"></span>
-                                    </label>
-                                    <span class="toggle-label" style="font-size:0.8rem;">${isVacant ? 'Vacant' : 'Occupied'}</span>
-                                </div>
-                                <button class="btn btn-outline btn-sm" onclick="removeProperty(${p.id})">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                    <div class="lprop-item">
+                        <div class="info">
+                            <strong>${p.title} <span class="badge badge-density-${p.density==='high'?'high':p.density==='middle'?'mid':'low'}" style="font-size:0.6rem;">${(p.density||'middle').toUpperCase()}</span></strong>
+                            <div class="sub"><i class="fas fa-dollar-sign"></i> ${p.price} · ${p.rooms} bed · ${p.location} · ${p.propType||'house'} · <span class="badge ${isVacant?'badge-success':'badge-danger'}">${p.status.toUpperCase()}</span></div>
+                            <div class="sub" style="font-size:0.75rem;">📍 ${p.address||p.location} | 🅿️ ${p.parking||'N/A'} | 🔒 ${p.security||'N/A'}</div>
                         </div>
-                    `;
+                        <div class="actions">
+                            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" ${isVacant?'checked':''} onchange="togglePropertyStatus(${p.id})" /><span class="slider"></span></label><span class="toggle-label">${isVacant?'Vacant':'Occupied'}</span></div>
+                            <button class="btn btn-outline btn-sm" onclick="removeProperty(${p.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
             }).join('');
         }
 
-        function togglePropertyStatus(id) {
-            const prop = properties.find(p => p.id === id);
-            if (!prop) return;
+        function togglePropertyStatus(id) { const prop = properties.find(p => p.id === id); if (!prop) return;
             prop.status = prop.status === 'vacant' ? 'occupied' : 'vacant';
             renderLandlord();
-            renderTenant();
-        }
+            renderTenant(); }
 
-        function removeProperty(id) {
-            if (!confirm('Remove this property listing?')) return;
+        function removeProperty(id) { if (!confirm('Remove this property listing?')) return;
             properties = properties.filter(p => p.id !== id);
             renderLandlord();
-            renderTenant();
-        }
+            renderTenant(); }
 
         // ============================================================
-        // MODAL: Add Property
+        // MODAL: Add Property (expanded fields)
         // ============================================================
-        function openAddProperty() {
-            document.getElementById('addPropertyModal').classList.add('active');
-        }
+        function openAddProperty() { document.getElementById('addPropertyModal').classList.add('active'); }
 
-        function closeAddProperty() {
-            document.getElementById('addPropertyModal').classList.remove('active');
-            document.getElementById('addPropertyForm').reset();
-        }
+        function closeAddProperty() { document.getElementById('addPropertyModal').classList.remove('active');
+            document.getElementById('addPropertyForm').reset(); }
 
         function handleAddProperty(e) {
             e.preventDefault();
             const title = document.getElementById('propTitle').value.trim();
             const location = document.getElementById('propLocation').value.trim();
+            const address = document.getElementById('propAddress').value.trim();
             const price = parseFloat(document.getElementById('propPrice').value);
             const rooms = parseInt(document.getElementById('propRooms').value);
+            const density = document.getElementById('propDensity').value;
+            const propType = document.getElementById('propType').value;
+            const furnished = document.getElementById('propFurnished').value;
+            const parking = document.getElementById('propParking').value.trim();
+            const security = document.getElementById('propSecurity').value.trim();
+            const utilities = document.getElementById('propUtilities').value.trim();
             const status = document.getElementById('propStatus').value;
             const desc = document.getElementById('propDesc').value.trim();
-
-            if (!title || !location || !price || !rooms) return alert('Please fill all required fields.');
-
-            const newProp = {
-                id: nextPropId++,
-                landlordId: CURRENT_LANDLORD_ID,
-                title,
-                location,
-                price,
-                rooms,
-                status,
-                desc: desc || 'New listing.',
-                imgIdx: Math.floor(Math.random() * PROPERTY_IMAGES.length),
-            };
+            if (!title || !location || !address || !price || !rooms || !density || !propType)
+                return alert('Please fill all required fields (*).');
+            const newProp = { id: nextPropId++, landlordId: CURRENT_LANDLORD_ID, title, location, address, price, rooms,
+                density, propType, furnished, parking, security, utilities, status, desc: desc ||
+                    'New listing — full details provided.', imgIdx: Math.floor(Math.random() * PROPERTY_IMAGES.length) };
             properties.push(newProp);
             closeAddProperty();
             renderLandlord();
             renderTenant();
-            alert('✅ Property added successfully!');
+            alert('✅ Property "' + title + '" added successfully! All details saved for tenant clarity.');
         }
 
         // ============================================================
@@ -1722,77 +2007,33 @@
         function renderAdmin() {
             const totalUsers = users.length;
             const totalProps = properties.length;
-            const totalRevenue = transactions.filter(t => t.status === 'Success').reduce((s, t) => s + t.amount, 0);
+            const totalRevenue = transactions.filter(t => t.status === 'Success' || t.status.includes('Points')).reduce(
+                (s, t) => s + t.amount, 0);
             const pendingVerifications = verifications.filter(v => v.status === 'pending').length;
-
             document.getElementById('adminStats').innerHTML = `
-                    <div class="stat-card"><div class="label">Total Users</div><div class="value">${totalUsers}</div></div>
-                    <div class="stat-card"><div class="label">Properties</div><div class="value">${totalProps}</div></div>
-                    <div class="stat-card"><div class="label">Revenue (USD)</div><div class="value green">$${totalRevenue}</div></div>
-                    <div class="stat-card"><div class="label">Pending Verifications</div><div class="value orange">${pendingVerifications}</div></div>
-                `;
-
-            // Transactions
-            const tbody = document.getElementById('adminTransactionTable');
-            tbody.innerHTML = transactions.map(t => `
-                    <tr>
-                        <td><strong>${t.id}</strong></td>
-                        <td>${t.tenant}</td>
-                        <td>${t.landlord}</td>
-                        <td>${t.property}</td>
-                        <td>$${t.amount}</td>
-                        <td>${t.ref}</td>
-                        <td><span class="badge ${t.status === 'Success' ? 'badge-success' : 'badge-danger'}">${t.status}</span></td>
-                    </tr>
-                `).join('');
-
-            // Users
-            const ubody = document.getElementById('adminUserTable');
-            ubody.innerHTML = users.map(u => `
-                    <tr>
-                        <td><strong>${u.name}</strong></td>
-                        <td>${u.contact}</td>
-                        <td><span class="badge badge-info">${u.role}</span></td>
-                        <td><span class="badge ${u.status === 'active' || u.status === 'verified' ? 'badge-success' : 'badge-warning'}">${u.status}</span></td>
-                    </tr>
-                `).join('');
-
-            // Verifications
-            const vbody = document.getElementById('adminVerificationTable');
-            vbody.innerHTML = verifications.map(v => `
-                    <tr>
-                        <td><strong>${v.landlord}</strong></td>
-                        <td>${v.document}</td>
-                        <td>${v.submitted}</td>
-                        <td>
-                            ${v.status === 'pending' ? `
-                                <button class="btn btn-success btn-sm" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i></button>
-                                <button class="btn btn-danger btn-sm" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i></button>
-                            ` : `<span class="badge ${v.status === 'approved' ? 'badge-success' : 'badge-danger'}">${v.status}</span>`}
-                        </td>
-                    </tr>
-                `).join('');
+                <div class="stat-card"><div class="label">Total Users</div><div class="value">${totalUsers}</div></div>
+                <div class="stat-card"><div class="label">Properties</div><div class="value">${totalProps}</div></div>
+                <div class="stat-card"><div class="label">Revenue (USD)</div><div class="value green">$${totalRevenue}</div></div>
+                <div class="stat-card"><div class="label">Pending Verifications</div><div class="value orange">${pendingVerifications}</div></div>
+            `;
+            document.getElementById('adminTransactionTable').innerHTML = transactions.map(t => `
+                <tr><td><strong>${t.id}</strong></td><td>${t.tenant}</td><td>${t.landlord}</td><td>${t.property}</td><td>$${t.amount}</td><td>${t.ref}</td><td><span class="badge ${t.status.includes('Success')?'badge-success':'badge-danger'}">${t.status}</span></td></tr>
+            `).join('');
+            document.getElementById('adminUserTable').innerHTML = users.map(u => `
+                <tr><td><strong>${u.name}</strong> ${u.status==='verified'?'<i class="fas fa-check-circle verified-check"></i>':''}</td><td>${u.contact}</td><td>${u.nationalId||'N/A'}</td><td><span class="badge badge-info">${u.role}</span></td><td><span class="badge ${u.status==='active'||u.status==='verified'?'badge-success':'badge-warning'}">${u.status}</span></td></tr>
+            `).join('');
+            document.getElementById('adminVerificationTable').innerHTML = verifications.map(v => `
+                <tr><td><strong>${v.landlord}</strong></td><td>${v.document}</td><td>${v.submitted}</td><td>${v.status==='pending'?`<button class="btn btn-success btn-sm" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i></button> <button class="btn btn-danger btn-sm" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i></button>`:`<span class="badge ${v.status==='approved'?'badge-success':'badge-danger'}">${v.status}</span>`}</td></tr>
+            `).join('');
         }
 
-        function approveVerification(id) {
-            const v = verifications.find(v => v.id === id);
-            if (v) {
-                v.status = 'approved';
-                const user = users.find(u => u.name === v.landlord);
-                if (user) user.status = 'verified';
-            }
-            renderAdmin();
-        }
+        function approveVerification(id) { const v = verifications.find(v => v.id === id); if (v) { v.status =
+                'approved'; const user = users.find(u => u.name === v.landlord); if (user) user.status = 'verified'; }
+            renderAdmin(); }
 
-        function rejectVerification(id) {
-            const v = verifications.find(v => v.id === id);
-            if (v) v.status = 'rejected';
-            renderAdmin();
-        }
+        function rejectVerification(id) { const v = verifications.find(v => v.id === id); if (v) v.status = 'rejected';
+            renderAdmin(); }
 
-        // ============================================================
-        // ADMIN TABS
-        // ============================================================
         document.querySelectorAll('[data-admin-tab]').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('[data-admin-tab]').forEach(b => b.classList.remove('active'));
@@ -1805,23 +2046,95 @@
         });
 
         // ============================================================
+        // AI CHATBOT
+        // ============================================================
+        document.getElementById('aiChatBtn').addEventListener('click', function() {
+            document.getElementById('aiChatWindow').classList.toggle('open');
+            if (document.getElementById('aiChatWindow').classList.contains('open')) {
+                document.getElementById('aiChatInput').focus();
+            }
+        });
+
+        function sendAiMessage() {
+            const input = document.getElementById('aiChatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const body = document.getElementById('aiChatBody');
+            body.innerHTML += '<div class="msg user">' + escapeHtml(msg) + '</div>';
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+            setTimeout(() => {
+                const response = getAiResponse(msg.toLowerCase());
+                body.innerHTML += '<div class="msg bot">' + response + '</div>';
+                body.scrollTop = body.scrollHeight;
+            }, 500);
+        }
+
+        function getAiResponse(msg) {
+            if (msg.includes('agent') || msg.includes('online') || msg.includes('human') || msg.includes('support')) {
+                if (!agentsOnline) {
+                    return '⚠️ No agents are currently online. But you can reach us on WhatsApp:<br><br>' +
+                        '<a class="whatsapp-link" href="https://wa.me/263776998296" target="_blank"><i class="fab fa-whatsapp"></i> Spudy: 0776998296</a><br>' +
+                        '<a class="whatsapp-link" href="https://wa.me/263789689443" target="_blank"><i class="fab fa-whatsapp"></i> Samlic: 0789689443</a><br><br>' +
+                        'Both are available during business hours (8am-6pm CAT).';
+                } else {
+                    return '✅ Agents are online! An agent will assist you shortly. You can also check our FAQ section.';
+                }
+            }
+            if (msg.includes('property') || msg.includes('house') || msg.includes('listing') || msg.includes('available'))
+                return '🏠 We have properties ranging from $60 (budget rooms) to $2,500 (luxury villas) across Zimbabwe. Use the filters on your dashboard to narrow by location, price, rooms, and density. Each listing shows full details from the landlord!';
+            if (msg.includes('unlock') || msg.includes('contact') || msg.includes('landlord'))
+                return '🔓 To unlock landlord contact details, pay $2.00 via EcoCash, OneMoney, SmileCash, PayPal, or InBucks — OR use 10 Points from referrals! The promotion runs until 31 December 2026.';
+            if (msg.includes('point') || msg.includes('referral') || msg.includes('refer'))
+                return '⭐ Points Promotion (ends 31 Dec 2026): Share your unique referral code. When a new tenant signs up with it, you earn 2 points. Collect 10 points to unlock any property for FREE (worth $2)! Check your dashboard for your code.';
+            if (msg.includes('verify') || msg.includes('blue check') || msg.includes('verified'))
+                return '✅ The blue checkmark <i class="fas fa-check-circle" style="color:#1d9bf0;"></i> indicates a verified landlord who has submitted their documents (title deeds, rates bills) and been approved by our admin team. Always look for verified landlords!';
+            if (msg.includes('profile') || msg.includes('edit') || msg.includes('change name'))
+                return '🔒 For security, tenant and landlord profiles cannot be edited from their portals. The name on your uploaded ID must match your account name. Contact admin to request any changes.';
+            if (msg.includes('payment') || msg.includes('pay') || msg.includes('smilecash') || msg.includes('onemoney'))
+                return '💳 We accept: EcoCash, OneMoney, SmileCash, PayPal, and InBucks. Select your preferred method in the payment modal. All payments are secure and landlord details are revealed instantly upon success.';
+            if (msg.includes('density') || msg.includes('high density') || msg.includes('low density'))
+                return '🏘️ We classify properties by density: <b>High Density</b> (apartments, rooms, shared living), <b>Middle Density</b> (cottages, townhouses, semi-detached), and <b>Low Density</b> (standalone houses, luxury estates). Filter by density on your dashboard!';
+            if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('help'))
+                return '👋 Hello! I\'m the HomeBase AI assistant. I can help with: properties, unlocking contacts, points & referrals, payment methods, verification, density info, profile security, or agent availability. What do you need?';
+            return '🤔 I\'m not sure about that. Try asking about: <b>properties</b>, <b>unlocking</b>, <b>points/referrals</b>, <b>payments</b>, <b>verification</b>, <b>density</b>, <b>profile security</b>, or <b>agent availability</b>.';
+        }
+
+        function escapeHtml(text) { const div = document.createElement('div');
+            div.textContent = text; return div.innerHTML; }
+
+        // ============================================================
         // CLOSE MODALS ON OVERLAY CLICK
         // ============================================================
-        document.getElementById('addPropertyModal').addEventListener('click', function(e) {
-            if (e.target === this) closeAddProperty();
-        });
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
-            if (e.target === this) closePaymentModal();
-        });
+        document.getElementById('addPropertyModal').addEventListener('click', function(e) { if (e.target === this)
+                closeAddProperty(); });
+        document.getElementById('paymentModal').addEventListener('click', function(e) { if (e.target === this)
+                closePaymentModal(); });
+
+        // ============================================================
+        // PROMO COUNTDOWN
+        // ============================================================
+        function updatePromoCountdown() {
+            const targetDate = new Date('2026-12-31T23:59:59+02:00');
+            const now = new Date();
+            const diff = targetDate - now;
+            if (diff <= 0) { document.getElementById('promoCountdown').textContent = 'Promotion has ended';
+                document.getElementById('promoBanner').style.opacity = '0.7'; return; }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            document.getElementById('promoCountdown').textContent = days + 'd ' + hours + 'h ' + mins +
+                'm remaining — 31 December 2026';
+        }
+        setInterval(updatePromoCountdown, 60000);
+        updatePromoCountdown();
 
         // ============================================================
         // INIT
         // ============================================================
-        // Start with tenant dashboard visible (but hidden behind login)
-        // Actually we start with login screen, so no auto-load.
-        // But we pre-render data.
-        console.log('HomeBase ready.');
+        document.getElementById('aiChatBtn').style.display = 'none';
+        updateTenantPointsDisplay();
+        console.log('HomeBase ready — all features active. AI bot, Points, WhatsApp fallback, Density filters, SmileCash & OneMoney enabled.');
     </script>
-
 </body>
 </html>
