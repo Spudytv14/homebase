@@ -1484,6 +1484,7 @@
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
             <div class="right">
+                <button class="btn btn-outline btn-sm" onclick="openChatListModal()"><i class="fas fa-envelope"></i> Messages</button>
                 <span class="user-chip"><span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i></span>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
             </div>
@@ -1586,6 +1587,31 @@
         </div>
     </div>
 
+    <!-- PEER CHAT WINDOW -->
+    <div class="ai-chat-window" id="peerChatWindow" style="right: 400px;">
+        <div class="ai-chat-header">
+            <span id="peerChatHeader"><i class="fas fa-user"></i> Chat</span>
+            <button class="close" onclick="closePeerChat()" style="background: none; border: none; color: #fff; cursor: pointer; margin-left: auto; font-size: 1.2rem;">&times;</button>
+        </div>
+        <div class="ai-chat-body" id="peerChatBody">
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" id="peerChatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendPeerMessage()" />
+            <button onclick="sendPeerMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- MODAL: Landlord Chat List -->
+    <div id="chatListModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeChatListModal()">&times;</button>
+            <h2><i class="fas fa-comments"></i> My Messages</h2>
+            <div id="chatListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px;">
+                <!-- Chat list items will go here -->
+            </div>
+        </div>
+    </div>
+
     <!-- AI CHATBOT -->
     <button class="ai-chat-btn" id="aiChatBtn" title="AI Assistant"><i class="fas fa-robot"></i></button>
     <div class="ai-chat-window" id="aiChatWindow">
@@ -1685,28 +1711,32 @@
 
         // EXPANDED USERS with National IDs & referral codes
         let users = [
-            { id: 1, name: 'Tinashe Moyo', contact: 'tinashe@email.com', role: 'tenant', status: 'active',
+            { id: 1, name: 'Tinashe Moyo', contact: 'tinashe@email.com', phone: '0771234567', role: 'tenant', status: 'active',
                 nationalId: '63-1234567-A12', points: 4, referralCode: 'HOME-TINASHE-2026', referredBy: null },
-            { id: 2, name: 'Tanaka Dube', contact: 'tanaka@email.com', role: 'tenant', status: 'active',
+            { id: 2, name: 'Tanaka Dube', contact: 'tanaka@email.com', phone: '0772345678', role: 'tenant', status: 'active',
                 nationalId: '63-2345678-B23', points: 0, referralCode: 'HOME-TANAKA-2026', referredBy: 'HOME-TINASHE-2026' },
-            { id: 3, name: 'Grace Chiweshe', contact: 'grace@props.co.zw', role: 'landlord', status: 'verified',
+            { id: 3, name: 'Grace Chiweshe', contact: 'grace@props.co.zw', phone: '0773456789', role: 'landlord', status: 'verified',
                 nationalId: '63-3456789-C34', points: 0, referralCode: null, referredBy: null },
-            { id: 4, name: 'Peter Ndlovu', contact: 'peter@rentals.co.zw', role: 'landlord', status: 'pending',
+            { id: 4, name: 'Peter Ndlovu', contact: 'peter@rentals.co.zw', phone: '0774567890', role: 'landlord', status: 'pending',
                 nationalId: '63-4567890-D45', points: 0, referralCode: null, referredBy: null },
-            { id: 5, name: 'Tawanda Moyo', contact: 'tawanda@homes.co.zw', role: 'landlord', status: 'verified',
+            { id: 5, name: 'Tawanda Moyo', contact: 'tawanda@homes.co.zw', phone: '0775678901', role: 'landlord', status: 'verified',
                 nationalId: '63-5678901-E56', points: 0, referralCode: null, referredBy: null },
-            { id: 6, name: 'Rumbidzai Zhou', contact: 'rumbi@estates.co.zw', role: 'landlord', status: 'verified',
+            { id: 6, name: 'Rumbidzai Zhou', contact: 'rumbi@estates.co.zw', phone: '0776789012', role: 'landlord', status: 'verified',
                 nationalId: '63-6789012-F67', points: 0, referralCode: null, referredBy: null },
-            { id: 7, name: 'Farai Makoni', contact: 'farai@rent.co.zw', role: 'landlord', status: 'pending',
+            { id: 7, name: 'Farai Makoni', contact: 'farai@rent.co.zw', phone: '0777890123', role: 'landlord', status: 'pending',
                 nationalId: '63-7890123-G78', points: 0, referralCode: null, referredBy: null },
-            { id: 8, name: 'Admin Prime', contact: 'admin@homebase.co.zw', role: 'admin', status: 'active',
+            { id: 8, name: 'Admin Prime', contact: 'admin@homebase.co.zw', phone: '0770000000', role: 'admin', status: 'active',
                 nationalId: '63-0000000-X00', points: 0, referralCode: null, referredBy: null },
-            { id: 9, name: 'Ruvimbo Chitando', contact: 'ruvimbo@email.com', role: 'tenant', status: 'active',
+            { id: 9, name: 'Ruvimbo Chitando', contact: 'ruvimbo@email.com', phone: '0778901234', role: 'tenant', status: 'active',
                 nationalId: '63-8901234-H89', points: 0, referralCode: 'HOME-RUVIMBO-2026', referredBy: null },
-            { id: 10, name: 'Anesu Marufu', contact: 'anesu@email.com', role: 'tenant', status: 'active',
+            { id: 10, name: 'Anesu Marufu', contact: 'anesu@email.com', phone: '0779012345', role: 'tenant', status: 'active',
                 nationalId: '63-9012345-I90', points: 2, referralCode: 'HOME-ANESU-2026',
             referredBy: 'HOME-TINASHE-2026' },
         ];
+
+        let chats = [];
+        let activeChatPeerId = null;
+        let activeChatPeerName = null;
 
         let transactions = [
             { id: 'TXN001', tenant: 'Tinashe Moyo', landlord: 'Grace Chiweshe', property: '2 Bed Cottage', amount: 2,
@@ -1760,24 +1790,7 @@
         }
 
         function promptTenantAuth() {
-            const action = prompt("Type 'login' or 'signup' to continue:");
-            if (action && action.toLowerCase() === 'signup') {
-                const email = prompt("Enter your Gmail address:");
-                if (!email || !email.toLowerCase().endsWith('@gmail.com')) {
-                    alert("Registration rejected: Only @gmail.com emails are allowed.");
-                    return;
-                }
-                const password = prompt("Enter a strong password (min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special character):");
-                const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\\\$%\\\\^&\\\\*])(?=.{8,})");
-                if (!password || !strongRegex.test(password)) {
-                    alert("Registration rejected: Password is too weak.");
-                    return;
-                }
-                alert("Signup successful!");
-                loadDashboard('tenant-dash');
-            } else if (action && action.toLowerCase() === 'login') {
-                loadDashboard('tenant-dash');
-            }
+            loadDashboard('tenant-dash');
         }
 
         function loadDashboard(dashId) {
@@ -1913,10 +1926,12 @@
                                     if (landlord) {
                                         return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--success); margin-top: 10px;">
                                                     <div style="font-weight: 600; color: var(--success); margin-bottom: 6px;"><i class="fas fa-unlock"></i> Contact Unlocked</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Name:</strong> ${landlord.name}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Contact:</strong> ${landlord.contact}</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Full Name:</strong> ${landlord.name}</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Email:</strong> ${landlord.contact}</div>
+                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Phone:</strong> ${landlord.phone}</div>
                                                     <div style="font-size: 0.85rem; color: var(--text);"><strong>ID:</strong> ${landlord.nationalId || 'N/A'}</div>
                                                     <div style="font-size: 0.75rem; color: var(--danger); margin-top: 6px; text-align: center;">Hides in ${timeRemaining}s</div>
+                                                    <button class="btn btn-primary btn-block btn-sm mt-2" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}')"><i class="fas fa-comment-dots"></i> Chat with Landlord</button>
                                                 </div>`;
                                     } else {
                                         return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--danger); margin-top: 10px; text-align: center; color: var(--danger);">Landlord details unavailable</div>`;
@@ -2130,6 +2145,116 @@
                     .classList.add('active');
             });
         });
+
+        // ============================================================
+        // PEER CHAT (Tenants <-> Landlords)
+        // ============================================================
+
+        function openChatWith(peerId, peerName) {
+            activeChatPeerId = peerId;
+            activeChatPeerName = peerName;
+            document.getElementById('peerChatHeader').innerHTML = '<i class="fas fa-user"></i> Chat with ' + peerName;
+            document.getElementById('peerChatWindow').classList.add('open');
+            if (document.getElementById('chatListModal').classList.contains('active')) {
+                closeChatListModal();
+            }
+            renderPeerChatWindow();
+            setTimeout(() => document.getElementById('peerChatInput').focus(), 100);
+        }
+
+        function closePeerChat() {
+            document.getElementById('peerChatWindow').classList.remove('open');
+            activeChatPeerId = null;
+            activeChatPeerName = null;
+        }
+
+        function renderPeerChatWindow() {
+            if (!activeChatPeerId) return;
+            const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+
+            const conversation = chats.filter(c =>
+                (c.fromId === currentUserId && c.toId === activeChatPeerId) ||
+                (c.fromId === activeChatPeerId && c.toId === currentUserId)
+            );
+
+            const body = document.getElementById('peerChatBody');
+            body.innerHTML = conversation.length === 0 ? '<div class="text-center text-muted" style="margin-top: 20px; font-size: 0.85rem;">No messages yet. Say hi!</div>' : '';
+
+            conversation.forEach(c => {
+                const isMe = c.fromId === currentUserId;
+                const msgClass = isMe ? 'msg user' : 'msg bot'; // Reusing AI chat classes for styling
+                body.innerHTML += `<div class="${msgClass}">${escapeHtml(c.text)}</div>`;
+            });
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function sendPeerMessage() {
+            const input = document.getElementById('peerChatInput');
+            const text = input.value.trim();
+            if (!text || !activeChatPeerId) return;
+
+            const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+
+            chats.push({
+                fromId: currentUserId,
+                toId: activeChatPeerId,
+                text: text,
+                timestamp: Date.now()
+            });
+
+            input.value = '';
+            renderPeerChatWindow();
+        }
+
+        function openChatListModal() {
+            // For landlord to see list of tenants they have chatted with or CAN chat with
+            // In this prototype, we'll list all tenants that have unlocked their property or messaged them
+            const listContainer = document.getElementById('chatListContainer');
+            listContainer.innerHTML = '';
+
+            // Find all unique users who have chatted with CURRENT_LANDLORD_ID
+            let chatUserIds = new Set();
+            chats.forEach(c => {
+                if (c.fromId === CURRENT_LANDLORD_ID) chatUserIds.add(c.toId);
+                if (c.toId === CURRENT_LANDLORD_ID) chatUserIds.add(c.fromId);
+            });
+
+            // Also add tenants who unlocked their property (from transactions)
+            transactions.forEach(t => {
+                if (t.landlord === 'Grace Chiweshe') {
+                    const tenantUser = users.find(u => u.name === t.tenant);
+                    if (tenantUser) chatUserIds.add(tenantUser.id);
+                }
+            });
+
+            if (chatUserIds.size === 0) {
+                listContainer.innerHTML = '<div class="text-muted text-center" style="padding: 20px;">No conversations yet.</div>';
+            } else {
+                chatUserIds.forEach(id => {
+                    const user = users.find(u => u.id === id);
+                    if (user) {
+                        listContainer.innerHTML += `
+                            <div class="lprop-item" style="cursor: pointer;" onclick="openChatWith(${user.id}, '${user.name.replace(/'/g, "\\'")}')">
+                                <div class="info">
+                                    <strong><i class="fas fa-user-circle"></i> ${user.name}</strong>
+                                    <div class="sub">${user.role.toUpperCase()}</div>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-outline btn-sm"><i class="fas fa-comment"></i> Open</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            document.getElementById('chatListModal').classList.add('active');
+        }
+
+        function closeChatListModal() {
+            document.getElementById('chatListModal').classList.remove('active');
+        }
+
 
         // ============================================================
         // AI CHATBOT
