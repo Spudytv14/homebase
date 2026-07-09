@@ -1132,6 +1132,10 @@
         .ai-chat-window.open {
             display: flex;
         }
+        .peer-chat-window {
+            right: 400px;
+            z-index: 999;
+        }
         .ai-chat-header {
             background: var(--primary);
             color: #fff;
@@ -1331,6 +1335,10 @@
                 right: 8px;
                 bottom: 80px;
             }
+            .peer-chat-window {
+                right: 8px;
+                bottom: 140px;
+            }
             .ai-chat-btn {
                 bottom: 16px;
                 right: 12px;
@@ -1384,6 +1392,10 @@
                 right: 10px;
                 bottom: 75px;
                 max-height: 400px;
+            }
+            .peer-chat-window {
+                right: 10px;
+                bottom: 130px;
             }
         }
     </style>
@@ -1588,7 +1600,7 @@
     </div>
 
     <!-- PEER CHAT WINDOW -->
-    <div class="ai-chat-window" id="peerChatWindow" style="right: 400px;">
+    <div class="ai-chat-window peer-chat-window" id="peerChatWindow">
         <div class="ai-chat-header">
             <span id="peerChatHeader"><i class="fas fa-user"></i> Chat</span>
             <button class="close" onclick="closePeerChat()" style="background: none; border: none; color: #fff; cursor: pointer; margin-left: auto; font-size: 1.2rem;">&times;</button>
@@ -1926,12 +1938,8 @@
                                     if (landlord) {
                                         return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--success); margin-top: 10px;">
                                                     <div style="font-weight: 600; color: var(--success); margin-bottom: 6px;"><i class="fas fa-unlock"></i> Contact Unlocked</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Full Name:</strong> ${landlord.name}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Email:</strong> ${landlord.contact}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Phone:</strong> ${landlord.phone}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>ID:</strong> ${landlord.nationalId || 'N/A'}</div>
                                                     <div style="font-size: 0.75rem; color: var(--danger); margin-top: 6px; text-align: center;">Hides in ${timeRemaining}s</div>
-                                                    <button class="btn btn-primary btn-block btn-sm mt-2" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}')"><i class="fas fa-comment-dots"></i> Chat with Landlord</button>
+                                                    <button class="btn btn-primary btn-block btn-sm mt-2" onclick="openChatWith(${landlord.id}, 'Landlord')"><i class="fas fa-comment-dots"></i> Chat with Landlord</button>
                                                 </div>`;
                                     } else {
                                         return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--danger); margin-top: 10px; text-align: center; color: var(--danger);">Landlord details unavailable</div>`;
