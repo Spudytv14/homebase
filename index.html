@@ -2211,7 +2211,7 @@
             const lockedNotice = document.querySelector('#tenant-dash .profile-locked');
             const filterBar = document.getElementById('tenantFilters');
             const propertyGrid = document.getElementById('tenantPropertyGrid');
-            const noResult = document.getElementById('tenantNoResult');
+            const emptyResult = document.getElementById('tenantNoResult');
 
             if (tenant && (tenant.status === 'paused' || tenant.status === 'revoked')) {
                 lockedNotice.innerHTML = `<i class="fas fa-ban"></i> <span><strong>Profile ${tenant.status}.</strong> Your account is currently under investigation or revoked. You cannot view or unlock properties. Contact support.</span>`;
@@ -2220,7 +2220,7 @@
                 lockedNotice.style.color = '#b91c1c';
                 filterBar.style.display = 'none';
                 propertyGrid.style.display = 'none';
-                noResult.style.display = 'none';
+                emptyResult.style.display = 'none';
                 return;
             } else {
                 lockedNotice.innerHTML = `<i class="fas fa-shield-alt"></i> <span><strong>Profile locked for security.</strong> Name & ID verified. Contact admin to update your details.</span>`;
