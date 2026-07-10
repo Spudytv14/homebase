@@ -1356,6 +1356,15 @@
         }
 
         @media (max-width: 768px) {
+            .table-wrap table {
+                min-width: 600px; /* Ensure tables scroll horizontally instead of squishing */
+            }
+            .modal-box {
+                width: 95%;
+                margin: 10px;
+                padding: 20px 15px;
+            }
+
             .navbar {
                 padding: 12px 16px;
                 flex-wrap: wrap;
@@ -1583,6 +1592,10 @@
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span></div>
             <div class="right">
+                <div style="position:relative; cursor:pointer; margin-right:10px;" onclick="openNotificationsModal()">
+                    <i class="fas fa-bell" style="font-size:1.2rem; color:var(--text-muted);"></i>
+                    <span id="tenantNotifBadge" style="position:absolute; top:-5px; right:-8px; background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:10px; display:none;">0</span>
+                </div>
                 <span class="points-display" id="tenantPointsDisplay"><i class="fas fa-star"></i> <span id="tenantPointsVal">0</span> Points</span>
                 <span class="user-chip" id="tenantUserChip"><span class="dot"></span> Tenant</span>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1596,13 +1609,13 @@
                 <div class="promo-banner" id="promoBanner">
                     <div class="promo-icon" style="font-size: 1.5rem;"><i class="fas fa-gift"></i></div>
                     <div class="promo-text" style="font-size: 0.9rem;">
-                        <strong>Promo:</strong> 10 points = 1 FREE unlock.
+                        <strong>Promo:</strong> 10 points = 1 FREE Viewing Request.
                     </div>
                 </div>
                 <i class="fas fa-users" style="color:var(--primary);font-size:1.2rem;"></i>
                 <strong>Your Referral Code:</strong>
                 <div class="ref-code" id="tenantRefCode" title="Click to copy" onclick="copyReferralCode()">HOME-TINASHE-2026</div>
-                <button class="btn btn-points btn-sm" style="margin-left: 10px;" onclick="simulateReferral()"><i class="fas fa-plus-circle"></i> Simulate Referral (+2 pts)</button>
+                <button class="btn btn-points btn-sm" style="margin-left: 10px;" onclick="simulateTenPoints()"><i class="fas fa-plus-circle"></i> Simulate 10 Points</button>
             </div>
 
             <!-- PROFILE LOCKED NOTICE -->
@@ -1640,6 +1653,27 @@
                 </div>
             </div>
 
+            <div id="tenantViewingRequestsPanel" class="panel" style="margin-top: 30px;">
+                <div class="panel-header">
+                    <h2><i class="fas fa-calendar-check"></i> My Viewing Requests</h2>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Requested For</th>
+                                <th>Status</th>
+                                <th>Actions / Info</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tenantViewingRequestsTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div id="tenantPropertyGrid" class="property-grid"></div>
             <div id="tenantNoResult" class="no-results" style="display:none;"><i class="fas fa-home"></i><h3>No properties match your filters</h3><p>Try adjusting your search or location.</p></div>
             
@@ -1658,6 +1692,10 @@
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
             <div class="right">
+                <div style="position:relative; cursor:pointer; margin-right:10px;" onclick="openNotificationsModal()">
+                    <i class="fas fa-bell" style="font-size:1.2rem; color:var(--text-muted);"></i>
+                    <span id="landlordNotifBadge" style="position:absolute; top:-5px; right:-8px; background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:10px; display:none;">0</span>
+                </div>
                 <button class="btn btn-outline btn-sm" onclick="openChatListModal()"><i class="fas fa-envelope"></i> Messages</button>
                 <span class="user-chip" id="landlordUserChip"><span class="dot"></span> Landlord</span>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1667,6 +1705,30 @@
             <div class="profile-locked"><i class="fas fa-shield-alt"></i><span><strong>Profile locked for security.</strong> Name & ID verified. Only admin can reset your details.</span></div>
             <div class="panel-header"><h2><i class="fas fa-building"></i> My Properties</h2><button class="btn btn-primary" onclick="openAddProperty()"><i class="fas fa-plus"></i> Add Listing</button></div>
             <div class="stat-grid" id="landlordStats"></div>
+
+            <div id="landlordViewingRequestsPanel" class="panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-calendar-check"></i> Viewing Requests</h2>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Tenant</th>
+                                <th>Requested Date/Time</th>
+                                <th>Note</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="landlordViewingRequestsTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="panel"><div id="landlordPropertyList" class="landlord-props"></div></div>
             
             <!-- SOCIAL MEDIA FOOTER -->
@@ -1763,6 +1825,7 @@
                 <div class="field"><label>Property Title *</label><input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required /></div>
                 <div class="field"><label>City *</label><input type="text" id="propLocation" placeholder="e.g. Harare" required /></div>
                 <div class="field"><label>Full Address *</label><input type="text" id="propAddress" placeholder="e.g. 42 Samora Machel Ave, Eastlea" required /></div>
+                <div class="field"><label>Meeting Point</label><input type="text" id="propMeetingPoint" placeholder="e.g. Main Gate, Security Office, GPS Pin (Optional)" /></div>
                 <div class="field"><label>Monthly Rent (USD) *</label><input type="number" id="propPrice" placeholder="e.g. 450" required min="1" /></div>
                 <div class="field"><label>Bedrooms *</label><input type="number" id="propRooms" placeholder="e.g. 2" required min="1" /></div>
                 <div class="field"><label>Density *</label><select id="propDensity" required><option value="">-- Select --</option><option value="high">High Density</option><option value="middle">Middle Density</option><option value="low">Low Density</option></select></div>
@@ -1778,20 +1841,45 @@
         </div>
     </div>
 
-    <!-- MODAL: Payment -->
+
+    <!-- MODAL: Request Viewing Form -->
+    <div id="viewingRequestModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeViewingRequestModal()">&times;</button>
+            <h2><i class="fas fa-calendar-alt"></i> Request House Viewing</h2>
+            <p style="color:var(--text-muted); margin-bottom:12px;">Fill in your preferred viewing details.</p>
+            <form id="viewingRequestForm" onsubmit="handleViewingRequestSubmit(event)">
+                <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="viewingPropertyName">—</span></div>
+                </div>
+                <div class="field-group">
+                    <div class="field"><label>Preferred Date *</label><input type="date" id="viewDate" required /></div>
+                    <div class="field"><label>Preferred Time *</label><input type="time" id="viewTime" required /></div>
+                </div>
+                <div class="field"><label>Number of Attendees (Optional)</label><input type="number" id="viewAttendees" min="1" placeholder="e.g. 2" /></div>
+                <div class="field"><label>Note for Landlord</label><textarea id="viewNote" placeholder="e.g. I will arrive right after work." rows="2"></textarea></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeViewingRequestModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Continue to Payment <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Viewing Payment -->
     <div id="paymentModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closePaymentModal()">&times;</button>
-            <h2><i class="fas fa-lock"></i> Unlock Landlord Contact</h2>
-            <p style="color:var(--text-muted); margin-bottom:12px;">Pay <strong>$2.00</strong> or use <strong>10 Points</strong> to reveal the verified landlord's phone & email.</p>
+            <h2><i class="fas fa-credit-card"></i> Viewing Fee Payment</h2>
+            <p style="color:var(--text-muted); margin-bottom:12px;">Pay <strong>$2.00</strong> or use <strong>10 Points</strong> to secure your viewing request.</p>
             <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
                 <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="paymentPropertyName">—</span></div>
                 <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;"><span>Cost:</span><span style="color:var(--primary);">$2.00 <span style="font-size:0.8rem;">or</span> 10 Points</span></div>
                 <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:2px;"><span>Your Points:</span><span style="color:var(--points-gold);" id="paymentYourPoints">0</span></div>
             </div>
             <div id="paymentPointsSection" style="margin-bottom:12px;">
-                <button class="btn btn-points btn-block btn-sm" id="usePointsBtn" onclick="usePointsToUnlock()" disabled>
-                    <i class="fas fa-star"></i> Use 10 Points to Unlock (FREE)
+                <button class="btn btn-points btn-block btn-sm" id="usePointsBtn" onclick="processViewingPayment('points')" disabled>
+                    <i class="fas fa-star"></i> Use 10 Points to Pay (FREE)
                 </button>
                 <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">You need 10 points. Current balance: <span id="pointsBalanceLabel">0</span></p>
             </div>
@@ -1809,8 +1897,39 @@
             <div id="paymentSmileCashFields" style="display:none; margin-top:14px;"><div class="field"><label>SmileCash Number</label><input type="tel" id="smilePhone" placeholder="e.g. 078 123 4567" /></div></div>
             <div id="paymentPaypalFields" style="display:none; margin-top:14px;"><div class="field"><label>PayPal Email</label><input type="email" id="paypalEmail" placeholder="you@example.com" /></div></div>
             <div id="paymentInbucksFields" style="display:none; margin-top:14px;"><div class="field"><label>InBucks Account</label><input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" /></div></div>
-            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processPayment()"><i class="fas fa-check-circle"></i> Pay $2.00 &amp; Unlock</button>
-            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-shield-alt"></i> Secure payment. Landlord details revealed instantly.</p>
+            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processViewingPayment('cash')"><i class="fas fa-check-circle"></i> Pay $2.00 &amp; Submit Request</button>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-shield-alt"></i> Secure payment. Your viewing request will be sent to the landlord.</p>
+        </div>
+    </div>
+
+
+    <!-- MODAL: Suggest Reschedule -->
+    <div id="rescheduleModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeRescheduleModal()">&times;</button>
+            <h2><i class="fas fa-calendar-plus"></i> Suggest Reschedule</h2>
+            <form id="rescheduleForm" onsubmit="handleRescheduleSubmit(event)">
+                <input type="hidden" id="rescheduleRequestId" />
+                <div class="field"><label>New Date *</label><input type="date" id="rescheduleDate" required /></div>
+                <div class="field"><label>New Time *</label><input type="time" id="rescheduleTime" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeRescheduleModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Proposal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL: Notifications -->
+    <div id="notificationsModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <button class="close" onclick="closeNotificationsModal()">&times;</button>
+            <h2><i class="fas fa-bell"></i> Notifications</h2>
+            <div id="notificationsList" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px; max-height: 400px; overflow-y:auto;">
+                <!-- Populated via JS -->
+            </div>
+            <button class="btn btn-ghost btn-block btn-sm" style="margin-top: 10px;" onclick="markAllNotifsRead()"><i class="fas fa-check-double"></i> Mark all as read</button>
         </div>
     </div>
 
@@ -1876,70 +1995,70 @@
         let properties = [
             { id: 1, landlordId: 3, title: '2 Bed Cottage', location: 'Harare', price: 450, rooms: 2, status: 'vacant',
                 desc: 'Solar, borehole, secure parking. Quiet neighbourhood in Eastlea.', imgIdx: 0, density: 'middle',
-                address: '12 Eastlea Rd, Harare', propType: 'cottage', furnished: 'semi', parking: '2 bays',
+                address: '12 Eastlea Rd, Harare', meetingPoint: '12 Eastlea Rd, Harare', propType: 'cottage', furnished: 'semi', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water included' },
             { id: 2, landlordId: 3, title: '1 Bed Apartment', location: 'Harare', price: 250, rooms: 1, status: 'vacant',
                 desc: 'CBD, WiFi included, backup water, ideal for professionals.', imgIdx: 1, density: 'high',
-                address: '5 Jason Moyo Ave, Harare CBD', propType: 'apartment', furnished: 'yes', parking: 'Street',
+                address: '5 Jason Moyo Ave, Harare CBD', meetingPoint: '5 Jason Moyo Ave, Harare CBD', propType: 'apartment', furnished: 'yes', parking: 'Street',
                 security: 'Reception desk', utilities: 'Water & WiFi' },
             { id: 3, landlordId: 4, title: '4 Bed Family House', location: 'Bulawayo', price: 800, rooms: 4,
                 status: 'occupied', desc: 'Pool, walled & gated, staff quarters, Hillside area.', imgIdx: 2,
-                density: 'low', address: '22 Hillside Rd, Bulawayo', propType: 'house', furnished: 'no',
+                density: 'low', address: '22 Hillside Rd, Bulawayo', meetingPoint: '22 Hillside Rd, Bulawayo', propType: 'house', furnished: 'no',
                 parking: '4 bays', security: 'Electric fence, 24/7 guard', utilities: 'None' },
             { id: 4, landlordId: 5, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant',
                 desc: 'Furnished, backup water, secure estate near CBD.', imgIdx: 3, density: 'low',
-                address: '8 Regency Park, Gweru', propType: 'estate', furnished: 'yes', parking: '2 garages',
+                address: '8 Regency Park, Gweru', meetingPoint: '8 Regency Park, Gweru', propType: 'estate', furnished: 'yes', parking: '2 garages',
                 security: 'Gated estate', utilities: 'Water & refuse' },
             { id: 5, landlordId: 6, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant',
                 desc: 'Quiet garden setting, parking, beautiful views.', imgIdx: 4, density: 'middle',
-                address: '15 Christmas Pass, Mutare', propType: 'cottage', furnished: 'no', parking: '1 bay',
+                address: '15 Christmas Pass, Mutare', meetingPoint: '15 Christmas Pass, Mutare', propType: 'cottage', furnished: 'no', parking: '1 bay',
                 security: 'Fenced', utilities: 'Water included' },
             { id: 6, landlordId: 5, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied',
                 desc: 'Premium Borrowdale estate, 24/7 security, pool.', imgIdx: 5, density: 'low',
-                address: '3 Borrowdale Lane, Harare', propType: 'estate', furnished: 'yes', parking: '3 garages',
+                address: '3 Borrowdale Lane, Harare', meetingPoint: '3 Borrowdale Lane, Harare', propType: 'estate', furnished: 'yes', parking: '3 garages',
                 security: '24/7 armed response', utilities: 'All included' },
             { id: 7, landlordId: 4, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1,
                 status: 'vacant', desc: 'Shared kitchen, water included, Nkulumane area.', imgIdx: 6, density: 'high',
-                address: '45 Nkulumane, Bulawayo', propType: 'room', furnished: 'no', parking: 'None',
+                address: '45 Nkulumane, Bulawayo', meetingPoint: '45 Nkulumane, Bulawayo', propType: 'room', furnished: 'no', parking: 'None',
                 security: 'Neighbourhood watch', utilities: 'Water' },
             { id: 8, landlordId: 3, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3,
                 status: 'vacant', desc: 'Near CBD, tiled floors, fenced, family-friendly.', imgIdx: 7, density: 'middle',
-                address: '10 Main St, Mutare', propType: 'house', furnished: 'semi', parking: '2 bays',
+                address: '10 Main St, Mutare', meetingPoint: '10 Main St, Mutare', propType: 'house', furnished: 'semi', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water' },
             { id: 9, landlordId: 6, title: 'Luxury 5-Bed Villa', location: 'Harare', price: 2500, rooms: 5,
                 status: 'vacant', desc: 'Borrowdale Brooke estate, infinity pool, staff quarters, ultra-modern.',
-                imgIdx: 8, density: 'low', address: '1 Brooke Dr, Borrowdale', propType: 'estate', furnished: 'yes',
+                imgIdx: 8, density: 'low', address: '1 Brooke Dr, Borrowdale', meetingPoint: '1 Brooke Dr, Borrowdale', propType: 'estate', furnished: 'yes',
                 parking: '4 garages', security: 'Gated community, CCTV', utilities: 'All inclusive' },
             { id: 10, landlordId: 7, title: 'Budget Single Room', location: 'Chitungwiza', price: 80, rooms: 1,
                 status: 'vacant', desc: 'Affordable single room, shared facilities, near kombi rank.', imgIdx: 9,
-                density: 'high', address: '88 Zengeza, Chitungwiza', propType: 'room', furnished: 'no',
+                density: 'high', address: '88 Zengeza, Chitungwiza', meetingPoint: '88 Zengeza, Chitungwiza', propType: 'room', furnished: 'no',
                 parking: 'None', security: 'Community policing', utilities: 'None' },
             { id: 11, landlordId: 5, title: '3-Bed Townhouse', location: 'Harare', price: 700, rooms: 3,
                 status: 'vacant', desc: 'Modern townhouse in Avondale, gated, solar backup.', imgIdx: 10,
-                density: 'middle', address: '25 Avondale Rd, Harare', propType: 'townhouse', furnished: 'semi',
+                density: 'middle', address: '25 Avondale Rd, Harare', meetingPoint: '25 Avondale Rd, Harare', propType: 'townhouse', furnished: 'semi',
                 parking: '1 garage', security: 'Gated, intercom', utilities: 'Water & solar' },
             { id: 12, landlordId: 7, title: '2-Bed Flat', location: 'Bulawayo', price: 350, rooms: 2, status: 'vacant',
                 desc: 'Spacious flat in city centre, secure building, lift access.', imgIdx: 11, density: 'high',
-                address: '10 Leopold Takawira Ave, Bulawayo', propType: 'apartment', furnished: 'no',
+                address: '10 Leopold Takawira Ave, Bulawayo', meetingPoint: '10 Leopold Takawira Ave, Bulawayo', propType: 'apartment', furnished: 'no',
                 parking: 'Bay available', security: 'Security guard', utilities: 'Water' },
             { id: 13, landlordId: 3, title: 'Executive 2-Bed', location: 'Victoria Falls', price: 950, rooms: 2,
                 status: 'vacant', desc: 'Tourist area, stunning views, fully furnished, secure.', imgIdx: 0,
-                density: 'low', address: '5 Livingstone Way, Victoria Falls', propType: 'apartment', furnished: 'yes',
+                density: 'low', address: '5 Livingstone Way, Victoria Falls', meetingPoint: '5 Livingstone Way, Victoria Falls', propType: 'apartment', furnished: 'yes',
                 parking: '2 bays', security: '24/7 security', utilities: 'All inclusive' },
             { id: 14, landlordId: 6, title: 'Mid-Range 3-Bed', location: 'Gweru', price: 480, rooms: 3,
                 status: 'vacant', desc: 'Family home, walled, water tank, neat garden.', imgIdx: 3, density: 'middle',
-                address: '33 Main Rd, Gweru', propType: 'house', furnished: 'no', parking: '2 bays',
+                address: '33 Main Rd, Gweru', meetingPoint: '33 Main Rd, Gweru', propType: 'house', furnished: 'no', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water tank' },
             { id: 15, landlordId: 4, title: 'Cheap 1-Room Shack', location: 'Chitungwiza', price: 60, rooms: 1,
                 status: 'occupied', desc: 'Basic accommodation, shared toilet, budget-friendly.', imgIdx: 6,
-                density: 'high', address: '120 St Marys, Chitungwiza', propType: 'room', furnished: 'no',
+                density: 'high', address: '120 St Marys, Chitungwiza', meetingPoint: '120 St Marys, Chitungwiza', propType: 'room', furnished: 'no',
                 parking: 'None', security: 'None', utilities: 'None' },
         ];
 
         // EXPANDED USERS with National IDs & referral codes
         let users = [
             { id: 1, name: 'Tinashe Moyo', contact: 'tinashe@email.com', phone: '0771234567', role: 'tenant', status: 'active',
-                nationalId: '63-1234567-A12', password: "spudy14", points: 4, referralCode: 'HOME-TINASHE-2026', referredBy: null },
+                nationalId: '63-1234567-A12', password: "spudy14", points: 2, referralCode: 'HOME-TINASHE-2026', referredBy: null },
             { id: 2, name: 'Tanaka Dube', contact: 'tanaka@email.com', phone: '0772345678', role: 'tenant', status: 'active',
                 nationalId: '63-2345678-B23', points: 0, referralCode: 'HOME-TANAKA-2026', referredBy: 'HOME-TINASHE-2026' },
             { id: 3, name: 'Grace Chiweshe', contact: 'grace@props.co.zw', phone: '0773456789', role: 'landlord', status: 'verified',
@@ -1964,6 +2083,7 @@
         let chats = [];
         let activeChatPeerId = null;
         let activeChatPeerName = null;
+        let activeChatPropertyId = null;
 
         let transactions = [
             { id: 'TXN001', tenant: 'Tinashe Moyo', landlord: 'Grace Chiweshe', property: '2 Bed Cottage', amount: 2,
@@ -1986,6 +2106,25 @@
             { id: 3, landlord: 'Farai Makoni', document: 'Lease Agreement (Uploaded)', submitted: '2026-07-10',
                 status: 'pending' },
         ];
+
+
+        let viewingRequests = [];
+        let nextViewingRequestId = 1;
+
+
+        function addNotification(userId, message) {
+            notifications.push({
+                id: nextNotificationId++,
+                userId: userId,
+                message: message,
+                timestamp: Date.now(),
+                read: false
+            });
+            updateNotificationBell();
+        }
+
+        let notifications = [];
+        let nextNotificationId = 1;
 
         let nextPropId = 16;
         let nextVerifId = 4;
@@ -2124,6 +2263,61 @@
             }
         }
 
+
+        function updateNotificationBell() {
+            const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+            if (!currentUserId) return;
+
+            const unreadCount = notifications.filter(n => n.userId === currentUserId && !n.read).length;
+
+            const tenantBadge = document.getElementById('tenantNotifBadge');
+            const landlordBadge = document.getElementById('landlordNotifBadge');
+
+            if (tenantBadge) {
+                tenantBadge.textContent = unreadCount;
+                tenantBadge.style.display = unreadCount > 0 ? 'block' : 'none';
+            }
+            if (landlordBadge) {
+                landlordBadge.textContent = unreadCount;
+                landlordBadge.style.display = unreadCount > 0 ? 'block' : 'none';
+            }
+        }
+
+        function openNotificationsModal() {
+            const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+            const list = document.getElementById('notificationsList');
+
+            const myNotifs = notifications.filter(n => n.userId === currentUserId).sort((a,b) => b.timestamp - a.timestamp);
+
+            if (myNotifs.length === 0) {
+                list.innerHTML = '<div class="text-center text-muted" style="padding: 20px;">No notifications yet.</div>';
+            } else {
+                list.innerHTML = myNotifs.map(n => `
+                    <div style="background: ${n.read ? 'var(--bg)' : '#eff6ff'}; padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid ${n.read ? 'transparent' : 'var(--primary)'}; font-size: 0.85rem;">
+                        ${n.message}
+                        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">${new Date(n.timestamp).toLocaleTimeString()}</div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('notificationsModal').classList.add('active');
+
+            // Mark as read after a short delay
+            setTimeout(markAllNotifsRead, 2000);
+        }
+
+        function closeNotificationsModal() {
+            document.getElementById('notificationsModal').classList.remove('active');
+        }
+
+        function markAllNotifsRead() {
+            const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+            notifications.forEach(n => {
+                if (n.userId === currentUserId) n.read = true;
+            });
+            updateNotificationBell();
+        }
+
         function loadDashboard(dashId) {
             document.getElementById('auth-section').style.display = 'none';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
@@ -2132,6 +2326,7 @@
             if (dashId === 'tenant-dash') { updateTenantPointsDisplay();
                 renderTenant(); }
             if (dashId === 'landlord-dash') renderLandlord();
+            updateNotificationBell();
             if (dashId === 'admin-dash') renderAdmin();
             document.getElementById('aiChatBtn').style.display = 'flex';
         }
@@ -2175,37 +2370,42 @@
             navigator.clipboard.writeText(code).then(() => alert('📋 Referral code copied! Share it with friends.'));
         }
 
-        function simulateReferral() {
+        function simulateTenPoints() {
             const tenant = getCurrentTenant();
             if (!tenant) return;
-            tenant.points += 2;
+            tenant.points = 10;
             updateTenantPointsDisplay();
-            alert('🎉 +2 Points earned! A new tenant signed up with your referral code.\n\nCurrent balance: ' + tenant
-                .points + ' points.\nEarn ' + (10 - tenant.points) + ' more to unlock a property for FREE!');
+            alert('🎉 You now have 10 points! You can request a property viewing for FREE!');
         }
 
-        function usePointsToUnlock() {
-            const tenant = getCurrentTenant();
-            if (!tenant || tenant.points < 10) return alert('You need at least 10 points.');
-            if (!paymentTargetPropertyId) return alert('No property selected.');
-            const prop = properties.find(p => p.id === paymentTargetPropertyId);
-            if (!prop) return alert('Property not found.');
-            tenant.points -= 10;
-            updateTenantPointsDisplay();
-            const landlord = users.find(u => u.id === prop.landlordId);
-            alert('✅ Unlocked with 10 Points! The landlord details are now visible on the property card for 120 seconds.');
-            transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant.name,
-                landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 0,
-                ref: 'PTS-' + Math.random().toString(36).substring(2, 6).toUpperCase(), status: 'Success (Points)' });
-            closePaymentModal();
-            unlockedProperties[prop.id] = Date.now();
-            if (document.getElementById('admin-dash').classList.contains('active-dash')) renderAdmin();
-            renderTenant();
-        }
+
 
         // ============================================================
         // TENANT RENDER
         // ============================================================
+
+        function respondToReschedule(requestId, action) {
+            const req = viewingRequests.find(r => r.id === requestId);
+            if (!req) return;
+
+            const prop = properties.find(p => p.id === req.propertyId);
+
+            if (action === 'accept') {
+                req.status = 'tenant_accepted_reschedule';
+                req.date = req.proposedDate;
+                req.time = req.proposedTime;
+                const viewingDateTime = new Date(`${req.date}T${req.time}`).getTime();
+                req.chatExpiry = viewingDateTime + (24 * 60 * 60 * 1000); // 24h after rescheduled viewing
+                addNotification(req.landlordId, `Tenant accepted the rescheduled viewing for ${prop.title}.`);
+                alert('You have accepted the rescheduled time. Chat is now open.');
+            } else {
+                req.status = 'tenant_declined_reschedule';
+                addNotification(req.landlordId, `Tenant declined the rescheduled viewing for ${prop.title}.`);
+                alert('You have declined the rescheduled time.');
+            }
+            renderTenant();
+        }
+
         function renderTenant() {
             const tenant = getCurrentTenant();
             const lockedNotice = document.querySelector('#tenant-dash .profile-locked');
@@ -2248,6 +2448,73 @@
                     (p.desc && p.desc.toLowerCase().includes(search))) return false;
                 return true;
             });
+
+            // Render Viewing Requests
+            const reqTable = document.getElementById('tenantViewingRequestsTable');
+            const myRequests = viewingRequests.filter(r => r.tenantId === tenant.id);
+            if (myRequests.length === 0) {
+                reqTable.innerHTML = '<tr><td colspan="4" class="text-center text-muted" style="padding: 20px;">No viewing requests yet. Find a property and request a viewing!</td></tr>';
+            } else {
+                reqTable.innerHTML = myRequests.map(r => {
+                    const prop = properties.find(p => p.id === r.propertyId);
+                    const landlord = users.find(u => u.id === prop.landlordId);
+                    let statusBadge = '';
+                    let actionHtml = '';
+
+                    if (r.status === 'pending') {
+                        statusBadge = '<span class="badge badge-warning">Pending Landlord Response</span>';
+                        actionHtml = `
+                            <div style="font-size: 0.8rem; margin-bottom: 6px;">
+                                Awaiting response...
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}', ${prop.id})"><i class="fas fa-comments"></i> Open Chat</button>
+                        `;
+                    } else if (r.status === 'accepted') {
+                        statusBadge = '<span class="badge badge-success">Accepted</span>';
+                        actionHtml = `
+                            <div style="font-size: 0.8rem; margin-bottom: 6px;">
+                                <strong>Meeting Point:</strong> ${prop.meetingPoint}
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}', ${prop.id})"><i class="fas fa-comments"></i> Open Chat</button>
+                        `;
+                    } else if (r.status === 'declined') {
+                        statusBadge = '<span class="badge badge-danger">Declined</span>';
+                        actionHtml = '<span class="text-muted" style="font-size: 0.8rem;">The landlord declined this time.</span>';
+                    } else if (r.status === 'rescheduled') {
+                        statusBadge = '<span class="badge badge-info">Reschedule Proposed</span>';
+                        actionHtml = `
+                            <div style="font-size: 0.8rem; margin-bottom: 6px; color: var(--primary);">
+                                <strong>Proposed:</strong> ${r.proposedDate} at ${r.proposedTime}
+                            </div>
+                            <div style="display:flex; gap: 8px;">
+                                <button class="btn btn-success btn-sm" onclick="respondToReschedule(${r.id}, 'accept')"><i class="fas fa-check"></i> Accept</button>
+                                <button class="btn btn-danger btn-sm" onclick="respondToReschedule(${r.id}, 'decline')"><i class="fas fa-times"></i> Decline</button>
+                            </div>
+                        `;
+                    } else if (r.status === 'tenant_accepted_reschedule') {
+                        statusBadge = '<span class="badge badge-success">Reschedule Accepted</span>';
+                        actionHtml = `
+                            <div style="font-size: 0.8rem; margin-bottom: 6px;">
+                                <strong>Meeting Point:</strong> ${prop.meetingPoint}
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}', ${prop.id})"><i class="fas fa-comments"></i> Open Chat</button>
+                        `;
+                    } else if (r.status === 'tenant_declined_reschedule') {
+                         statusBadge = '<span class="badge badge-danger">Reschedule Declined</span>';
+                         actionHtml = '<span class="text-muted" style="font-size: 0.8rem;">You declined the reschedule.</span>';
+                    }
+
+                    return `
+                        <tr>
+                            <td><strong>${prop.title}</strong><br><span class="text-muted" style="font-size: 0.8rem;"><i class="fas fa-map-marker-alt"></i> ${prop.location}</span></td>
+                            <td>${r.date} at ${r.time}<br><span class="text-muted" style="font-size: 0.75rem;">Attendees: ${r.attendees || 1}</span></td>
+                            <td>${statusBadge}</td>
+                            <td>${actionHtml}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
             const grid = document.getElementById('tenantPropertyGrid');
             const noResult = document.getElementById('tenantNoResult');
             if (!filtered.length) { grid.innerHTML = '';
@@ -2282,27 +2549,15 @@
                             <div class="landlord-info"><i class="fas fa-user"></i> ${landlordName} ${isVerified ? '<i class="fas fa-check-circle verified-check-sm"></i>' : ''}</div>
                             <div class="desc">${p.desc || ''}</div>
                             ${(() => {
-                                const unlockTime = unlockedProperties[p.id];
-                                const isUnlocked = unlockTime !== undefined && (Date.now() - unlockTime <= 120000);
-                                if (isUnlocked) {
-                                    const timeRemaining = Math.max(0, Math.ceil((120000 - (Date.now() - unlockTime)) / 1000));
-                                    if (landlord) {
-                                        return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--success); margin-top: 10px;">
-                                                    <div style="font-weight: 600; color: var(--success); margin-bottom: 6px;"><i class="fas fa-unlock"></i> Contact Unlocked</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Full Name:</strong> ${landlord.name}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Email:</strong> ${landlord.contact}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>Phone:</strong> ${landlord.phone}</div>
-                                                    <div style="font-size: 0.85rem; color: var(--text);"><strong>ID:</strong> ${landlord.nationalId || 'N/A'}</div>
-                                                    <div style="font-size: 0.75rem; color: var(--danger); margin-top: 6px; text-align: center;">Hides in ${timeRemaining}s</div>
-                                                    <button class="btn btn-primary btn-block btn-sm mt-2" onclick="openChatWith(${landlord.id}, '${landlord.name.replace(/'/g, "\\'")}')"><i class="fas fa-comment-dots"></i> Chat with Landlord</button>
-                                                </div>`;
-                                    } else {
-                                        return `<div style="background: var(--bg); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--danger); margin-top: 10px; text-align: center; color: var(--danger);">Landlord details unavailable</div>`;
-                                    }
+                                const reqs = viewingRequests.filter(r => r.propertyId === p.id && r.tenantId === CURRENT_TENANT_ID);
+                                const req = reqs.length > 0 ? reqs[reqs.length - 1] : null;
+
+                                if (req) {
+                                    return `<button class="btn btn-outline btn-block btn-sm mt-2" disabled><i class="fas fa-clock"></i> Viewing Request Sent</button>`;
                                 } else {
                                     return p.status === 'vacant'
-                                        ? `<button class="btn btn-primary btn-block btn-sm" onclick="openPayment(${p.id}, '${p.title.replace(/'/g, "\\'")}')"><i class="fas fa-unlock"></i> Unlock Contact · $2 or 10pts</button>`
-                                        : `<button class="btn btn-outline btn-block btn-sm" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Currently Unavailable</button>`;
+                                        ? `<button class="btn btn-primary btn-block btn-sm mt-2" onclick="openViewingRequestModal(${p.id}, '${p.title.replace(/'/g, "\\'")}')"><i class="fas fa-eye"></i> Request House Viewing</button>`
+                                        : `<button class="btn btn-outline btn-block btn-sm mt-2" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Currently Unavailable</button>`;
                                 }
                             })()}
                         </div>
@@ -2313,6 +2568,39 @@
         // ============================================================
         // PAYMENT MODAL
         // ============================================================
+
+        let pendingViewingRequest = null;
+
+        function openViewingRequestModal(propertyId, propertyTitle) {
+            paymentTargetPropertyId = propertyId;
+            document.getElementById('viewingPropertyName').textContent = propertyTitle;
+            document.getElementById('viewingRequestForm').reset();
+            document.getElementById('viewingRequestModal').classList.add('active');
+        }
+
+        function closeViewingRequestModal() {
+            document.getElementById('viewingRequestModal').classList.remove('active');
+            // pendingViewingRequest is kept until payment completes or is canceled
+        }
+
+        function handleViewingRequestSubmit(e) {
+            e.preventDefault();
+            const date = document.getElementById('viewDate').value;
+            const time = document.getElementById('viewTime').value;
+            const attendees = document.getElementById('viewAttendees').value;
+            const note = document.getElementById('viewNote').value;
+
+            pendingViewingRequest = {
+                date,
+                time,
+                attendees,
+                note
+            };
+
+            closeViewingRequestModal();
+            openPayment(paymentTargetPropertyId, document.getElementById('viewingPropertyName').textContent);
+        }
+
         function openPayment(propertyId, propertyTitle) {
             paymentTargetPropertyId = propertyId;
             document.getElementById('paymentPropertyName').textContent = propertyTitle;
@@ -2328,7 +2616,7 @@
 
         function closePaymentModal() {
             document.getElementById('paymentModal').classList.remove('active');
-            paymentTargetPropertyId = null;
+            pendingViewingRequest = null;
         }
 
         function selectPayment(method) {
@@ -2343,37 +2631,112 @@
             document.getElementById('paymentSmileCashFields').style.display = method === 'smilecash' ? 'block' : 'none';
         }
 
-        function processPayment() {
-            let identifier = '';
-            let methodName = '';
-            if (selectedPayment === 'ecocash') { identifier = document.getElementById('ecoPhone').value.trim();
-                methodName = 'EcoCash'; if (!identifier) return alert('Please enter your EcoCash number.'); } else if (
-                selectedPayment === 'onemoney') { identifier = document.getElementById('onePhone').value.trim();
-                methodName = 'OneMoney'; if (!identifier) return alert('Please enter your OneMoney number.'); } else if (
-                selectedPayment === 'smilecash') { identifier = document.getElementById('smilePhone').value.trim();
-                methodName = 'SmileCash'; if (!identifier) return alert('Please enter your SmileCash number.'); } else if (
-                selectedPayment === 'paypal') { identifier = document.getElementById('paypalEmail').value.trim();
-                methodName = 'PayPal'; if (!identifier) return alert('Please enter your PayPal email.'); } else if (
-                selectedPayment === 'inbucks') { identifier = document.getElementById('inbucksAccount').value.trim();
-                methodName = 'InBucks'; if (!identifier) return alert('Please enter your InBucks account.'); }
-            const prop = properties.find(p => p.id === paymentTargetPropertyId);
-            if (!prop) return alert('Property not found.');
-            const landlord = users.find(u => u.id === prop.landlordId);
-            alert('✅ Payment of $2.00 via ' + methodName + ' (' + identifier + ') successful! The landlord details are now visible on the property card for 120 seconds.');
+        function processViewingPayment(type) {
             const tenant = getCurrentTenant();
-            transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant ? tenant
-                    .name : 'Tenant', landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 2,
-                ref: methodName.substring(0, 2).toUpperCase() + Math.random().toString(36).substring(2, 8)
-                .toUpperCase(), status: 'Success' });
+            const prop = properties.find(p => p.id === paymentTargetPropertyId);
+            const landlord = users.find(u => u.id === prop.landlordId);
+
+            if (type === 'points') {
+                if (!tenant || tenant.points < 10) return alert('You need at least 10 points.');
+                tenant.points -= 10;
+                transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant.name,
+                    landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 0,
+                    ref: 'PTS-' + Math.random().toString(36).substring(2, 6).toUpperCase(), status: 'Success (Points)' });
+            } else {
+                let identifier = '';
+                let methodName = '';
+                if (selectedPayment === 'ecocash') { identifier = document.getElementById('ecoPhone').value.trim(); methodName = 'EcoCash'; if (!identifier) return alert('Please enter your EcoCash number.'); }
+                else if (selectedPayment === 'onemoney') { identifier = document.getElementById('onePhone').value.trim(); methodName = 'OneMoney'; if (!identifier) return alert('Please enter your OneMoney number.'); }
+                else if (selectedPayment === 'smilecash') { identifier = document.getElementById('smilePhone').value.trim(); methodName = 'SmileCash'; if (!identifier) return alert('Please enter your SmileCash number.'); }
+                else if (selectedPayment === 'paypal') { identifier = document.getElementById('paypalEmail').value.trim(); methodName = 'PayPal'; if (!identifier) return alert('Please enter your PayPal email.'); }
+                else if (selectedPayment === 'inbucks') { identifier = document.getElementById('inbucksAccount').value.trim(); methodName = 'InBucks'; if (!identifier) return alert('Please enter your InBucks account.'); }
+
+                transactions.push({ id: 'TXN' + String(transactions.length + 1).padStart(3, '0'), tenant: tenant ? tenant.name : 'Tenant', landlord: landlord ? landlord.name : 'Landlord', property: prop.title, amount: 2,
+                    ref: methodName.substring(0, 2).toUpperCase() + Math.random().toString(36).substring(2, 8).toUpperCase(), status: 'Success' });
+            }
+
+            // Create Viewing Request
+            const newRequest = {
+                id: nextViewingRequestId++,
+                propertyId: prop.id,
+                tenantId: tenant.id,
+                landlordId: landlord.id,
+                date: pendingViewingRequest.date,
+                time: pendingViewingRequest.time,
+                attendees: pendingViewingRequest.attendees,
+                note: pendingViewingRequest.note,
+                status: 'pending', // pending, accepted, declined, rescheduled
+                createdAt: Date.now(),
+                chatExpiry: 0 // Will be set when accepted
+            };
+            viewingRequests.push(newRequest);
+
+            // Notification
+            addNotification(landlord.id, `New viewing request for ${prop.title} from ${tenant.name}.`);
+            addNotification(tenant.id, `Payment successful. Viewing request sent for ${prop.title}.`);
+
+            alert('✅ Payment successful! Viewing request sent to the landlord. You can track its status in your dashboard. Chat is now open.');
+
             closePaymentModal();
-            unlockedProperties[prop.id] = Date.now();
-            if (document.getElementById('admin-dash').classList.contains('active-dash')) renderAdmin();
+            updateTenantPointsDisplay();
+            pendingViewingRequest = null;
             renderTenant();
         }
+
 
         // ============================================================
         // LANDLORD RENDER
         // ============================================================
+
+        function landlordAction(requestId, action) {
+            const req = viewingRequests.find(r => r.id === requestId);
+            if (!req) return;
+            const prop = properties.find(p => p.id === req.propertyId);
+
+            if (action === 'accept') {
+                req.status = 'accepted';
+                const viewingDateTime = new Date(`${req.date}T${req.time}`).getTime();
+                req.chatExpiry = viewingDateTime + (24 * 60 * 60 * 1000); // 24 hours after viewing
+                addNotification(req.tenantId, `Your viewing request for ${prop.title} has been ACCEPTED. Meeting point: ${prop.meetingPoint}`);
+                alert('Viewing request accepted. The tenant has been notified and chat is open.');
+            } else if (action === 'decline') {
+                req.status = 'declined';
+                addNotification(req.tenantId, `Your viewing request for ${prop.title} was declined by the landlord.`);
+                alert('Viewing request declined.');
+            }
+            renderLandlord();
+        }
+
+        function openRescheduleModal(requestId) {
+            document.getElementById('rescheduleRequestId').value = requestId;
+            document.getElementById('rescheduleForm').reset();
+            document.getElementById('rescheduleModal').classList.add('active');
+        }
+
+        function closeRescheduleModal() {
+            document.getElementById('rescheduleModal').classList.remove('active');
+        }
+
+        function handleRescheduleSubmit(e) {
+            e.preventDefault();
+            const requestId = parseInt(document.getElementById('rescheduleRequestId').value);
+            const req = viewingRequests.find(r => r.id === requestId);
+            if (!req) return;
+
+            const newDate = document.getElementById('rescheduleDate').value;
+            const newTime = document.getElementById('rescheduleTime').value;
+            const prop = properties.find(p => p.id === req.propertyId);
+
+            req.status = 'rescheduled';
+            req.proposedDate = newDate;
+            req.proposedTime = newTime;
+
+            addNotification(req.tenantId, `The landlord proposed a new time for ${prop.title}: ${newDate} at ${newTime}.`);
+            alert('Reschedule proposal sent to tenant.');
+            closeRescheduleModal();
+            renderLandlord();
+        }
+
         function renderLandlord() {
             const landlord = users.find(u => u.id === CURRENT_LANDLORD_ID);
             const lockedNotice = document.querySelector('#landlord-dash .profile-locked');
@@ -2406,6 +2769,53 @@
                 <div class="stat-card"><div class="label">Occupied</div><div class="value red">${occupied}</div></div>
                 <div class="stat-card"><div class="label">Total Unlocks</div><div class="value blue">${totalUnlocks}</div></div>
             `;
+
+            const reqTable = document.getElementById('landlordViewingRequestsTable');
+            const myIncomingRequests = viewingRequests.filter(r => r.landlordId === CURRENT_LANDLORD_ID);
+
+            if (myIncomingRequests.length === 0) {
+                reqTable.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: 20px;">No viewing requests at this time.</td></tr>';
+            } else {
+                reqTable.innerHTML = myIncomingRequests.map(r => {
+                    const prop = properties.find(p => p.id === r.propertyId);
+                    const tenantUser = users.find(u => u.id === r.tenantId);
+                    let actionHtml = '';
+                    let statusHtml = '';
+
+                    if (r.status === 'pending') {
+                        statusHtml = '<span class="badge badge-warning">Needs Attention</span>';
+                        actionHtml = `
+                            <div style="display:flex; gap: 4px; flex-wrap: wrap;">
+                                <button class="btn btn-success btn-sm" onclick="landlordAction(${r.id}, 'accept')"><i class="fas fa-check"></i> Accept</button>
+                                <button class="btn btn-outline btn-sm" onclick="openRescheduleModal(${r.id})"><i class="fas fa-clock"></i> Suggest Reschedule</button>
+                                <button class="btn btn-danger btn-sm" onclick="landlordAction(${r.id}, 'decline')"><i class="fas fa-times"></i></button>
+                                <button class="btn btn-primary btn-sm" onclick="openChatWith(${tenantUser.id}, '${tenantUser.name.replace(/'/g, "\\'")}', ${prop.id})"><i class="fas fa-comments"></i> Chat</button>
+                            </div>
+                        `;
+                    } else if (r.status === 'accepted' || r.status === 'tenant_accepted_reschedule') {
+                        statusHtml = '<span class="badge badge-success">Accepted</span>';
+                        actionHtml = `<button class="btn btn-primary btn-sm" onclick="openChatWith(${tenantUser.id}, '${tenantUser.name.replace(/'/g, "\\'")}', ${prop.id})"><i class="fas fa-comments"></i> Chat</button>`;
+                    } else if (r.status === 'declined') {
+                        statusHtml = '<span class="badge badge-danger">Declined</span>';
+                    } else if (r.status === 'rescheduled') {
+                        statusHtml = '<span class="badge badge-info">Awaiting Tenant</span>';
+                    } else if (r.status === 'tenant_declined_reschedule') {
+                        statusHtml = '<span class="badge badge-danger">Tenant Declined Reschedule</span>';
+                    }
+
+                    return `
+                        <tr>
+                            <td><strong>${prop.title}</strong></td>
+                            <td>${tenantUser.name}</td>
+                            <td>${r.date} at ${r.time}<br><small class="text-muted">${r.attendees ? r.attendees + ' attendees' : ''}</small></td>
+                            <td style="max-width: 150px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${r.note || ''}">${r.note || '-'}</td>
+                            <td>${statusHtml}</td>
+                            <td>${actionHtml}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
             const list = document.getElementById('landlordPropertyList');
             if (!myProps.length) { list.innerHTML =
                 '<div class="text-center text-muted" style="padding:30px;"><i class="fas fa-building" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>You haven\'t listed any properties yet.</div>'; return; }
@@ -2449,6 +2859,7 @@
             const title = document.getElementById('propTitle').value.trim();
             const location = document.getElementById('propLocation').value.trim();
             const address = document.getElementById('propAddress').value.trim();
+            const meetingPoint = document.getElementById('propMeetingPoint').value.trim() || address; // default to address
             const price = parseFloat(document.getElementById('propPrice').value);
             const rooms = parseInt(document.getElementById('propRooms').value);
             const density = document.getElementById('propDensity').value;
@@ -2461,7 +2872,7 @@
             const desc = document.getElementById('propDesc').value.trim();
             if (!title || !location || !address || !price || !rooms || !density || !propType)
                 return alert('Please fill all required fields (*).');
-            const newProp = { id: nextPropId++, landlordId: CURRENT_LANDLORD_ID, title, location, address, price, rooms,
+            const newProp = { id: nextPropId++, landlordId: CURRENT_LANDLORD_ID, title, location, address, meetingPoint, price, rooms,
                 density, propType, furnished, parking, security, utilities, status, desc: desc ||
                     'New listing — full details provided.', imgIdx: Math.floor(Math.random() * PROPERTY_IMAGES.length) };
             properties.push(newProp);
@@ -2659,9 +3070,10 @@
         // PEER CHAT (Tenants <-> Landlords)
         // ============================================================
 
-        function openChatWith(peerId, peerName) {
+        function openChatWith(peerId, peerName, propertyId) {
             activeChatPeerId = peerId;
             activeChatPeerName = peerName;
+            activeChatPropertyId = propertyId;
             document.getElementById('peerChatHeader').innerHTML = '<i class="fas fa-user"></i> Chat with ' + peerName;
             document.getElementById('peerChatWindow').classList.add('open');
             if (document.getElementById('chatListModal').classList.contains('active')) {
@@ -2680,12 +3092,46 @@
         function renderPeerChatWindow() {
             if (!activeChatPeerId) return;
             const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
+            const isLandlord = document.getElementById('landlord-dash').classList.contains('active-dash');
+
+            const reqs = viewingRequests.filter(r => r.propertyId === activeChatPropertyId && (r.tenantId === activeChatPeerId || r.tenantId === currentUserId));
+            const req = reqs.length > 0 ? reqs[reqs.length - 1] : null;
+            const isArchived = req ? (req.chatExpiry !== 0 && Date.now() > req.chatExpiry) : true;
 
             const conversation = chats.filter(c =>
-                (c.fromId === currentUserId && c.toId === activeChatPeerId) ||
+                c.propertyId === activeChatPropertyId &&
+                ((c.fromId === currentUserId && c.toId === activeChatPeerId) ||
                 (c.fromId === activeChatPeerId && c.toId === currentUserId) ||
-                (c.fromId === 'system' && c.toId === currentUserId && c.peerId === activeChatPeerId) // Show system warnings to the current user for this specific chat
+                (c.fromId === 'system' && c.toId === currentUserId && c.peerId === activeChatPeerId))
             );
+
+            const chatHeader = document.getElementById('peerChatHeader');
+            chatHeader.innerHTML = '<i class="fas fa-user"></i> Chat with ' + activeChatPeerName + (isArchived ? ' (Archived)' : '');
+
+            const inputArea = document.querySelector('#peerChatWindow .ai-chat-input');
+            if (isArchived) {
+                inputArea.style.display = 'none';
+            } else {
+                inputArea.style.display = 'flex';
+                if (isLandlord && req) {
+                    // Check if extend button already exists, update or create
+                    let extendBtn = document.getElementById('extendChatBtn');
+                    if (!extendBtn) {
+                        extendBtn = document.createElement('button');
+                        extendBtn.id = 'extendChatBtn';
+                        extendBtn.className = 'btn btn-outline btn-sm';
+                        extendBtn.style.margin = '4px 8px';
+                        extendBtn.style.padding = '4px 8px';
+                        extendBtn.innerHTML = '<i class="fas fa-clock"></i> Extend';
+                        inputArea.parentNode.insertBefore(extendBtn, inputArea);
+                    }
+                    extendBtn.onclick = () => extendChatExpiry(req.id);
+                    extendBtn.style.display = 'block';
+                } else {
+                    const extendBtn = document.getElementById('extendChatBtn');
+                    if(extendBtn) extendBtn.style.display = 'none';
+                }
+            }
 
             const body = document.getElementById('peerChatBody');
             body.innerHTML = conversation.length === 0 ? '<div class="text-center text-muted" style="margin-top: 20px; font-size: 0.85rem;">No messages yet. Say hi!</div>' : '';
@@ -2714,8 +3160,8 @@
 
             const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
 
-            // AI/Smart Message Filter
-            const contactRegex = /(\b07\d{8}\b|\b07\d\s\d{3}\s\d{4}\b|\+?\d{1,3}[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{4}|[\w\.-]+@[\w\.-]+\.\w+|www\.[^\s]+|https?:\/\/[^\s]+|facebook\.com\/[^\s]+|instagram\.com\/[^\s]+|t\.me\/[^\s]+|\@\w+)/gi;
+            // AI/Smart Message Filter - Robust
+            const contactRegex = /(\b0\d{9}\b|\b\+?\d{1,4}[\s-]?\d{3,4}[\s-]?\d{3,4}\b|[\w\.-]+@[\w\.-]+\.\w+|www\.[^\s]+|https?:\/\/[^\s]+|facebook\.com\/[^\s]+|instagram\.com\/[^\s]+|t\.me\/[^\s]+|wa\.me\/[^\s]+|wa\.link\/[^\s]+|whatsapp|\@\w+)/gi;
             
             let isBlocked = false;
             if (contactRegex.test(text)) {
@@ -2727,17 +3173,19 @@
                 toId: activeChatPeerId,
                 text: text,
                 timestamp: Date.now(),
-                blocked: isBlocked
+                blocked: isBlocked,
+                propertyId: activeChatPropertyId // Associated with the viewing request property
             });
             
             if (isBlocked) {
                  chats.push({
                     fromId: 'system',
                     toId: currentUserId,
-                    peerId: activeChatPeerId, // Add peerId to associate warning with specific chat
-                    text: '⚠️ For your security, personal contact details cannot be shared until the rental process is complete.',
+                    peerId: activeChatPeerId,
+                    text: '⚠️ For your safety and security, sharing personal contact information outside HomeBase is not permitted before the rental process is completed.',
                     timestamp: Date.now() + 1,
-                    isSystemWarning: true
+                    isSystemWarning: true,
+                    propertyId: activeChatPropertyId
                 });
             }
 
@@ -2745,38 +3193,33 @@
             renderPeerChatWindow();
         }
 
+        function extendChatExpiry(requestId) {
+            const req = viewingRequests.find(r => r.id === requestId);
+            if (req) {
+                req.chatExpiry = req.chatExpiry + (48 * 60 * 60 * 1000); // add 48 hours
+                alert('Chat extended by 48 hours.');
+                renderPeerChatWindow();
+            }
+        }
+
         function openChatListModal() {
-            // For landlord to see list of tenants they have chatted with or CAN chat with
-            // In this prototype, we'll list all tenants that have unlocked their property or messaged them
             const listContainer = document.getElementById('chatListContainer');
             listContainer.innerHTML = '';
 
-            // Find all unique users who have chatted with CURRENT_LANDLORD_ID
-            let chatUserIds = new Set();
-            chats.forEach(c => {
-                if (c.fromId === CURRENT_LANDLORD_ID) chatUserIds.add(c.toId);
-                if (c.toId === CURRENT_LANDLORD_ID) chatUserIds.add(c.fromId);
-            });
+            const myIncomingRequests = viewingRequests.filter(r => r.landlordId === CURRENT_LANDLORD_ID);
 
-            // Also add tenants who unlocked their property (from transactions)
-            transactions.forEach(t => {
-                if (t.landlord === 'Grace Chiweshe') {
-                    const tenantUser = users.find(u => u.name === t.tenant);
-                    if (tenantUser) chatUserIds.add(tenantUser.id);
-                }
-            });
-
-            if (chatUserIds.size === 0) {
+            if (myIncomingRequests.length === 0) {
                 listContainer.innerHTML = '<div class="text-muted text-center" style="padding: 20px;">No conversations yet.</div>';
             } else {
-                chatUserIds.forEach(id => {
-                    const user = users.find(u => u.id === id);
-                    if (user) {
+                myIncomingRequests.forEach(req => {
+                    const user = users.find(u => u.id === req.tenantId);
+                    const prop = properties.find(p => p.id === req.propertyId);
+                    if (user && prop) {
                         listContainer.innerHTML += `
-                            <div class="lprop-item" style="cursor: pointer;" onclick="openChatWith(${user.id}, '${user.name.replace(/'/g, "\\'")}')">
+                            <div class="lprop-item" style="cursor: pointer;" onclick="openChatWith(${user.id}, '${user.name.replace(/'/g, "\\'")}', ${prop.id})">
                                 <div class="info">
                                     <strong><i class="fas fa-user-circle"></i> ${user.name}</strong>
-                                    <div class="sub">${user.role.toUpperCase()}</div>
+                                    <div class="sub">${prop.title}</div>
                                 </div>
                                 <div class="actions">
                                     <button class="btn btn-outline btn-sm"><i class="fas fa-comment"></i> Open</button>
@@ -2868,28 +3311,62 @@
         // ============================================================
         // INIT
         // ============================================================
-        let unlockedProperties = {};
-        setInterval(() => {
-            let hasUnlocked = false;
-            let needsRender = false;
-            const now = Date.now();
-            for (const [id, time] of Object.entries(unlockedProperties)) {
-                hasUnlocked = true;
-                if (now - time >= 120000) {
-                    delete unlockedProperties[id];
-                    needsRender = true;
-                }
-            }
-            if (hasUnlocked && document.getElementById('tenant-dash').classList.contains('active-dash')) {
-                renderTenant();
-            } else if (needsRender) {
-                renderTenant();
-            }
-        }, 1000);
+
 
         document.getElementById('aiChatBtn').style.display = 'none';
 
-        updateTenantPointsDisplay();
+
+        setInterval(() => {
+            const now = Date.now();
+            let stateChanged = false;
+
+            viewingRequests.forEach(req => {
+                if(req.status === 'accepted' || req.status === 'tenant_accepted_reschedule') {
+                    const viewingDateTime = new Date(`${req.date}T${req.time}`).getTime();
+
+                    // 24 hours before reminder
+                    if (viewingDateTime - now <= (24 * 60 * 60 * 1000) && viewingDateTime - now > 0 && !req.reminded) {
+                        req.reminded = true;
+                        addNotification(req.tenantId, `Reminder: You have a viewing scheduled in 24 hours for property ID ${req.propertyId}.`);
+                        addNotification(req.landlordId, `Reminder: You have a viewing scheduled in 24 hours for property ID ${req.propertyId}.`);
+                    }
+
+                    // Viewing completed (time passed)
+                    if (now >= viewingDateTime && !req.completedNotified) {
+                        req.completedNotified = true;
+                        addNotification(req.tenantId, `Your viewing for property ID ${req.propertyId} has completed.`);
+                        addNotification(req.landlordId, `Viewing for property ID ${req.propertyId} has completed.`);
+                    }
+                }
+
+                // 7 days inactivity check
+                // Find latest message timestamp for this request's chat
+                if(req.chatExpiry && now < req.chatExpiry) {
+                    const chatMsgs = chats.filter(c => c.propertyId === req.propertyId && (c.fromId === req.tenantId || c.toId === req.tenantId));
+                    const lastActivity = chatMsgs.length > 0 ? chatMsgs[chatMsgs.length - 1].timestamp : req.createdAt;
+
+                    if (now - lastActivity > (7 * 24 * 60 * 60 * 1000)) {
+                        req.chatExpiry = now - 1000; // Force archive
+                        addNotification(req.tenantId, `Chat for property ID ${req.propertyId} archived due to inactivity.`);
+                        addNotification(req.landlordId, `Chat for property ID ${req.propertyId} archived due to inactivity.`);
+                        stateChanged = true;
+                    }
+                }
+
+                // Normal Expiry check (Archived)
+                if (req.chatExpiry && now >= req.chatExpiry && !req.archivedNotified) {
+                    req.archivedNotified = true;
+                    addNotification(req.tenantId, `Chat for property ID ${req.propertyId} has been archived.`);
+                    addNotification(req.landlordId, `Chat for property ID ${req.propertyId} has been archived.`);
+                    stateChanged = true;
+                }
+            });
+
+            if (stateChanged && activeChatPropertyId) {
+                renderPeerChatWindow();
+            }
+        }, 10000); // Check every 10s for prototype
+updateTenantPointsDisplay();
         console.log('HomeBase ready — all features active. AI bot, Points, WhatsApp fallback, Density filters, SmileCash & OneMoney enabled.');
     </script>
 </body>

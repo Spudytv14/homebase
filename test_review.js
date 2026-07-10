@@ -2,14 +2,14 @@
 const fs = require('fs');
 const html = fs.readFileSync('index.html', 'utf8');
 
-// Check what is stored in unlockedProperties
-const unlockedPropertiesAssignment = html.match(/unlockedProperties\[(.*?)\] = (.*?);/g);
-console.log(unlockedPropertiesAssignment);
-
-// Check if there is an existing setInterval
-const setIntervalMatch = html.match(/setInterval\(\(\) => \{[\s\S]*?\}, 1000\);/);
-if (setIntervalMatch) {
-  console.log('setInterval found');
+if (html.includes('viewingRequests')) {
+    console.log('Test Pass: viewingRequests is defined');
 } else {
-  console.log('setInterval NOT found');
+    throw new Error('Test Fail: viewingRequests not found');
+}
+
+if (!html.includes('setInterval(() => {')) {
+    console.log('Test Pass: 120s loop is gone');
+} else {
+    throw new Error('Test Fail: 120s loop still present');
 }
