@@ -1700,7 +1700,7 @@
                 <div id="adminPaneVerifications" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-clock"></i> Verification Queue</h3><div class="table-wrap"><table><thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="adminVerificationTable"></tbody></table></div></div>
                 <div id="adminPaneAdmins" class="admin-pane">
                     <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-user-shield"></i> Manage Admins & Emails</h3>
-
+                    
                     <div style="display: flex; gap: 24px; flex-wrap: wrap;">
                         <!-- Add New Admin Form -->
                         <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
@@ -2211,7 +2211,7 @@
             const lockedNotice = document.querySelector('#tenant-dash .profile-locked');
             const filterBar = document.getElementById('tenantFilters');
             const propertyGrid = document.getElementById('tenantPropertyGrid');
-            const noResult = document.getElementById('tenantNoResult');
+            const emptyResult = document.getElementById('tenantNoResult');
 
             if (tenant && (tenant.status === 'paused' || tenant.status === 'revoked')) {
                 lockedNotice.innerHTML = `<i class="fas fa-ban"></i> <span><strong>Profile ${tenant.status}.</strong> Your account is currently under investigation or revoked. You cannot view or unlock properties. Contact support.</span>`;
@@ -2220,7 +2220,7 @@
                 lockedNotice.style.color = '#b91c1c';
                 filterBar.style.display = 'none';
                 propertyGrid.style.display = 'none';
-                noResult.style.display = 'none';
+                emptyResult.style.display = 'none';
                 return;
             } else {
                 lockedNotice.innerHTML = `<i class="fas fa-shield-alt"></i> <span><strong>Profile locked for security.</strong> Name & ID verified. Contact admin to update your details.</span>`;
@@ -2498,11 +2498,12 @@
                     <td><span class="badge ${u.status==='active'||u.status==='verified'?'badge-success':u.status==='rejected'||u.status==='revoked'?'badge-danger':u.status==='paused'?'badge-warning':'badge-warning'}">${u.status}</span></td>
                     <td>
                         ${u.contact === 'admin@homebase.co.zw' ? '<em>Master Admin</em>' : `
-                        <div style="display:flex;gap:4px;">
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;">
                             <button class="btn btn-outline btn-sm" title="Pause" style="padding:4px 8px;" onclick="pauseUser(${u.id})"><i class="fas fa-pause"></i></button>
                             <button class="btn btn-outline btn-sm" title="Revoke" style="padding:4px 8px;" onclick="revokeUser(${u.id})"><i class="fas fa-ban"></i></button>
                             <button class="btn btn-outline btn-sm" title="Delete" style="padding:4px 8px;" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
                             <button class="btn btn-outline btn-sm" title="Reset Password" style="padding:4px 8px;" onclick="openResetPasswordModal(${u.id})"><i class="fas fa-key"></i></button>
+                            ${u.status !== 'verified' ? `<button class="btn btn-outline btn-sm" title="Verify (Blue Tick)" style="padding:4px 8px;" onclick="verifyUser(${u.id})"><i class="fas fa-check-circle" style="color:var(--verified);"></i></button>` : ''}
                         </div>
                         `}
                     </td>
@@ -2554,6 +2555,14 @@
         function deleteUser(id) {
             if (confirm('Are you sure you want to completely remove this user? This action cannot be undone.')) {
                 users = users.filter(u => u.id !== id);
+                renderAdmin();
+            }
+        }
+
+        function verifyUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.status = 'verified';
                 renderAdmin();
             }
         }
@@ -2623,15 +2632,15 @@
             e.preventDefault();
             const name = document.getElementById('genEmailName').value.trim().toLowerCase().replace(/\s+/g, '');
             const dept = document.getElementById('genEmailDept').value;
-
+            
             const newEmail = `${name}@homebase.${dept}.com`;
-
+            
             const list = document.getElementById('generatedEmailList');
             const item = document.createElement('div');
             item.style.cssText = 'padding: 8px 12px; background: #0f172a; border: 1px dashed #60a5fa; color: #e2e8f0; border-radius: 4px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between;';
             item.innerHTML = `<span><i class="fas fa-envelope" style="color:#60a5fa; margin-right:8px;"></i> ${newEmail}</span> <button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>`;
             list.appendChild(item);
-
+            
             document.getElementById('generateEmailForm').reset();
         }
 
