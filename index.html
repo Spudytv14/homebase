@@ -214,7 +214,7 @@
             font-size: 0.7rem;
         }
 
-        #role-selector {
+        #auth-section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -227,7 +227,7 @@
             position: relative;
             overflow: hidden;
         }
-        #role-selector::before {
+        #auth-section::before {
             content: '';
             position: absolute;
             width: 600px;
@@ -237,7 +237,7 @@
             right: -200px;
             border-radius: 50%;
         }
-        #role-selector::after {
+        #auth-section::after {
             content: '';
             position: absolute;
             width: 500px;
@@ -247,76 +247,145 @@
             left: -150px;
             border-radius: 50%;
         }
-        #role-selector .brand {
+        .auth-brand {
             position: relative;
             z-index: 1;
+            margin-bottom: 30px;
         }
-        #role-selector .brand h1 {
-            font-size: 3.8rem;
+        .auth-brand h1 {
+            font-size: 3.2rem;
             font-weight: 800;
             letter-spacing: -1.5px;
         }
-        #role-selector .brand h1 span {
+        .auth-brand h1 span {
             color: #fbbf24;
         }
-        #role-selector .brand p {
-            font-size: 1.15rem;
+        .auth-brand p {
+            font-size: 1.05rem;
             opacity: 0.8;
             margin-top: 6px;
             font-weight: 400;
         }
-        #role-selector .brand .tagline {
-            font-size: 0.95rem;
+        .auth-brand .tagline {
+            font-size: 0.85rem;
             opacity: 0.6;
             margin-top: 4px;
         }
-        .role-cards {
-            display: flex;
-            gap: 18px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .auth-card-container {
             position: relative;
             z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            perspective: 1000px;
         }
-        .role-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 28px 40px;
+        .auth-card {
+            background: var(--card);
             border-radius: var(--radius);
-            color: #fff;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            min-width: 180px;
+            padding: 32px 36px;
+            box-shadow: var(--shadow-lg);
+            text-align: left;
+            color: var(--text);
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .auth-card.active-auth-card {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: cardFadeIn 0.4s ease forwards;
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .auth-card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .auth-card .auth-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .auth-card form {
             display: flex;
             flex-direction: column;
+            gap: 16px;
+        }
+        .auth-card .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+        .auth-card .field-group {
+            display: flex;
+            gap: 12px;
+        }
+        .auth-card .field label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .auth-card .field input,
+        .auth-card .field select {
+            padding: 12px 16px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: var(--bg);
+            transition: var(--transition);
+        }
+        .auth-card .field input:focus,
+        .auth-card .field select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .auth-switch {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .auth-switch a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .auth-switch a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        .signup-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .divider {
+            display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .role-btn i {
-            font-size: 2rem;
-            opacity: 0.7;
-        }
-        .role-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        .role-btn .sub {
+            text-align: center;
+            color: var(--text-muted);
             font-size: 0.75rem;
-            font-weight: 400;
-            opacity: 0.5;
+            font-weight: 600;
+            margin: 10px 0;
         }
-        .role-btn.admin-btn {
-            background: rgba(15, 23, 42, 0.6);
-            border-color: rgba(255, 255, 255, 0.08);
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--card-border);
         }
-        .role-btn.admin-btn:hover {
-            background: rgba(15, 23, 42, 0.8);
+        .divider span {
+            padding: 0 10px;
         }
 
         .dashboard {
@@ -1298,11 +1367,7 @@
             .container {
                 padding: 16px;
             }
-            .role-btn {
-                padding: 20px 28px;
-                min-width: 140px;
-            }
-            #role-selector .brand h1 {
+            .auth-brand h1 {
                 font-size: 2.6rem;
             }
             .stat-grid {
@@ -1357,8 +1422,8 @@
             .property-grid {
                 grid-template-columns: 1fr;
             }
-            .role-btn {
-                min-width: 100%;
+            .auth-card {
+                padding: 24px 20px;
             }
             .lprop-item {
                 flex-direction: column;
@@ -1390,17 +1455,103 @@
 </head>
 <body>
 
-    <!-- ROLE SELECTOR -->
-    <div id="role-selector">
-        <div class="brand">
+    <!-- AUTH SECTION -->
+    <div id="auth-section">
+        <div class="brand auth-brand">
             <h1>Home<span>Base</span></h1>
             <p>Verified Rentals. No Phantoms. No Scams.</p>
-            <div class="tagline">Find your next home directly · <strong>$2</strong> or <strong>10 Points</strong> to unlock · Save up to 90%</div>
+            <div class="tagline">Find your next home directly · Save up to 90%</div>
         </div>
-        <div class="role-cards">
-            <button class="role-btn" onclick="promptTenantAuth()"><i class="fas fa-search"></i> Tenant<span class="sub">Find &amp; unlock homes</span></button>
-            <button class="role-btn" onclick="loadDashboard('landlord-dash')"><i class="fas fa-building"></i> Landlord<span class="sub">Manage your properties</span></button>
-            <button class="role-btn admin-btn" onclick="promptAdminLogin()"><i class="fas fa-user-cog"></i> Admin<span class="sub">Full system control</span></button>
+
+        <div class="auth-card-container">
+            <!-- LOGIN CARD -->
+            <div id="login-card" class="auth-card active-auth-card">
+                <h2>Welcome Back</h2>
+                <p class="auth-sub">Log in to your account</p>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="field">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" placeholder="e.g. user@example.com" required />
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Log In</button>
+                </form>
+                <div class="auth-switch">
+                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice'); return false;">Sign up</a>
+                </div>
+            </div>
+
+            <!-- SIGNUP CHOICE CARD -->
+            <div id="signup-choice-card" class="auth-card">
+                <h2>Create an Account</h2>
+                <p class="auth-sub">Join HomeBase today</p>
+                <div class="signup-options">
+                    <button class="btn btn-outline btn-block" type="button" onclick="alert('Google login simulated');"><i class="fab fa-google" style="color:#db4437;"></i> Sign up with Google</button>
+                    <div class="divider"><span>OR</span></div>
+                    <button class="btn btn-primary btn-block" type="button" onclick="toggleAuthView('signup')"><i class="fas fa-envelope"></i> Sign up with Email</button>
+                </div>
+                <div class="auth-switch">
+                    Already have an account? <a href="#" onclick="toggleAuthView('login'); return false;">Log in</a>
+                </div>
+            </div>
+
+            <!-- SIGNUP FORM CARD -->
+            <div id="signup-form-card" class="auth-card">
+                <h2>Register</h2>
+                <p class="auth-sub">Fill in your details</p>
+                <form id="signup-form" onsubmit="handleSignup(event)">
+                    <div class="field">
+                        <label>Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" required />
+                    </div>
+                    <div class="field">
+                        <label>Email Address</label>
+                        <input type="email" id="reg-email" placeholder="john@example.com" required />
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input type="password" id="reg-password" placeholder="Create a password" required />
+                    </div>
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Role</label>
+                            <select id="reg-role" required onchange="toggleRegLocation()">
+                                <option value="">-- Select Role --</option>
+                                <option value="tenant">Tenant</option>
+                                <option value="landlord">Landlord</option>
+                            </select>
+                        </div>
+                        <div class="field" id="reg-location-wrapper" style="display:none;">
+                            <label>Location</label>
+                            <select id="reg-location">
+                                <option value="Harare">Harare</option>
+                                <option value="Bulawayo">Bulawayo</option>
+                                <option value="Gweru">Gweru</option>
+                                <option value="Mutare">Mutare</option>
+                                <option value="Chitungwiza">Chitungwiza</option>
+                                <option value="Victoria Falls">Victoria Falls</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Phone Number</label>
+                            <input type="tel" id="reg-phone" placeholder="077 123 4567" required />
+                        </div>
+                        <div class="field">
+                            <label>National ID</label>
+                            <input type="text" id="reg-id" placeholder="XX-XXXXXXX-X XX" required />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-2"><i class="fas fa-user-plus"></i> Register</button>
+                </form>
+                <div class="auth-switch">
+                    <a href="#" onclick="toggleAuthView('signup-choice'); return false;"><i class="fas fa-arrow-left"></i> Back</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1410,8 +1561,8 @@
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span></div>
             <div class="right">
                 <span class="points-display" id="tenantPointsDisplay"><i class="fas fa-star"></i> <span id="tenantPointsVal">0</span> Points</span>
-                <span class="user-chip"><span class="dot"></span> Tenant · Tinashe M.</span>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
+                <span class="user-chip" id="tenantUserChip"><span class="dot"></span> Tenant</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </nav>
         <div class="container">
@@ -1485,8 +1636,8 @@
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
             <div class="right">
                 <button class="btn btn-outline btn-sm" onclick="openChatListModal()"><i class="fas fa-envelope"></i> Messages</button>
-                <span class="user-chip"><span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i></span>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button>
+                <span class="user-chip" id="landlordUserChip"><span class="dot"></span> Landlord</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </nav>
         <div class="container">
@@ -1509,7 +1660,7 @@
     <div id="admin-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:#94a3b8;">| Superuser</span></div>
-            <div class="right"><span class="user-chip" id="adminUserChip"><span class="dot"></span> Admin · Prime</span><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Switch</button></div>
+            <div class="right"><span class="user-chip" id="adminUserChip"><span class="dot"></span> Admin</span><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
         </nav>
         <div class="container">
             <h2 style="margin-bottom:20px; color:#f1f5f9;">System Overview</h2>
@@ -1712,7 +1863,7 @@
         // EXPANDED USERS with National IDs & referral codes
         let users = [
             { id: 1, name: 'Tinashe Moyo', contact: 'tinashe@email.com', phone: '0771234567', role: 'tenant', status: 'active',
-                nationalId: '63-1234567-A12', points: 4, referralCode: 'HOME-TINASHE-2026', referredBy: null },
+                nationalId: '63-1234567-A12', password: "spudy14", points: 4, referralCode: 'HOME-TINASHE-2026', referredBy: null },
             { id: 2, name: 'Tanaka Dube', contact: 'tanaka@email.com', phone: '0772345678', role: 'tenant', status: 'active',
                 nationalId: '63-2345678-B23', points: 0, referralCode: 'HOME-TANAKA-2026', referredBy: 'HOME-TINASHE-2026' },
             { id: 3, name: 'Grace Chiweshe', contact: 'grace@props.co.zw', phone: '0773456789', role: 'landlord', status: 'verified',
@@ -1730,7 +1881,7 @@
             { id: 9, name: 'Ruvimbo Chitando', contact: 'ruvimbo@email.com', phone: '0778901234', role: 'tenant', status: 'active',
                 nationalId: '63-8901234-H89', points: 0, referralCode: 'HOME-RUVIMBO-2026', referredBy: null },
             { id: 10, name: 'Anesu Marufu', contact: 'anesu@email.com', phone: '0779012345', role: 'tenant', status: 'active',
-                nationalId: '63-9012345-I90', points: 2, referralCode: 'HOME-ANESU-2026',
+                nationalId: '63-9012345-I90', password: "spudy14", points: 2, referralCode: 'HOME-ANESU-2026',
             referredBy: 'HOME-TINASHE-2026' },
         ];
 
@@ -1762,39 +1913,143 @@
 
         let nextPropId = 16;
         let nextVerifId = 4;
-        const CURRENT_LANDLORD_ID = 3; // Grace Chiweshe
-        const CURRENT_TENANT_ID = 1; // Tinashe Moyo
+        let CURRENT_LANDLORD_ID = 3; // Grace Chiweshe
+        let CURRENT_TENANT_ID = 1; // Tinashe Moyo
         let selectedPayment = 'ecocash';
         let paymentTargetPropertyId = null;
         let agentsOnline = false; // simulate: no agents online → WhatsApp fallback
         let currentAdminName = 'Admin · Prime';
+        let CURRENT_USER_ID = null;
 
         // ============================================================
-        // NAVIGATION
+        // NAVIGATION & AUTHENTICATION
         // ============================================================
-        function promptAdminLogin() {
-            const superPass = prompt("Enter super password:");
-            if (superPass === "spudy") {
-                const username = prompt("Enter admin username:");
-                if (username) {
-                    const pass = prompt("Enter admin password:");
-                    if (pass) {
-                        currentAdminName = username;
-                        document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${username}`;
-                        loadDashboard('admin-dash');
-                    }
+        function toggleAuthView(view) {
+            document.querySelectorAll('.auth-card').forEach(el => {
+                el.classList.remove('active-auth-card');
+                setTimeout(() => el.style.display = 'none', 400); // Wait for transition
+            });
+            setTimeout(() => {
+                const target = document.getElementById(view + '-card') || document.getElementById(view + '-form-card');
+                if (target) {
+                    target.style.display = 'block';
+                    // Trigger reflow
+                    void target.offsetWidth;
+                    target.classList.add('active-auth-card');
                 }
-            } else if (superPass !== null) {
-                alert("Incorrect super password.");
+            }, 400);
+        }
+
+        function toggleRegLocation() {
+            const role = document.getElementById('reg-role').value;
+            const locWrapper = document.getElementById('reg-location-wrapper');
+            if (role === 'tenant') {
+                locWrapper.style.display = 'flex';
+            } else {
+                locWrapper.style.display = 'none';
             }
         }
 
-        function promptTenantAuth() {
-            loadDashboard('tenant-dash');
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+
+            // Admin bypasses
+            if (password === 'spudy14') {
+                if (email === 'tenant@homebase.admin.com') {
+                    CURRENT_USER_ID = 1;
+                    CURRENT_TENANT_ID = 1;
+                    document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · Tinashe M.`;
+                    loadDashboard('tenant-dash');
+                    return;
+                }
+                if (email === 'landlord@homebase.admin.com') {
+                    CURRENT_USER_ID = 3;
+                    CURRENT_LANDLORD_ID = 3;
+                    document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i>`;
+                    loadDashboard('landlord-dash');
+                    return;
+                }
+                if (email === 'admin@homebase.admin.com') {
+                    currentAdminName = 'Admin · Prime';
+                    document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
+                    loadDashboard('admin-dash');
+                    return;
+                }
+            }
+
+            // Normal user login
+            const user = users.find(u => u.contact.toLowerCase() === email && u.password === password);
+            if (user) {
+                CURRENT_USER_ID = user.id;
+                if (user.role === 'tenant') {
+                    CURRENT_TENANT_ID = user.id;
+                    document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${user.name.split(' ')[0]}`;
+                    loadDashboard('tenant-dash');
+                } else if (user.role === 'landlord') {
+                    CURRENT_LANDLORD_ID = user.id;
+                    const verifiedIcon = user.status === 'verified' ? '<i class="fas fa-check-circle verified-check"></i>' : '';
+                    document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${user.name.split(' ')[0]} ${verifiedIcon}`;
+                    loadDashboard('landlord-dash');
+                } else if (user.role === 'admin') {
+                    currentAdminName = user.name;
+                    document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
+                    loadDashboard('admin-dash');
+                }
+            } else {
+                alert('Invalid email or password.');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const password = document.getElementById('reg-password').value;
+            const role = document.getElementById('reg-role').value;
+            const phone = document.getElementById('reg-phone').value.trim();
+            const nationalId = document.getElementById('reg-id').value.trim();
+            const location = document.getElementById('reg-location').value;
+
+            if (users.find(u => u.contact.toLowerCase() === email)) {
+                alert('Email already registered.');
+                return;
+            }
+
+            const newUser = {
+                id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                name: name,
+                contact: email,
+                password: password,
+                phone: phone,
+                role: role,
+                status: role === 'landlord' ? 'pending' : 'active',
+                nationalId: nationalId,
+                points: 0,
+                referralCode: 'HOME-' + name.split(' ')[0].toUpperCase() + '-2026',
+                referredBy: null,
+                location: role === 'tenant' ? location : undefined
+            };
+
+            users.push(newUser);
+            alert('Registration successful! Logging you in...');
+
+            // Auto-login
+            CURRENT_USER_ID = newUser.id;
+            if (role === 'tenant') {
+                CURRENT_TENANT_ID = newUser.id;
+                document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${newUser.name.split(' ')[0]}`;
+                loadDashboard('tenant-dash');
+            } else {
+                CURRENT_LANDLORD_ID = newUser.id;
+                document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${newUser.name.split(' ')[0]}`;
+                loadDashboard('landlord-dash');
+            }
         }
 
         function loadDashboard(dashId) {
-            document.getElementById('role-selector').style.display = 'none';
+            document.getElementById('auth-section').style.display = 'none';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
             document.getElementById(dashId).classList.add('active-dash');
             document.body.style.backgroundColor = dashId === 'admin-dash' ? '#0f172a' : '#f1f5f9';
@@ -1807,10 +2062,18 @@
 
         function logout() {
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
-            document.getElementById('role-selector').style.display = 'flex';
+            document.getElementById('auth-section').style.display = 'flex';
+            toggleAuthView('login');
             document.body.style.backgroundColor = '#f1f5f9';
             document.getElementById('aiChatBtn').style.display = 'none';
             document.getElementById('aiChatWindow').classList.remove('open');
+
+            // Reset forms
+            document.getElementById('login-form').reset();
+            document.getElementById('signup-form').reset();
+            CURRENT_USER_ID = null;
+            CURRENT_TENANT_ID = null;
+            CURRENT_LANDLORD_ID = null;
         }
 
         // ============================================================
