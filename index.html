@@ -2498,11 +2498,12 @@
                     <td><span class="badge ${u.status==='active'||u.status==='verified'?'badge-success':u.status==='rejected'||u.status==='revoked'?'badge-danger':u.status==='paused'?'badge-warning':'badge-warning'}">${u.status}</span></td>
                     <td>
                         ${u.contact === 'admin@homebase.co.zw' ? '<em>Master Admin</em>' : `
-                        <div style="display:flex;gap:4px;">
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;">
                             <button class="btn btn-outline btn-sm" title="Pause" style="padding:4px 8px;" onclick="pauseUser(${u.id})"><i class="fas fa-pause"></i></button>
                             <button class="btn btn-outline btn-sm" title="Revoke" style="padding:4px 8px;" onclick="revokeUser(${u.id})"><i class="fas fa-ban"></i></button>
                             <button class="btn btn-outline btn-sm" title="Delete" style="padding:4px 8px;" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
                             <button class="btn btn-outline btn-sm" title="Reset Password" style="padding:4px 8px;" onclick="openResetPasswordModal(${u.id})"><i class="fas fa-key"></i></button>
+                            ${u.status !== 'verified' ? `<button class="btn btn-outline btn-sm" title="Verify (Blue Tick)" style="padding:4px 8px;" onclick="verifyUser(${u.id})"><i class="fas fa-check-circle" style="color:var(--verified);"></i></button>` : ''}
                         </div>
                         `}
                     </td>
@@ -2554,6 +2555,14 @@
         function deleteUser(id) {
             if (confirm('Are you sure you want to completely remove this user? This action cannot be undone.')) {
                 users = users.filter(u => u.id !== id);
+                renderAdmin();
+            }
+        }
+
+        function verifyUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.status = 'verified';
                 renderAdmin();
             }
         }
