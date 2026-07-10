@@ -1555,6 +1555,29 @@
         </div>
     </div>
 
+    <!-- MODAL: Reset Password -->
+    <div id="resetPasswordModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeResetPasswordModal()">&times;</button>
+            <h2><i class="fas fa-key"></i> Reset Password</h2>
+            <p style="color:var(--text-muted); margin-bottom: 15px;">Reset password for <strong id="resetPwdTargetName">User</strong>.</p>
+            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
+                <input type="hidden" id="resetPwdTargetId" />
+                <div class="field">
+                    <label>New Password</label>
+                    <input type="text" id="resetPwdInput" placeholder="Enter new password" required />
+                </div>
+                <div class="form-actions" style="justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="setSpudy14Pwd()">Default (spudy14)</button>
+                    <div>
+                        <button type="button" class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- TENANT DASHBOARD -->
     <div id="tenant-dash" class="dashboard">
         <nav class="navbar">
@@ -1670,10 +1693,63 @@
                     <button class="active" data-admin-tab="transactions"><i class="fas fa-receipt"></i> Transactions</button>
                     <button data-admin-tab="users"><i class="fas fa-users"></i> Users</button>
                     <button data-admin-tab="verifications"><i class="fas fa-check-circle"></i> Verifications</button>
+                    <button data-admin-tab="admins"><i class="fas fa-user-shield"></i> Admins & Emails</button>
                 </div>
                 <div id="adminPaneTransactions" class="admin-pane active"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-list"></i> All Transactions</h3><div class="table-wrap"><table><thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>Ref</th><th>Status</th></tr></thead><tbody id="adminTransactionTable"></tbody></table></div></div>
-                <div id="adminPaneUsers" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Nat. ID</th><th>Role</th><th>Status</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div>
+                <div id="adminPaneUsers" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Nat. ID</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div>
                 <div id="adminPaneVerifications" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-clock"></i> Verification Queue</h3><div class="table-wrap"><table><thead><tr><th>Landlord</th><th>Document</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="adminVerificationTable"></tbody></table></div></div>
+                <div id="adminPaneAdmins" class="admin-pane">
+                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-user-shield"></i> Manage Admins & Emails</h3>
+
+                    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                        <!-- Add New Admin Form -->
+                        <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
+                            <h4 style="margin-bottom: 12px; color: #f1f5f9;">Create Admin Account</h4>
+                            <form id="createAdminForm" onsubmit="handleCreateAdmin(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="field" style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="color:#94a3b8; font-size: 0.85rem;">Admin Name</label>
+                                    <input type="text" id="newAdminName" placeholder="e.g. John Doe" required style="padding: 10px; background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: var(--radius-sm);" />
+                                </div>
+                                <div class="field" style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="color:#94a3b8; font-size: 0.85rem;">Admin Login Email</label>
+                                    <input type="email" id="newAdminEmail" placeholder="admin@homebase.co.zw" required style="padding: 10px; background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: var(--radius-sm);" />
+                                </div>
+                                <div class="field" style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="color:#94a3b8; font-size: 0.85rem;">Password</label>
+                                    <input type="password" id="newAdminPwd" placeholder="Password" required style="padding: 10px; background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: var(--radius-sm);" />
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 8px;"><i class="fas fa-plus"></i> Create Admin</button>
+                            </form>
+                        </div>
+
+                        <!-- Generate Custom Email Form -->
+                        <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
+                            <h4 style="margin-bottom: 12px; color: #f1f5f9;">Generate Company Email</h4>
+                            <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 12px;">Generates mocked emails for marketing purposes (e.g. name@homebase.department.com)</p>
+                            <form id="generateEmailForm" onsubmit="handleGenerateEmail(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="field" style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="color:#94a3b8; font-size: 0.85rem;">Person Name (First Name)</label>
+                                    <input type="text" id="genEmailName" placeholder="e.g. Tinashe" required style="padding: 10px; background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: var(--radius-sm);" />
+                                </div>
+                                <div class="field" style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="color:#94a3b8; font-size: 0.85rem;">Department</label>
+                                    <select id="genEmailDept" required style="padding: 10px; background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: var(--radius-sm);">
+                                        <option value="marketing">Marketing</option>
+                                        <option value="sales">Sales</option>
+                                        <option value="support">Support</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="hr">HR</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-outline" style="margin-top: 8px;"><i class="fas fa-magic"></i> Generate</button>
+                            </form>
+
+                            <div id="generatedEmailList" style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+                                <!-- Generated emails will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2131,6 +2207,30 @@
         // TENANT RENDER
         // ============================================================
         function renderTenant() {
+            const tenant = getCurrentTenant();
+            const lockedNotice = document.querySelector('#tenant-dash .profile-locked');
+            const filterBar = document.getElementById('tenantFilters');
+            const propertyGrid = document.getElementById('tenantPropertyGrid');
+            const noResult = document.getElementById('tenantNoResult');
+
+            if (tenant && (tenant.status === 'paused' || tenant.status === 'revoked')) {
+                lockedNotice.innerHTML = `<i class="fas fa-ban"></i> <span><strong>Profile ${tenant.status}.</strong> Your account is currently under investigation or revoked. You cannot view or unlock properties. Contact support.</span>`;
+                lockedNotice.style.background = '#fee2e2';
+                lockedNotice.style.borderColor = '#fca5a5';
+                lockedNotice.style.color = '#b91c1c';
+                filterBar.style.display = 'none';
+                propertyGrid.style.display = 'none';
+                noResult.style.display = 'none';
+                return;
+            } else {
+                lockedNotice.innerHTML = `<i class="fas fa-shield-alt"></i> <span><strong>Profile locked for security.</strong> Name & ID verified. Contact admin to update your details.</span>`;
+                lockedNotice.style.background = '#fef3c7';
+                lockedNotice.style.borderColor = '#fcd34d';
+                lockedNotice.style.color = '#fbbf24';
+                filterBar.style.display = 'grid';
+                propertyGrid.style.display = 'grid';
+            }
+
             const search = document.getElementById('tenantSearch').value.toLowerCase().trim();
             const location = document.getElementById('tenantLocation').value;
             const maxPrice = parseFloat(document.getElementById('tenantMaxPrice').value) || Infinity;
@@ -2275,6 +2375,27 @@
         // LANDLORD RENDER
         // ============================================================
         function renderLandlord() {
+            const landlord = users.find(u => u.id === CURRENT_LANDLORD_ID);
+            const lockedNotice = document.querySelector('#landlord-dash .profile-locked');
+            const addListingBtn = document.querySelector('#landlord-dash .panel-header button');
+            const propList = document.getElementById('landlordPropertyList');
+
+            if (landlord && (landlord.status === 'paused' || landlord.status === 'revoked')) {
+                lockedNotice.innerHTML = `<i class="fas fa-ban"></i> <span><strong>Profile ${landlord.status}.</strong> Your account is currently under investigation or revoked. You cannot manage properties. Contact support.</span>`;
+                lockedNotice.style.background = '#fee2e2';
+                lockedNotice.style.borderColor = '#fca5a5';
+                lockedNotice.style.color = '#b91c1c';
+                if(addListingBtn) addListingBtn.style.display = 'none';
+                propList.innerHTML = `<div class="text-center text-muted" style="padding:30px;"><i class="fas fa-ban" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>Account restricted.</div>`;
+                return;
+            } else {
+                lockedNotice.innerHTML = `<i class="fas fa-shield-alt"></i><span><strong>Profile locked for security.</strong> Name & ID verified. Only admin can reset your details.</span>`;
+                lockedNotice.style.background = '#fef3c7';
+                lockedNotice.style.borderColor = '#fcd34d';
+                lockedNotice.style.color = '#fbbf24';
+                if(addListingBtn) addListingBtn.style.display = 'inline-flex';
+            }
+
             const myProps = properties.filter(p => p.landlordId === CURRENT_LANDLORD_ID);
             const vacant = myProps.filter(p => p.status === 'vacant').length;
             const occupied = myProps.filter(p => p.status === 'occupied').length;
@@ -2369,7 +2490,23 @@
                 <tr><td><strong>${t.id}</strong></td><td>${t.tenant}</td><td>${t.landlord}</td><td>${t.property}</td><td>$${t.amount}</td><td>${t.ref}</td><td><span class="badge ${t.status.includes('Success')?'badge-success':'badge-danger'}">${t.status}</span></td></tr>
             `).join('');
             document.getElementById('adminUserTable').innerHTML = users.map(u => `
-                <tr><td><strong>${u.name}</strong> ${u.status==='verified'?'<i class="fas fa-check-circle verified-check"></i>':''}</td><td>${u.contact}</td><td>${u.nationalId||'N/A'}</td><td><span class="badge badge-info">${u.role}</span></td><td><span class="badge ${u.status==='active'||u.status==='verified'?'badge-success':u.status==='rejected'?'badge-danger':'badge-warning'}">${u.status}</span></td></tr>
+                <tr>
+                    <td><strong>${u.name}</strong> ${u.status==='verified'?'<i class="fas fa-check-circle verified-check"></i>':''}</td>
+                    <td>${u.contact}</td>
+                    <td>${u.nationalId||'N/A'}</td>
+                    <td><span class="badge badge-info">${u.role}</span></td>
+                    <td><span class="badge ${u.status==='active'||u.status==='verified'?'badge-success':u.status==='rejected'||u.status==='revoked'?'badge-danger':u.status==='paused'?'badge-warning':'badge-warning'}">${u.status}</span></td>
+                    <td>
+                        ${u.contact === 'admin@homebase.co.zw' ? '<em>Master Admin</em>' : `
+                        <div style="display:flex;gap:4px;">
+                            <button class="btn btn-outline btn-sm" title="Pause" style="padding:4px 8px;" onclick="pauseUser(${u.id})"><i class="fas fa-pause"></i></button>
+                            <button class="btn btn-outline btn-sm" title="Revoke" style="padding:4px 8px;" onclick="revokeUser(${u.id})"><i class="fas fa-ban"></i></button>
+                            <button class="btn btn-outline btn-sm" title="Delete" style="padding:4px 8px;" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-outline btn-sm" title="Reset Password" style="padding:4px 8px;" onclick="openResetPasswordModal(${u.id})"><i class="fas fa-key"></i></button>
+                        </div>
+                        `}
+                    </td>
+                </tr>
             `).join('');
             document.getElementById('adminVerificationTable').innerHTML = verifications.map(v => `
                 <tr><td><strong>${v.landlord}</strong></td><td>${v.document}</td><td>${v.submitted}</td><td>${v.status==='pending'?`<button class="btn btn-success btn-sm" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i></button> <button class="btn btn-danger btn-sm" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i></button>`:`<span class="badge ${v.status==='approved'?'badge-success':'badge-danger'}">${v.status}</span><br><small style="color:var(--text-muted);">by ${v.executedBy || 'System'}</small>`}</td></tr>
@@ -2396,6 +2533,106 @@
                 if (user) user.status = 'rejected';
             }
             renderAdmin(); 
+        }
+
+        function pauseUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.status = 'paused';
+                renderAdmin();
+            }
+        }
+
+        function revokeUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.status = 'revoked';
+                renderAdmin();
+            }
+        }
+
+        function deleteUser(id) {
+            if (confirm('Are you sure you want to completely remove this user? This action cannot be undone.')) {
+                users = users.filter(u => u.id !== id);
+                renderAdmin();
+            }
+        }
+
+        function openResetPasswordModal(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                document.getElementById('resetPwdTargetId').value = id;
+                document.getElementById('resetPwdTargetName').textContent = user.name;
+                document.getElementById('resetPwdInput').value = '';
+                document.getElementById('resetPasswordModal').classList.add('active');
+            }
+        }
+
+        function closeResetPasswordModal() {
+            document.getElementById('resetPasswordModal').classList.remove('active');
+        }
+
+        function setSpudy14Pwd() {
+            document.getElementById('resetPwdInput').value = 'spudy14';
+        }
+
+        function handleResetPassword(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('resetPwdTargetId').value);
+            const newPwd = document.getElementById('resetPwdInput').value;
+            const user = users.find(u => u.id === id);
+            if (user && newPwd) {
+                user.password = newPwd;
+                alert('Password for ' + user.name + ' has been reset successfully.');
+                closeResetPasswordModal();
+            }
+        }
+
+        function handleCreateAdmin(e) {
+            e.preventDefault();
+            const name = document.getElementById('newAdminName').value.trim();
+            const email = document.getElementById('newAdminEmail').value.trim().toLowerCase();
+            const password = document.getElementById('newAdminPwd').value;
+
+            if (users.find(u => u.contact.toLowerCase() === email)) {
+                alert('Email already in use.');
+                return;
+            }
+
+            const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+            users.push({
+                id: newId,
+                name: name,
+                contact: email,
+                password: password,
+                phone: 'N/A',
+                role: 'admin',
+                status: 'active',
+                nationalId: 'N/A',
+                points: 0,
+                referralCode: null,
+                referredBy: null
+            });
+
+            alert(`Admin account for ${name} created successfully!`);
+            document.getElementById('createAdminForm').reset();
+            renderAdmin(); // Refresh user table
+        }
+
+        function handleGenerateEmail(e) {
+            e.preventDefault();
+            const name = document.getElementById('genEmailName').value.trim().toLowerCase().replace(/\s+/g, '');
+            const dept = document.getElementById('genEmailDept').value;
+
+            const newEmail = `${name}@homebase.${dept}.com`;
+
+            const list = document.getElementById('generatedEmailList');
+            const item = document.createElement('div');
+            item.style.cssText = 'padding: 8px 12px; background: #0f172a; border: 1px dashed #60a5fa; color: #e2e8f0; border-radius: 4px; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between;';
+            item.innerHTML = `<span><i class="fas fa-envelope" style="color:#60a5fa; margin-right:8px;"></i> ${newEmail}</span> <button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>`;
+            list.appendChild(item);
+
+            document.getElementById('generateEmailForm').reset();
         }
 
         document.querySelectorAll('[data-admin-tab]').forEach(btn => {
@@ -2584,6 +2821,8 @@
                 closeAddProperty(); });
         document.getElementById('paymentModal').addEventListener('click', function(e) { if (e.target === this)
                 closePaymentModal(); });
+        document.getElementById('resetPasswordModal').addEventListener('click', function(e) { if (e.target === this)
+                closeResetPasswordModal(); });
 
         
 
