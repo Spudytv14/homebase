@@ -2683,7 +2683,8 @@
 
             const conversation = chats.filter(c =>
                 (c.fromId === currentUserId && c.toId === activeChatPeerId) ||
-                (c.fromId === activeChatPeerId && c.toId === currentUserId)
+                (c.fromId === activeChatPeerId && c.toId === currentUserId) ||
+                (c.fromId === 'system' && c.toId === currentUserId && c.peerId === activeChatPeerId) // Show system warnings to the current user for this specific chat
             );
 
             const body = document.getElementById('peerChatBody');
@@ -2691,8 +2692,17 @@
 
             conversation.forEach(c => {
                 const isMe = c.fromId === currentUserId;
-                const msgClass = isMe ? 'msg user' : 'msg bot'; // Reusing AI chat classes for styling
-                body.innerHTML += `<div class="${msgClass}">${escapeHtml(c.text)}</div>`;
+                
+                // Hide blocked messages from the recipient
+                if (!isMe && c.blocked) return;
+
+                if (c.fromId === 'system') {
+                    body.innerHTML += `<div class="msg" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; align-self:center; border-radius:4px; text-align:center;">${escapeHtml(c.text)}</div>`;
+                } else {
+                    const msgClass = isMe ? 'msg user' : 'msg bot'; // Reusing AI chat classes for styling
+                    const blockedInfo = (isMe && c.blocked) ? '<br><small style="color:#fca5a5;"><i class="fas fa-ban"></i> Message blocked (contains contact info)</small>' : '';
+                    body.innerHTML += `<div class="${msgClass}">${escapeHtml(c.text)}${blockedInfo}</div>`;
+                }
             });
             body.scrollTop = body.scrollHeight;
         }
@@ -2704,12 +2714,32 @@
 
             const currentUserId = document.getElementById('tenant-dash').classList.contains('active-dash') ? CURRENT_TENANT_ID : CURRENT_LANDLORD_ID;
 
+            // AI/Smart Message Filter
+            const contactRegex = /(\b07\d{8}\b|\b07\d\s\d{3}\s\d{4}\b|\+?\d{1,3}[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{4}|[\w\.-]+@[\w\.-]+\.\w+|www\.[^\s]+|https?:\/\/[^\s]+|facebook\.com\/[^\s]+|instagram\.com\/[^\s]+|t\.me\/[^\s]+|\@\w+)/gi;
+            
+            let isBlocked = false;
+            if (contactRegex.test(text)) {
+                isBlocked = true;
+            }
+
             chats.push({
                 fromId: currentUserId,
                 toId: activeChatPeerId,
                 text: text,
-                timestamp: Date.now()
+                timestamp: Date.now(),
+                blocked: isBlocked
             });
+            
+            if (isBlocked) {
+                 chats.push({
+                    fromId: 'system',
+                    toId: currentUserId,
+                    peerId: activeChatPeerId, // Add peerId to associate warning with specific chat
+                    text: '⚠️ For your security, personal contact details cannot be shared until the rental process is complete.',
+                    timestamp: Date.now() + 1,
+                    isSystemWarning: true
+                });
+            }
 
             input.value = '';
             renderPeerChatWindow();
