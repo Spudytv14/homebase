@@ -1836,6 +1836,11 @@
                 <div class="field"><label>Utilities Included</label><input type="text" id="propUtilities" placeholder="e.g. Water, WiFi" /></div>
                 <div class="field"><label>Status</label><select id="propStatus"><option value="vacant">Vacant</option><option value="occupied">Occupied</option></select></div>
                 <div class="field"><label>Description</label><textarea id="propDesc" placeholder="Full amenities, features, nearby landmarks, etc." rows="3"></textarea></div>
+                <div class="field">
+                    <label>Property Images *</label>
+                    <input type="file" id="propImages" multiple accept="image/*" required />
+                    <small style="color:var(--text-muted);font-size:0.75rem;">You must upload exactly 2 images per room.</small>
+                </div>
                 <div class="form-actions"><button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button><button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button></div>
             </form>
         </div>
@@ -1994,63 +1999,63 @@
         // EXPANDED PROPERTIES: cheap to luxury, each with landlordId & density
         let properties = [
             { id: 1, landlordId: 3, title: '2 Bed Cottage', location: 'Harare', price: 450, rooms: 2, status: 'vacant',
-                desc: 'Solar, borehole, secure parking. Quiet neighbourhood in Eastlea.', imgIdx: 0, density: 'middle',
+                desc: 'Solar, borehole, secure parking. Quiet neighbourhood in Eastlea.', images: Array.from({length: 4}, (_, i) => PROPERTY_IMAGES[(0 + i) % PROPERTY_IMAGES.length]), density: 'middle',
                 address: '12 Eastlea Rd, Harare', meetingPoint: '12 Eastlea Rd, Harare', propType: 'cottage', furnished: 'semi', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water included' },
             { id: 2, landlordId: 3, title: '1 Bed Apartment', location: 'Harare', price: 250, rooms: 1, status: 'vacant',
-                desc: 'CBD, WiFi included, backup water, ideal for professionals.', imgIdx: 1, density: 'high',
+                desc: 'CBD, WiFi included, backup water, ideal for professionals.', images: Array.from({length: 2}, (_, i) => PROPERTY_IMAGES[(1 + i) % PROPERTY_IMAGES.length]), density: 'high',
                 address: '5 Jason Moyo Ave, Harare CBD', meetingPoint: '5 Jason Moyo Ave, Harare CBD', propType: 'apartment', furnished: 'yes', parking: 'Street',
                 security: 'Reception desk', utilities: 'Water & WiFi' },
             { id: 3, landlordId: 4, title: '4 Bed Family House', location: 'Bulawayo', price: 800, rooms: 4,
-                status: 'occupied', desc: 'Pool, walled & gated, staff quarters, Hillside area.', imgIdx: 2,
+                status: 'occupied', desc: 'Pool, walled & gated, staff quarters, Hillside area.', images: Array.from({length: 8}, (_, i) => PROPERTY_IMAGES[(2 + i) % PROPERTY_IMAGES.length]),
                 density: 'low', address: '22 Hillside Rd, Bulawayo', meetingPoint: '22 Hillside Rd, Bulawayo', propType: 'house', furnished: 'no',
                 parking: '4 bays', security: 'Electric fence, 24/7 guard', utilities: 'None' },
             { id: 4, landlordId: 5, title: 'Executive 3-bed', location: 'Gweru', price: 620, rooms: 3, status: 'vacant',
-                desc: 'Furnished, backup water, secure estate near CBD.', imgIdx: 3, density: 'low',
+                desc: 'Furnished, backup water, secure estate near CBD.', images: Array.from({length: 6}, (_, i) => PROPERTY_IMAGES[(3 + i) % PROPERTY_IMAGES.length]), density: 'low',
                 address: '8 Regency Park, Gweru', meetingPoint: '8 Regency Park, Gweru', propType: 'estate', furnished: 'yes', parking: '2 garages',
                 security: 'Gated estate', utilities: 'Water & refuse' },
             { id: 5, landlordId: 6, title: 'Garden Cottage', location: 'Mutare', price: 310, rooms: 1, status: 'vacant',
-                desc: 'Quiet garden setting, parking, beautiful views.', imgIdx: 4, density: 'middle',
+                desc: 'Quiet garden setting, parking, beautiful views.', images: Array.from({length: 2}, (_, i) => PROPERTY_IMAGES[(4 + i) % PROPERTY_IMAGES.length]), density: 'middle',
                 address: '15 Christmas Pass, Mutare', meetingPoint: '15 Christmas Pass, Mutare', propType: 'cottage', furnished: 'no', parking: '1 bay',
                 security: 'Fenced', utilities: 'Water included' },
             { id: 6, landlordId: 5, title: 'Duplex 4-bed', location: 'Harare', price: 1100, rooms: 4, status: 'occupied',
-                desc: 'Premium Borrowdale estate, 24/7 security, pool.', imgIdx: 5, density: 'low',
+                desc: 'Premium Borrowdale estate, 24/7 security, pool.', images: Array.from({length: 8}, (_, i) => PROPERTY_IMAGES[(5 + i) % PROPERTY_IMAGES.length]), density: 'low',
                 address: '3 Borrowdale Lane, Harare', meetingPoint: '3 Borrowdale Lane, Harare', propType: 'estate', furnished: 'yes', parking: '3 garages',
                 security: '24/7 armed response', utilities: 'All included' },
             { id: 7, landlordId: 4, title: 'Affordable Room', location: 'Bulawayo', price: 160, rooms: 1,
-                status: 'vacant', desc: 'Shared kitchen, water included, Nkulumane area.', imgIdx: 6, density: 'high',
+                status: 'vacant', desc: 'Shared kitchen, water included, Nkulumane area.', images: Array.from({length: 2}, (_, i) => PROPERTY_IMAGES[(6 + i) % PROPERTY_IMAGES.length]), density: 'high',
                 address: '45 Nkulumane, Bulawayo', meetingPoint: '45 Nkulumane, Bulawayo', propType: 'room', furnished: 'no', parking: 'None',
                 security: 'Neighbourhood watch', utilities: 'Water' },
             { id: 8, landlordId: 3, title: 'Family Home 3-bed', location: 'Mutare', price: 540, rooms: 3,
-                status: 'vacant', desc: 'Near CBD, tiled floors, fenced, family-friendly.', imgIdx: 7, density: 'middle',
+                status: 'vacant', desc: 'Near CBD, tiled floors, fenced, family-friendly.', images: Array.from({length: 6}, (_, i) => PROPERTY_IMAGES[(7 + i) % PROPERTY_IMAGES.length]), density: 'middle',
                 address: '10 Main St, Mutare', meetingPoint: '10 Main St, Mutare', propType: 'house', furnished: 'semi', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water' },
             { id: 9, landlordId: 6, title: 'Luxury 5-Bed Villa', location: 'Harare', price: 2500, rooms: 5,
                 status: 'vacant', desc: 'Borrowdale Brooke estate, infinity pool, staff quarters, ultra-modern.',
-                imgIdx: 8, density: 'low', address: '1 Brooke Dr, Borrowdale', meetingPoint: '1 Brooke Dr, Borrowdale', propType: 'estate', furnished: 'yes',
+                images: Array.from({length: 10}, (_, i) => PROPERTY_IMAGES[(8 + i) % PROPERTY_IMAGES.length]), density: 'low', address: '1 Brooke Dr, Borrowdale', meetingPoint: '1 Brooke Dr, Borrowdale', propType: 'estate', furnished: 'yes',
                 parking: '4 garages', security: 'Gated community, CCTV', utilities: 'All inclusive' },
             { id: 10, landlordId: 7, title: 'Budget Single Room', location: 'Chitungwiza', price: 80, rooms: 1,
-                status: 'vacant', desc: 'Affordable single room, shared facilities, near kombi rank.', imgIdx: 9,
+                status: 'vacant', desc: 'Affordable single room, shared facilities, near kombi rank.', images: Array.from({length: 2}, (_, i) => PROPERTY_IMAGES[(9 + i) % PROPERTY_IMAGES.length]),
                 density: 'high', address: '88 Zengeza, Chitungwiza', meetingPoint: '88 Zengeza, Chitungwiza', propType: 'room', furnished: 'no',
                 parking: 'None', security: 'Community policing', utilities: 'None' },
             { id: 11, landlordId: 5, title: '3-Bed Townhouse', location: 'Harare', price: 700, rooms: 3,
-                status: 'vacant', desc: 'Modern townhouse in Avondale, gated, solar backup.', imgIdx: 10,
+                status: 'vacant', desc: 'Modern townhouse in Avondale, gated, solar backup.', images: Array.from({length: 6}, (_, i) => PROPERTY_IMAGES[(10 + i) % PROPERTY_IMAGES.length]),
                 density: 'middle', address: '25 Avondale Rd, Harare', meetingPoint: '25 Avondale Rd, Harare', propType: 'townhouse', furnished: 'semi',
                 parking: '1 garage', security: 'Gated, intercom', utilities: 'Water & solar' },
             { id: 12, landlordId: 7, title: '2-Bed Flat', location: 'Bulawayo', price: 350, rooms: 2, status: 'vacant',
-                desc: 'Spacious flat in city centre, secure building, lift access.', imgIdx: 11, density: 'high',
+                desc: 'Spacious flat in city centre, secure building, lift access.', images: Array.from({length: 4}, (_, i) => PROPERTY_IMAGES[(11 + i) % PROPERTY_IMAGES.length]), density: 'high',
                 address: '10 Leopold Takawira Ave, Bulawayo', meetingPoint: '10 Leopold Takawira Ave, Bulawayo', propType: 'apartment', furnished: 'no',
                 parking: 'Bay available', security: 'Security guard', utilities: 'Water' },
             { id: 13, landlordId: 3, title: 'Executive 2-Bed', location: 'Victoria Falls', price: 950, rooms: 2,
-                status: 'vacant', desc: 'Tourist area, stunning views, fully furnished, secure.', imgIdx: 0,
+                status: 'vacant', desc: 'Tourist area, stunning views, fully furnished, secure.', images: Array.from({length: 4}, (_, i) => PROPERTY_IMAGES[(0 + i) % PROPERTY_IMAGES.length]),
                 density: 'low', address: '5 Livingstone Way, Victoria Falls', meetingPoint: '5 Livingstone Way, Victoria Falls', propType: 'apartment', furnished: 'yes',
                 parking: '2 bays', security: '24/7 security', utilities: 'All inclusive' },
             { id: 14, landlordId: 6, title: 'Mid-Range 3-Bed', location: 'Gweru', price: 480, rooms: 3,
-                status: 'vacant', desc: 'Family home, walled, water tank, neat garden.', imgIdx: 3, density: 'middle',
+                status: 'vacant', desc: 'Family home, walled, water tank, neat garden.', images: Array.from({length: 6}, (_, i) => PROPERTY_IMAGES[(3 + i) % PROPERTY_IMAGES.length]), density: 'middle',
                 address: '33 Main Rd, Gweru', meetingPoint: '33 Main Rd, Gweru', propType: 'house', furnished: 'no', parking: '2 bays',
                 security: 'Wall & gate', utilities: 'Water tank' },
             { id: 15, landlordId: 4, title: 'Cheap 1-Room Shack', location: 'Chitungwiza', price: 60, rooms: 1,
-                status: 'occupied', desc: 'Basic accommodation, shared toilet, budget-friendly.', imgIdx: 6,
+                status: 'occupied', desc: 'Basic accommodation, shared toilet, budget-friendly.', images: Array.from({length: 2}, (_, i) => PROPERTY_IMAGES[(6 + i) % PROPERTY_IMAGES.length]),
                 density: 'high', address: '120 St Marys, Chitungwiza', meetingPoint: '120 St Marys, Chitungwiza', propType: 'room', furnished: 'no',
                 parking: 'None', security: 'None', utilities: 'None' },
         ];
@@ -2521,7 +2526,10 @@
                 noResult.style.display = 'block'; return; }
             noResult.style.display = 'none';
             grid.innerHTML = filtered.map(p => {
-                const imgUrl = PROPERTY_IMAGES[p.imgIdx % PROPERTY_IMAGES.length];
+                const imagesHtml = p.images && p.images.length > 0
+                    ? p.images.map(img => `<img src="${img}" alt="${p.title}" loading="lazy" style="flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start;" />`).join('')
+                    : `<img src="${PROPERTY_IMAGES[0]}" alt="${p.title}" loading="lazy" style="flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start;" />`;
+
                 const statusClass = p.status === 'vacant' ? 'badge-success' : 'badge-danger';
                 const statusLabel = p.status.toUpperCase();
                 const densityClass = p.density === 'high' ? 'badge-density-high' : p.density === 'middle' ?
@@ -2532,11 +2540,16 @@
                 const landlordName = 'Property Owner';
                 return `
                     <div class="property-card">
-                        <div class="img-wrap">
-                            <img src="${imgUrl}" alt="${p.title}" loading="lazy" />
-                            <span class="badge ${statusClass} status-badge">${statusLabel}</span>
-                            <span class="badge ${densityClass} density-badge">${densityLabel}</span>
-                            ${isVerified ? '<span class="verified-icon"><i class="fas fa-check-circle" style="color:var(--verified);font-size:1rem;"></i></span>' : ''}
+                        <div class="img-wrap" style="position: relative;">
+                            <div style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; width: 100%; height: 100%; scrollbar-width: none; -ms-overflow-style: none;">
+                                ${imagesHtml}
+                            </div>
+                            <span class="badge ${statusClass} status-badge" style="position: absolute; top: 12px; left: 12px; z-index: 10;">${statusLabel}</span>
+                            <span class="badge ${densityClass} density-badge" style="position: absolute; top: 12px; right: 12px; z-index: 10;">${densityLabel}</span>
+                            ${isVerified ? '<span class="verified-icon" style="position: absolute; bottom: 10px; right: 12px; z-index: 10;"><i class="fas fa-check-circle" style="color:var(--verified);font-size:1rem;"></i></span>' : ''}
+                            <div style="position: absolute; bottom: 10px; left: 12px; background: rgba(0,0,0,0.6); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; z-index: 10;">
+                                <i class="fas fa-camera"></i> ${p.images ? p.images.length : 1}
+                            </div>
                         </div>
                         <div class="body">
                             <div class="price">$${p.price} <span>/ month</span></div>
@@ -2870,16 +2883,39 @@
             const utilities = document.getElementById('propUtilities').value.trim();
             const status = document.getElementById('propStatus').value;
             const desc = document.getElementById('propDesc').value.trim();
+            const imageFiles = document.getElementById('propImages').files;
+
             if (!title || !location || !address || !price || !rooms || !density || !propType)
                 return alert('Please fill all required fields (*).');
-            const newProp = { id: nextPropId++, landlordId: CURRENT_LANDLORD_ID, title, location, address, meetingPoint, price, rooms,
-                density, propType, furnished, parking, security, utilities, status, desc: desc ||
-                    'New listing — full details provided.', imgIdx: Math.floor(Math.random() * PROPERTY_IMAGES.length) };
-            properties.push(newProp);
-            closeAddProperty();
-            renderLandlord();
-            renderTenant();
-            alert('✅ Property "' + title + '" added successfully! All details saved for tenant clarity.');
+
+            if (imageFiles.length !== rooms * 2) {
+                return alert(`You specified ${rooms} rooms, so you must upload exactly ${rooms * 2} images.`);
+            }
+
+            // Convert files to base64
+            const fileReaders = [];
+            for (let i = 0; i < imageFiles.length; i++) {
+                fileReaders.push(new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(imageFiles[i]);
+                }));
+            }
+
+            Promise.all(fileReaders).then(base64Images => {
+                const newProp = { id: nextPropId++, landlordId: CURRENT_LANDLORD_ID, title, location, address, meetingPoint, price, rooms,
+                    density, propType, furnished, parking, security, utilities, status, desc: desc ||
+                        'New listing — full details provided.', images: base64Images };
+                properties.push(newProp);
+                closeAddProperty();
+                renderLandlord();
+                renderTenant();
+                alert('✅ Property "' + title + '" added successfully! All details saved for tenant clarity.');
+            }).catch(error => {
+                console.error("Error reading images:", error);
+                alert("There was an error processing your images.");
+            });
         }
 
         // ============================================================
@@ -3316,7 +3352,7 @@
         document.getElementById('aiChatBtn').style.display = 'none';
 
 
-        setInterval(() => {
+        setInterval(function checkSystemState() {
             const now = Date.now();
             let stateChanged = false;
 
