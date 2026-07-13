@@ -1460,7 +1460,141 @@
                 max-height: 400px;
             }
         }
-    </style>
+
+        /* HRM DASHBOARD STYLES */
+        #hrm-dash {
+            display: none;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+        #hrm-dash.active-dash {
+            display: flex; /* Sidebar layout */
+            animation: fadeIn 0.35s ease;
+        }
+        .hrm-sidebar {
+            width: 260px;
+            background: var(--card);
+            border-right: 1px solid var(--card-border);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .hrm-sidebar .logo {
+            padding: 20px 24px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .hrm-sidebar .logo span { color: var(--primary); }
+        .hrm-nav {
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+        .hrm-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            text-align: left;
+            width: 100%;
+        }
+        .hrm-nav-item i { width: 20px; text-align: center; font-size: 1.1rem; }
+        .hrm-nav-item:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .hrm-nav-item.active {
+            background: var(--primary-glow);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        .hrm-sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .hrm-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0; /* prevent flex blowout */
+        }
+        .hrm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 28px;
+            background: var(--card);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .hrm-header-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .hrm-content {
+            padding: 24px 28px 40px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .hrm-pane { display: none; }
+        .hrm-pane.active { display: block; animation: fadeIn 0.3s ease; }
+
+        /* Mobile sidebar toggle */
+        .hrm-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            #hrm-dash.active-dash { flex-direction: column; }
+            .hrm-sidebar {
+                position: fixed;
+                left: -260px;
+                transition: left 0.3s ease;
+                box-shadow: var(--shadow-lg);
+            }
+            .hrm-sidebar.open { left: 0; }
+            .hrm-menu-btn { display: block; margin-right: 15px; }
+            .hrm-header { padding: 14px 20px; justify-content: flex-start; }
+            .hrm-header .right { margin-left: auto; }
+            .hrm-content { padding: 16px 20px; }
+
+            /* Overlay for mobile sidebar */
+            .hrm-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+            .hrm-overlay.active { display: block; }
+        }
+</style>
 </head>
 <body>
 
@@ -1739,6 +1873,253 @@
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
                 <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Developed by <a href="https://wa.me/263776998296" target="_blank" style="color: var(--primary); text-decoration: none;">Spudy</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- HRM DASHBOARD -->
+    <div id="hrm-dash" class="dashboard">
+        <div class="hrm-overlay" onclick="toggleHrmSidebar()"></div>
+        <div class="hrm-sidebar" id="hrmSidebar">
+            <div class="logo">Home<span>Base</span><br><span style="font-size:0.8rem;font-weight:500;color:var(--text-muted);">Marketing & HR</span></div>
+            <div class="hrm-nav">
+                <button class="hrm-nav-item active" data-hrm-tab="dashboard" onclick="switchHrmTab('dashboard')"><i class="fas fa-home"></i> Dashboard</button>
+                <div class="divider"><span style="font-size: 0.65rem;">HR</span></div>
+                <button class="hrm-nav-item" data-hrm-tab="employees" onclick="switchHrmTab('employees')"><i class="fas fa-users"></i> Employees</button>
+                <button class="hrm-nav-item" data-hrm-tab="recruitment" onclick="switchHrmTab('recruitment')"><i class="fas fa-file-alt"></i> Recruitment</button>
+                <button class="hrm-nav-item" data-hrm-tab="attendance" onclick="switchHrmTab('attendance')"><i class="fas fa-calendar-check"></i> Attendance</button>
+                <button class="hrm-nav-item" data-hrm-tab="performance" onclick="switchHrmTab('performance')"><i class="fas fa-star"></i> Performance Reviews</button>
+                <button class="hrm-nav-item" data-hrm-tab="training" onclick="switchHrmTab('training')"><i class="fas fa-graduation-cap"></i> Training</button>
+                <div class="divider"><span style="font-size: 0.65rem;">MARKETING</span></div>
+                <button class="hrm-nav-item" data-hrm-tab="marketing" onclick="switchHrmTab('marketing')"><i class="fas fa-bullhorn"></i> Marketing</button>
+                <button class="hrm-nav-item" data-hrm-tab="properties" onclick="switchHrmTab('properties')"><i class="fas fa-building"></i> Properties to Promote</button>
+                <button class="hrm-nav-item" data-hrm-tab="leads" onclick="switchHrmTab('leads')"><i class="fas fa-bullseye"></i> Leads</button>
+                <button class="hrm-nav-item" data-hrm-tab="commissions" onclick="switchHrmTab('commissions')"><i class="fas fa-money-bill-wave"></i> Commissions</button>
+                <div class="divider"><span style="font-size: 0.65rem;">GENERAL</span></div>
+                <button class="hrm-nav-item" data-hrm-tab="reports" onclick="switchHrmTab('reports')"><i class="fas fa-chart-bar"></i> Reports</button>
+                <button class="hrm-nav-item" data-hrm-tab="messages" onclick="switchHrmTab('messages')"><i class="fas fa-comments"></i> Messages</button>
+                <button class="hrm-nav-item" data-hrm-tab="documents" onclick="switchHrmTab('documents')"><i class="fas fa-folder-open"></i> Documents</button>
+                <button class="hrm-nav-item" data-hrm-tab="settings" onclick="switchHrmTab('settings')"><i class="fas fa-cog"></i> Settings</button>
+            </div>
+            <div class="hrm-sidebar-footer">
+                <button class="btn btn-outline btn-block" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <div class="hrm-main">
+            <div class="hrm-header">
+                <button class="hrm-menu-btn" onclick="toggleHrmSidebar()"><i class="fas fa-bars"></i></button>
+                <div class="hrm-header-title" id="hrmHeaderTitle">Dashboard</div>
+                <div class="right" style="display:flex; align-items:center; gap: 15px;">
+                    <div style="position:relative; cursor:pointer;" onclick="openNotificationsModal()">
+                        <i class="fas fa-bell" style="font-size:1.2rem; color:var(--text-muted);"></i>
+                        <span id="hrmNotifBadge" style="position:absolute; top:-5px; right:-8px; background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:10px; display:none;">0</span>
+                    </div>
+                    <span class="user-chip" id="hrmUserChip"><span class="dot"></span> HR & Marketing</span>
+                </div>
+            </div>
+
+            <div class="hrm-content">
+                <!-- PANELS -->
+                <div id="hrmPane-dashboard" class="hrm-pane active">
+                    <h2 style="margin-bottom:20px;">Welcome back, <span id="hrmWelcomeName">User</span></h2>
+                    <div class="stat-grid" id="hrmDashStats">
+                        <!-- Stats injected via JS -->
+                    </div>
+
+                    <div class="panel" style="margin-top: 20px;">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-tasks"></i> Pending Tasks</h2>
+                        </div>
+                        <div id="hrmPendingTasksList">
+                            <!-- Tasks injected via JS -->
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2><i class="fas fa-chart-line"></i> Performance Overview</h2>
+                        </div>
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: var(--radius-sm); border: 1px dashed var(--card-border); color: var(--text-muted);">
+                            <i class="fas fa-chart-pie" style="font-size: 2rem; margin-right: 10px;"></i> Charts Placeholder
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-employees" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-users"></i> Employee Management</h2>
+                        <button class="btn btn-primary btn-sm" onclick="alert('Open Add Employee Modal')"><i class="fas fa-plus"></i> Add Employee</button>
+                    </div>
+                    <div class="panel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>ID</th><th>Name</th><th>Department</th><th>Contract</th><th>Emergency Contact</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmEmployeesTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-recruitment" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-file-alt"></i> Recruitment</h2>
+                        <button class="btn btn-primary btn-sm" onclick="alert('Publish Vacancy Modal')"><i class="fas fa-plus"></i> Publish Vacancy</button>
+                    </div>
+                    <div class="panel" style="margin-bottom: 20px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1rem;">Active Vacancies</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Title</th><th>Department</th><th>Applicants</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmVacanciesTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-attendance" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-calendar-check"></i> Attendance</h2>
+                    </div>
+                    <div class="panel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Employee</th><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmAttendanceTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-performance" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-star"></i> Performance Reviews</h2>
+                    </div>
+                     <div class="panel">
+                        <p class="text-muted text-center" style="padding: 20px;">Monthly evaluations and KPI tracking will appear here.</p>
+                    </div>
+                </div>
+
+                <div id="hrmPane-training" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-graduation-cap"></i> Training</h2>
+                        <button class="btn btn-primary btn-sm" onclick="alert('Assign Course Modal')"><i class="fas fa-plus"></i> Assign Course</button>
+                    </div>
+                    <div class="panel">
+                        <p class="text-muted text-center" style="padding: 20px;">Assigned courses and skills development tracking will appear here.</p>
+                    </div>
+                </div>
+
+                <div id="hrmPane-marketing" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-bullhorn"></i> Campaigns</h2>
+                        <button class="btn btn-primary btn-sm" onclick="alert('Create Campaign Modal')"><i class="fas fa-plus"></i> Create Campaign</button>
+                    </div>
+                    <div class="panel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Campaign Name</th><th>Assigned To</th><th>Budget</th><th>Status</th><th>Performance</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmCampaignsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-properties" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-building"></i> Properties to Promote</h2>
+                    </div>
+                    <div class="panel">
+                        <p class="text-muted" style="margin-bottom: 15px; font-size: 0.9rem;">Generate shareable links and marketing materials for assigned properties.</p>
+                        <div class="property-grid" id="hrmPromotePropsGrid"></div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-leads" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-bullseye"></i> Leads</h2>
+                    </div>
+                    <div class="panel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Lead Name</th><th>Contact</th><th>Source</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmLeadsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-commissions" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-money-bill-wave"></i> Commissions</h2>
+                    </div>
+                    <div class="stat-grid" style="margin-bottom: 20px;">
+                        <div class="stat-card"><div class="label">Pending</div><div class="value orange" id="hrmCommPending">$0</div></div>
+                        <div class="stat-card"><div class="label">Approved</div><div class="value blue" id="hrmCommApproved">$0</div></div>
+                        <div class="stat-card"><div class="label">Paid</div><div class="value green" id="hrmCommPaid">$0</div></div>
+                    </div>
+                    <div class="panel">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Marketer</th><th>Property / Action</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="hrmCommissionsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-reports" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-chart-bar"></i> Reports</h2>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating HR Report...')"><i class="fas fa-users" style="font-size: 2rem; color: var(--primary); margin-bottom: 10px;"></i><br><strong>HR & Attendance</strong></div>
+                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating Marketing Report...')"><i class="fas fa-bullhorn" style="font-size: 2rem; color: var(--warning); margin-bottom: 10px;"></i><br><strong>Marketing Performance</strong></div>
+                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating Financial Report...')"><i class="fas fa-money-bill-wave" style="font-size: 2rem; color: var(--success); margin-bottom: 10px;"></i><br><strong>Commissions & Leads</strong></div>
+                    </div>
+                </div>
+
+                <div id="hrmPane-messages" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-comments"></i> Messages</h2>
+                    </div>
+                     <div class="panel">
+                        <p class="text-muted text-center" style="padding: 20px;">Internal communication with Employees, Marketers, Managers, Admins, and Owners.</p>
+                        <button class="btn btn-primary" style="margin: 0 auto; display: block;" onclick="alert('Open Message Composer')"><i class="fas fa-paper-plane"></i> Compose Message</button>
+                    </div>
+                </div>
+
+                <div id="hrmPane-documents" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-folder-open"></i> Documents</h2>
+                    </div>
+                     <div class="panel">
+                        <p class="text-muted text-center" style="padding: 20px;">Company policies, marketing assets, and HR templates.</p>
+                    </div>
+                </div>
+
+                <div id="hrmPane-settings" class="hrm-pane">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-cog"></i> Settings</h2>
+                    </div>
+                     <div class="panel">
+                        <p class="text-muted text-center" style="padding: 20px;">Dashboard display and notification preferences.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -2115,6 +2496,49 @@
         ];
 
 
+
+        // ============================================================
+        // HR & MARKETING DATA
+        // ============================================================
+        let employees = [
+            { id: 1, name: 'Spudy Prime', department: 'Admin', contract: 'Full-time', emergency: '077 111 2222' },
+            { id: 2, name: 'Samlic Support', department: 'Support', contract: 'Full-time', emergency: '071 222 3333' },
+            { id: 3, name: 'Topstriker Support', department: 'Support', contract: 'Part-time', emergency: '078 333 4444' },
+            { id: 4, name: 'Jane Doe', department: 'Marketing', contract: 'Contract', emergency: '077 444 5555' },
+            { id: 5, name: 'John Smith', department: 'HR', contract: 'Full-time', emergency: '071 555 6666' }
+        ];
+
+        let vacancies = [
+            { id: 1, title: 'Senior Marketer', department: 'Marketing', applicants: 12, status: 'Active' },
+            { id: 2, title: 'Support Agent', department: 'Support', applicants: 45, status: 'Active' },
+            { id: 3, title: 'HR Assistant', department: 'HR', applicants: 8, status: 'Closed' }
+        ];
+
+        let campaigns = [
+            { id: 1, name: 'Summer Rentals Boost', assignedTo: 'Jane Doe', budget: 500, status: 'Active', performance: 'Good' },
+            { id: 2, name: 'Student Accommodation', assignedTo: 'Tinashe Moyo', budget: 200, status: 'Paused', performance: 'Needs Review' },
+            { id: 3, name: 'Luxury Villa Promo', assignedTo: 'Jane Doe', budget: 1000, status: 'Active', performance: 'Excellent' }
+        ];
+
+        let leads = [
+            { id: 1, name: 'Tendai Mutasa', contact: '077 999 8888', source: 'Facebook', status: 'New' },
+            { id: 2, name: 'Sarah Gumbo', contact: 'sarah@email.com', source: 'Referral', status: 'Qualified' },
+            { id: 3, name: 'David Moyo', contact: '071 888 7777', source: 'Instagram', status: 'Converted' },
+            { id: 4, name: 'Lisa Chidu', contact: 'lisa@email.com', source: 'Campaign 1', status: 'Lost' }
+        ];
+
+        let commissions = [
+            { id: 1, marketer: 'Jane Doe', action: 'Lead Converted (Sarah Gumbo)', amount: 50, status: 'Approved' },
+            { id: 2, marketer: 'Tinashe Moyo', action: 'Property Rented (ID: 5)', amount: 120, status: 'Pending' },
+            { id: 3, marketer: 'Jane Doe', action: 'Campaign Bonus', amount: 200, status: 'Paid' }
+        ];
+
+        let attendance = [
+            { id: 1, empId: 1, date: '2026-10-25', clockIn: '08:00', clockOut: '17:00', status: 'Present' },
+            { id: 2, empId: 2, date: '2026-10-25', clockIn: '08:15', clockOut: '17:05', status: 'Late' },
+            { id: 3, empId: 4, date: '2026-10-25', clockIn: '-', clockOut: '-', status: 'Sick Leave' }
+        ];
+
         let viewingRequests = [];
         let nextViewingRequestId = 1;
 
@@ -2197,6 +2621,13 @@
                     currentAdminName = 'Admin · Prime';
                     document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
                     loadDashboard('admin-dash');
+                    return;
+                }
+                if (email === 'hr-marketing@homebase.admin.com') {
+                    currentAdminName = 'HR & Marketing';
+                    document.getElementById('hrmUserChip').innerHTML = `<span class="dot"></span> HR & Marketing`;
+                    document.getElementById('hrmWelcomeName').textContent = 'HR & Marketing Admin';
+                    loadDashboard('hrm-dash');
                     return;
                 }
             }
@@ -2325,6 +2756,40 @@
             updateNotificationBell();
         }
 
+
+        function toggleHrmSidebar() {
+            document.getElementById('hrmSidebar').classList.toggle('open');
+            document.querySelector('.hrm-overlay').classList.toggle('active');
+        }
+
+        function switchHrmTab(tabId) {
+            // Update active states on nav items
+            document.querySelectorAll('.hrm-nav-item').forEach(el => el.classList.remove('active'));
+            const targetBtn = document.querySelector(`.hrm-nav-item[data-hrm-tab="${tabId}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+
+            // Update pane visibility
+            document.querySelectorAll('.hrm-pane').forEach(el => el.classList.remove('active'));
+            const targetPane = document.getElementById('hrmPane-' + tabId);
+            if (targetPane) targetPane.classList.add('active');
+
+            // Update header title
+            const titles = {
+                'dashboard': 'Dashboard', 'employees': 'Employee Management', 'recruitment': 'Recruitment',
+                'attendance': 'Attendance', 'performance': 'Performance Reviews', 'training': 'Training',
+                'marketing': 'Campaigns', 'properties': 'Properties to Promote', 'leads': 'Leads',
+                'commissions': 'Commissions', 'reports': 'Reports', 'messages': 'Messages',
+                'documents': 'Documents', 'settings': 'Settings'
+            };
+            document.getElementById('hrmHeaderTitle').textContent = titles[tabId] || 'Dashboard';
+
+            // On mobile, close sidebar after clicking
+            if (window.innerWidth <= 900) {
+                document.getElementById('hrmSidebar').classList.remove('open');
+                document.querySelector('.hrm-overlay').classList.remove('active');
+            }
+        }
+
         function loadDashboard(dashId) {
             document.getElementById('auth-section').style.display = 'none';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
@@ -2335,6 +2800,7 @@
             if (dashId === 'landlord-dash') renderLandlord();
             updateNotificationBell();
             if (dashId === 'admin-dash') renderAdmin();
+            if (dashId === 'hrm-dash') { switchHrmTab('dashboard'); renderHrm(); }
             document.getElementById('aiChatBtn').style.display = 'flex';
         }
 
@@ -2923,7 +3389,144 @@
         // ============================================================
         // ADMIN RENDER
         // ============================================================
-        function renderAdmin() {
+
+        // ============================================================
+        // HRM RENDER
+        // ============================================================
+        function renderHrm() {
+            // Dashboard Stats
+            document.getElementById('hrmDashStats').innerHTML = `
+                <div class="stat-card"><div class="label">Total Employees</div><div class="value">${employees.length}</div></div>
+                <div class="stat-card"><div class="label">Active Vacancies</div><div class="value blue">${vacancies.filter(v=>v.status==='Active').length}</div></div>
+                <div class="stat-card"><div class="label">Active Campaigns</div><div class="value orange">${campaigns.filter(c=>c.status==='Active').length}</div></div>
+                <div class="stat-card"><div class="label">Pending Commissions</div><div class="value red">${commissions.filter(c=>c.status==='Pending').length}</div></div>
+            `;
+
+            // Dashboard Tasks
+            document.getElementById('hrmPendingTasksList').innerHTML = `
+                <div class="lprop-item">
+                    <div class="info"><strong>Review Sarah Gumbo's Application</strong><div class="sub">Support Agent Vacancy</div></div>
+                    <div class="actions"><button class="btn btn-primary btn-sm">Review</button></div>
+                </div>
+                <div class="lprop-item">
+                    <div class="info"><strong>Approve Tinashe's Commission</strong><div class="sub">$120 for Property ID 5</div></div>
+                    <div class="actions"><button class="btn btn-success btn-sm">Approve</button></div>
+                </div>
+            `;
+
+            // Employees
+            document.getElementById('hrmEmployeesTable').innerHTML = employees.map(e => `
+                <tr>
+                    <td>EMP-${String(e.id).padStart(3, '0')}</td>
+                    <td><strong>${e.name}</strong></td>
+                    <td><span class="badge badge-info">${e.department}</span></td>
+                    <td>${e.contract}</td>
+                    <td>${e.emergency}</td>
+                    <td>
+                        <button class="btn btn-outline btn-sm" onclick="alert('Edit Employee ${e.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="alert('Terminate Employee ${e.id}')"><i class="fas fa-user-times"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Recruitment
+            document.getElementById('hrmVacanciesTable').innerHTML = vacancies.map(v => `
+                <tr>
+                    <td><strong>${v.title}</strong></td>
+                    <td>${v.department}</td>
+                    <td>${v.applicants}</td>
+                    <td><span class="badge ${v.status==='Active'?'badge-success':'badge-danger'}">${v.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline btn-sm" onclick="alert('View Applicants')">View CVs</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Attendance
+            document.getElementById('hrmAttendanceTable').innerHTML = attendance.map(a => {
+                const emp = employees.find(e => e.id === a.empId);
+                return `
+                <tr>
+                    <td><strong>${emp ? emp.name : 'Unknown'}</strong></td>
+                    <td>${a.date}</td>
+                    <td>${a.clockIn}</td>
+                    <td>${a.clockOut}</td>
+                    <td><span class="badge ${a.status==='Present'?'badge-success':a.status==='Late'?'badge-warning':'badge-danger'}">${a.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline btn-sm" onclick="alert('Edit record')"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+            `}).join('');
+
+            // Marketing Campaigns
+            document.getElementById('hrmCampaignsTable').innerHTML = campaigns.map(c => `
+                <tr>
+                    <td><strong>${c.name}</strong></td>
+                    <td>${c.assignedTo}</td>
+                    <td>$${c.budget}</td>
+                    <td><span class="badge ${c.status==='Active'?'badge-success':'badge-warning'}">${c.status}</span></td>
+                    <td>${c.performance}</td>
+                    <td><button class="btn btn-outline btn-sm" onclick="alert('Edit Campaign')"><i class="fas fa-edit"></i></button></td>
+                </tr>
+            `).join('');
+
+            // Properties to Promote (Mocking taking first 4 properties)
+            document.getElementById('hrmPromotePropsGrid').innerHTML = properties.slice(0, 4).map(p => `
+                <div class="property-card">
+                    <div class="img-wrap"><img src="${p.images[0]}" alt="${p.title}" /></div>
+                    <div class="body">
+                        <div class="price">$${p.price}</div>
+                        <div class="title">${p.title}</div>
+                        <div class="meta"><span><i class="fas fa-map-pin"></i> ${p.location}</span></div>
+                        <div style="display:flex; gap: 8px; margin-top: 10px;">
+                            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="alert('Link Copied: https://homebase.co.zw/p/${p.id}')"><i class="fas fa-link"></i> Copy Link</button>
+                            <button class="btn btn-outline btn-sm" onclick="alert('QR Code generated')"><i class="fas fa-qrcode"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Leads
+            document.getElementById('hrmLeadsTable').innerHTML = leads.map(l => `
+                <tr>
+                    <td><strong>${l.name}</strong></td>
+                    <td>${l.contact}</td>
+                    <td>${l.source}</td>
+                    <td><span class="badge ${l.status==='Converted'?'badge-success':l.status==='Lost'?'badge-danger':'badge-info'}">${l.status}</span></td>
+                    <td>
+                        <select class="btn btn-outline btn-sm" style="padding: 4px; font-size: 0.8rem; background: transparent;" onchange="alert('Status changed')">
+                            <option ${l.status==='New'?'selected':''}>New</option>
+                            <option ${l.status==='Qualified'?'selected':''}>Qualified</option>
+                            <option ${l.status==='Converted'?'selected':''}>Converted</option>
+                            <option ${l.status==='Lost'?'selected':''}>Lost</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Commissions
+            let pen = 0, app = 0, paid = 0;
+            document.getElementById('hrmCommissionsTable').innerHTML = commissions.map(c => {
+                if(c.status==='Pending') pen+=c.amount;
+                else if(c.status==='Approved') app+=c.amount;
+                else paid+=c.amount;
+                return `
+                <tr>
+                    <td><strong>${c.marketer}</strong></td>
+                    <td>${c.action}</td>
+                    <td>$${c.amount}</td>
+                    <td><span class="badge ${c.status==='Paid'?'badge-success':c.status==='Approved'?'badge-info':'badge-warning'}">${c.status}</span></td>
+                    <td>
+                        ${c.status==='Pending' ? `<button class="btn btn-success btn-sm" onclick="alert('Approved!')">Approve</button>` : `<button class="btn btn-outline btn-sm" disabled>Processed</button>`}
+                    </td>
+                </tr>
+            `}).join('');
+            document.getElementById('hrmCommPending').textContent = '$'+pen;
+            document.getElementById('hrmCommApproved').textContent = '$'+app;
+            document.getElementById('hrmCommPaid').textContent = '$'+paid;
+        }
+
+function renderAdmin() {
             const totalUsers = users.length;
             const totalProps = properties.length;
             const totalRevenue = transactions.filter(t => t.status === 'Success' || t.status.includes('Points')).reduce(
@@ -3326,6 +3929,12 @@
                 return '💳 We accept: EcoCash, OneMoney, SmileCash, PayPal, and InBucks. Select your preferred method in the payment modal. All payments are secure and landlord details are revealed instantly upon success.';
             if (msg.includes('density') || msg.includes('high density') || msg.includes('low density'))
                 return '🏘️ We classify properties by density: <b>High Density</b> (apartments, rooms, shared living), <b>Middle Density</b> (cottages, townhouses, semi-detached), and <b>Low Density</b> (standalone houses, luxury estates). Filter by density on your dashboard!';
+            if (msg.includes('screen cv') || msg.includes('recommend candidate') || msg.includes('applicant'))
+                return '📄 AI Screening: I can analyze CVs against job requirements. Currently, for the Support Agent role, Sarah Gumbo shows a 92% match based on her past customer service experience.';
+            if (msg.includes('campaign') || msg.includes('marketing strategy') || msg.includes('performance'))
+                return '📈 Campaign AI: The "Summer Rentals Boost" campaign is performing well with a 15% conversion rate. I suggest targeting Facebook ads towards recent graduates for the "Student Accommodation" campaign to improve its performance.';
+            if (msg.includes('policy') || msg.includes('leave') || msg.includes('hr question'))
+                return '📚 HR Policy: According to the company handbook, employees are entitled to 21 days of annual leave. Sick leave requires a doctor\'s note after 2 consecutive days.';
             if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('help'))
                 return '👋 Hello! I\'m the HomeBase AI assistant. I can help with: properties, unlocking contacts, points & referrals, payment methods, verification, density info, profile security, or agent availability. What do you need?';
             return '🤔 I\'m not sure about that. Try asking about: <b>properties</b>, <b>unlocking</b>, <b>points/referrals</b>, <b>payments</b>, <b>verification</b>, <b>density</b>, <b>profile security</b>, or <b>agent availability</b>.';
