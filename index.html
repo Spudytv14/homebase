@@ -1698,6 +1698,66 @@
         </div>
     </div>
 
+
+    <!-- MODAL: Employee Form -->
+    <div id="employeeModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeEmployeeModal()">&times;</button>
+            <h2 id="employeeModalTitle"><i class="fas fa-user-edit"></i> Edit Employee</h2>
+            <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                <input type="hidden" id="empId" />
+                <div class="field"><label>Name *</label><input type="text" id="empName" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="empDept" required /></div>
+                <div class="field"><label>Contract *</label><input type="text" id="empContract" required /></div>
+                <div class="field"><label>Emergency Contact *</label><input type="text" id="empEmergency" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeEmployeeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL: Vacancy Form -->
+    <div id="vacancyModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeVacancyModal()">&times;</button>
+            <h2 id="vacancyModalTitle"><i class="fas fa-file-alt"></i> Edit Vacancy</h2>
+            <form id="vacancyForm" onsubmit="handleVacancySubmit(event)">
+                <input type="hidden" id="vacId" />
+                <div class="field"><label>Title *</label><input type="text" id="vacTitle" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="vacDept" required /></div>
+                <div class="field"><label>Status *</label><select id="vacStatus"><option value="Active">Active</option><option value="Closed">Closed</option></select></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeVacancyModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL: Campaign Form -->
+    <div id="campaignModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeCampaignModal()">&times;</button>
+            <h2 id="campaignModalTitle"><i class="fas fa-bullhorn"></i> Edit Campaign</h2>
+            <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
+                <input type="hidden" id="campId" />
+                <div class="field"><label>Campaign Name *</label><input type="text" id="campName" required /></div>
+                <div class="field"><label>Assigned To *</label><input type="text" id="campAssigned" required /></div>
+                <div class="field"><label>Budget ($) *</label><input type="number" id="campBudget" required /></div>
+                <div class="field"><label>Status *</label><select id="campStatus"><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option></select></div>
+                <div class="field"><label>Performance *</label><input type="text" id="campPerformance" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeCampaignModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- MODAL: Reset Password -->
     <div id="resetPasswordModal" class="modal-overlay">
         <div class="modal-box" style="max-width: 400px;">
@@ -1950,7 +2010,7 @@
                 <div id="hrmPane-employees" class="hrm-pane">
                     <div class="panel-header">
                         <h2><i class="fas fa-users"></i> Employee Management</h2>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Open Add Employee Modal')"><i class="fas fa-plus"></i> Add Employee</button>
+                        <button class="btn btn-primary btn-sm" onclick="openEmployeeModal()"><i class="fas fa-plus"></i> Add Employee</button>
                     </div>
                     <div class="panel">
                         <div class="table-wrap">
@@ -1967,7 +2027,7 @@
                 <div id="hrmPane-recruitment" class="hrm-pane">
                     <div class="panel-header">
                         <h2><i class="fas fa-file-alt"></i> Recruitment</h2>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Publish Vacancy Modal')"><i class="fas fa-plus"></i> Publish Vacancy</button>
+                        <button class="btn btn-primary btn-sm" onclick="openVacancyModal()"><i class="fas fa-plus"></i> Publish Vacancy</button>
                     </div>
                     <div class="panel" style="margin-bottom: 20px;">
                         <h3 style="margin-bottom: 15px; font-size: 1rem;">Active Vacancies</h3>
@@ -2020,7 +2080,7 @@
                 <div id="hrmPane-marketing" class="hrm-pane">
                     <div class="panel-header">
                         <h2><i class="fas fa-bullhorn"></i> Campaigns</h2>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Create Campaign Modal')"><i class="fas fa-plus"></i> Create Campaign</button>
+                        <button class="btn btn-primary btn-sm" onclick="openCampaignModal()"><i class="fas fa-plus"></i> Create Campaign</button>
                     </div>
                     <div class="panel">
                         <div class="table-wrap">
@@ -2139,6 +2199,7 @@
                     <button data-admin-tab="users"><i class="fas fa-users"></i> Users</button>
                     <button data-admin-tab="verifications"><i class="fas fa-check-circle"></i> Verifications</button>
                     <button data-admin-tab="admins"><i class="fas fa-user-shield"></i> Admins & Emails</button>
+                    <button data-admin-tab="hr"><i class="fas fa-briefcase"></i> HR Control</button>
                 </div>
                 <div id="adminPaneTransactions" class="admin-pane active"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-list"></i> All Transactions</h3><div class="table-wrap"><table><thead><tr><th>ID</th><th>Tenant</th><th>Landlord</th><th>Property</th><th>Amount</th><th>Ref</th><th>Status</th></tr></thead><tbody id="adminTransactionTable"></tbody></table></div></div>
                 <div id="adminPaneUsers" class="admin-pane"><h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-users"></i> User Registry</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Nat. ID</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div>
@@ -2147,6 +2208,32 @@
                     <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-user-shield"></i> Manage Admins & Emails</h3>
                     
                     <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+
+                <div id="adminPaneHr" class="admin-pane">
+                    <h3 style="margin-bottom:12px; color:#e2e8f0;"><i class="fas fa-briefcase"></i> HR Control</h3>
+                    <div class="stat-grid" id="adminHrStats"></div>
+                    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
+                            <h4 style="margin-bottom: 12px; color: #f1f5f9;">Employees Overview</h4>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead><tr><th>Name</th><th>Dept</th><th>Actions</th></tr></thead>
+                                    <tbody id="adminHrEmployeesTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
+                            <h4 style="margin-bottom: 12px; color: #f1f5f9;">Active Campaigns</h4>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead><tr><th>Name</th><th>Budget</th><th>Status</th></tr></thead>
+                                    <tbody id="adminHrCampaignsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                         <!-- Add New Admin Form -->
                         <div style="flex: 1; min-width: 300px; background: #1e293b; padding: 20px; border-radius: var(--radius-sm); border: 1px solid #334155;">
                             <h4 style="margin-bottom: 12px; color: #f1f5f9;">Create Admin Account</h4>
@@ -3393,6 +3480,172 @@
         // ============================================================
         // HRM RENDER
         // ============================================================
+
+        function openEmployeeModal(id = null) {
+            const form = document.getElementById('employeeForm');
+            form.reset();
+            document.getElementById('empId').value = '';
+            document.getElementById('employeeModalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Employee';
+            if (id) {
+                const emp = employees.find(e => e.id === id);
+                if (emp) {
+                    document.getElementById('empId').value = emp.id;
+                    document.getElementById('empName').value = emp.name;
+                    document.getElementById('empDept').value = emp.department;
+                    document.getElementById('empContract').value = emp.contract;
+                    document.getElementById('empEmergency').value = emp.emergency;
+                    document.getElementById('employeeModalTitle').innerHTML = '<i class="fas fa-user-edit"></i> Edit Employee';
+                }
+            }
+            document.getElementById('employeeModal').classList.add('active');
+        }
+
+        function closeEmployeeModal() {
+            document.getElementById('employeeModal').classList.remove('active');
+        }
+
+        function handleEmployeeSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('empId').value;
+            const name = document.getElementById('empName').value;
+            const dept = document.getElementById('empDept').value;
+            const contract = document.getElementById('empContract').value;
+            const emergency = document.getElementById('empEmergency').value;
+
+            if (id) {
+                const emp = employees.find(e => e.id === parseInt(id));
+                if (emp) {
+                    emp.name = name;
+                    emp.department = dept;
+                    emp.contract = contract;
+                    emp.emergency = emergency;
+                }
+            } else {
+                const newId = employees.length > 0 ? Math.max(...employees.map(e => e.id)) + 1 : 1;
+                employees.push({ id: newId, name: name, department: dept, contract: contract, emergency: emergency });
+            }
+            closeEmployeeModal();
+            renderHrm();
+        }
+
+        function terminateEmployee(id) {
+            if (confirm('Are you sure you want to terminate this employee?')) {
+                employees = employees.filter(e => e.id !== id);
+                renderHrm();
+            }
+        }
+
+        document.getElementById('employeeModal').addEventListener('click', function(e) { if (e.target === this) closeEmployeeModal(); });
+
+
+        function openVacancyModal(id = null) {
+            const form = document.getElementById('vacancyForm');
+            form.reset();
+            document.getElementById('vacId').value = '';
+            document.getElementById('vacancyModalTitle').innerHTML = '<i class="fas fa-plus"></i> Publish Vacancy';
+            if (id) {
+                const vac = vacancies.find(v => v.id === id);
+                if (vac) {
+                    document.getElementById('vacId').value = vac.id;
+                    document.getElementById('vacTitle').value = vac.title;
+                    document.getElementById('vacDept').value = vac.department;
+                    document.getElementById('vacStatus').value = vac.status;
+                    document.getElementById('vacancyModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Vacancy';
+                }
+            }
+            document.getElementById('vacancyModal').classList.add('active');
+        }
+
+        function closeVacancyModal() {
+            document.getElementById('vacancyModal').classList.remove('active');
+        }
+
+        function handleVacancySubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('vacId').value;
+            const title = document.getElementById('vacTitle').value;
+            const dept = document.getElementById('vacDept').value;
+            const status = document.getElementById('vacStatus').value;
+
+            if (id) {
+                const vac = vacancies.find(v => v.id === parseInt(id));
+                if (vac) {
+                    vac.title = title;
+                    vac.department = dept;
+                    vac.status = status;
+                }
+            } else {
+                const newId = vacancies.length > 0 ? Math.max(...vacancies.map(v => v.id)) + 1 : 1;
+                vacancies.push({ id: newId, title: title, department: dept, status: status, applicants: 0 });
+            }
+            closeVacancyModal();
+            renderHrm();
+        }
+
+        document.getElementById('vacancyModal').addEventListener('click', function(e) { if (e.target === this) closeVacancyModal(); });
+
+
+        function openCampaignModal(id = null) {
+            const form = document.getElementById('campaignForm');
+            form.reset();
+            document.getElementById('campId').value = '';
+            document.getElementById('campaignModalTitle').innerHTML = '<i class="fas fa-plus"></i> Create Campaign';
+            if (id) {
+                const camp = campaigns.find(c => c.id === id);
+                if (camp) {
+                    document.getElementById('campId').value = camp.id;
+                    document.getElementById('campName').value = camp.name;
+                    document.getElementById('campAssigned').value = camp.assignedTo;
+                    document.getElementById('campBudget').value = camp.budget;
+                    document.getElementById('campStatus').value = camp.status;
+                    document.getElementById('campPerformance').value = camp.performance;
+                    document.getElementById('campaignModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Campaign';
+                }
+            }
+            document.getElementById('campaignModal').classList.add('active');
+        }
+
+        function closeCampaignModal() {
+            document.getElementById('campaignModal').classList.remove('active');
+        }
+
+        function handleCampaignSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('campId').value;
+            const name = document.getElementById('campName').value;
+            const assigned = document.getElementById('campAssigned').value;
+            const budget = document.getElementById('campBudget').value;
+            const status = document.getElementById('campStatus').value;
+            const perf = document.getElementById('campPerformance').value;
+
+            if (id) {
+                const camp = campaigns.find(c => c.id === parseInt(id));
+                if (camp) {
+                    camp.name = name;
+                    camp.assignedTo = assigned;
+                    camp.budget = budget;
+                    camp.status = status;
+                    camp.performance = perf;
+                }
+            } else {
+                const newId = campaigns.length > 0 ? Math.max(...campaigns.map(c => c.id)) + 1 : 1;
+                campaigns.push({ id: newId, name: name, assignedTo: assigned, budget: budget, status: status, performance: perf });
+            }
+            closeCampaignModal();
+            renderHrm();
+        }
+
+        document.getElementById('campaignModal').addEventListener('click', function(e) { if (e.target === this) closeCampaignModal(); });
+
+
+        function updateLeadStatus(id, newStatus) {
+            const lead = leads.find(l => l.id === id);
+            if (lead) {
+                lead.status = newStatus;
+                renderHrm();
+            }
+        }
+
         function renderHrm() {
             // Dashboard Stats
             document.getElementById('hrmDashStats').innerHTML = `
@@ -3423,8 +3676,8 @@
                     <td>${e.contract}</td>
                     <td>${e.emergency}</td>
                     <td>
-                        <button class="btn btn-outline btn-sm" onclick="alert('Edit Employee ${e.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="alert('Terminate Employee ${e.id}')"><i class="fas fa-user-times"></i></button>
+                        <button class="btn btn-outline btn-sm" onclick="openEmployeeModal(${e.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="terminateEmployee(${e.id})"><i class="fas fa-user-times"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -3437,7 +3690,7 @@
                     <td>${v.applicants}</td>
                     <td><span class="badge ${v.status==='Active'?'badge-success':'badge-danger'}">${v.status}</span></td>
                     <td>
-                        <button class="btn btn-outline btn-sm" onclick="alert('View Applicants')">View CVs</button>
+                        <button class="btn btn-outline btn-sm" onclick="openVacancyModal(${v.id})">Edit</button>
                     </td>
                 </tr>
             `).join('');
@@ -3466,7 +3719,7 @@
                     <td>$${c.budget}</td>
                     <td><span class="badge ${c.status==='Active'?'badge-success':'badge-warning'}">${c.status}</span></td>
                     <td>${c.performance}</td>
-                    <td><button class="btn btn-outline btn-sm" onclick="alert('Edit Campaign')"><i class="fas fa-edit"></i></button></td>
+                    <td><button class="btn btn-outline btn-sm" onclick="openCampaignModal(${c.id})"><i class="fas fa-edit"></i></button></td>
                 </tr>
             `).join('');
 
@@ -3494,11 +3747,11 @@
                     <td>${l.source}</td>
                     <td><span class="badge ${l.status==='Converted'?'badge-success':l.status==='Lost'?'badge-danger':'badge-info'}">${l.status}</span></td>
                     <td>
-                        <select class="btn btn-outline btn-sm" style="padding: 4px; font-size: 0.8rem; background: transparent;" onchange="alert('Status changed')">
-                            <option ${l.status==='New'?'selected':''}>New</option>
-                            <option ${l.status==='Qualified'?'selected':''}>Qualified</option>
-                            <option ${l.status==='Converted'?'selected':''}>Converted</option>
-                            <option ${l.status==='Lost'?'selected':''}>Lost</option>
+                        <select class="btn btn-outline btn-sm" style="padding: 4px; font-size: 0.8rem; background: transparent;" onchange="updateLeadStatus(${l.id}, this.value)">
+                            <option value="New" ${l.status==='New'?'selected':''}>New</option>
+                            <option value="Qualified" ${l.status==='Qualified'?'selected':''}>Qualified</option>
+                            <option value="Converted" ${l.status==='Converted'?'selected':''}>Converted</option>
+                            <option value="Lost" ${l.status==='Lost'?'selected':''}>Lost</option>
                         </select>
                     </td>
                 </tr>
@@ -3561,9 +3814,45 @@ function renderAdmin() {
                     </td>
                 </tr>
             `).join('');
+
+            // HR Control Stats
+            const totalEmps = employees.length;
+            const totalCamps = campaigns.length;
+            document.getElementById('adminHrStats').innerHTML = `
+                <div class="stat-card"><div class="label">Total Employees</div><div class="value">${totalEmps}</div></div>
+                <div class="stat-card"><div class="label">Total Campaigns</div><div class="value blue">${totalCamps}</div></div>
+            `;
+
+            document.getElementById('adminHrEmployeesTable').innerHTML = employees.map(e => `
+                <tr>
+                    <td><strong>${e.name}</strong></td>
+                    <td><span class="badge badge-info">${e.department}</span></td>
+                    <td><button class="btn btn-outline btn-sm" style="padding:4px 8px; color:var(--danger); border-color:var(--danger);" onclick="terminateEmployeeAdmin(${e.id})"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `).join('');
+
+            document.getElementById('adminHrCampaignsTable').innerHTML = campaigns.map(c => `
+                <tr>
+                    <td><strong>${c.name}</strong></td>
+                    <td>$${c.budget}</td>
+                    <td><span class="badge ${c.status==='Active'?'badge-success':'badge-warning'}">${c.status}</span></td>
+                </tr>
+            `).join('');
+
             document.getElementById('adminVerificationTable').innerHTML = verifications.map(v => `
                 <tr><td><strong>${v.landlord}</strong></td><td>${v.document}</td><td>${v.submitted}</td><td>${v.status==='pending'?`<button class="btn btn-success btn-sm" onclick="approveVerification(${v.id})"><i class="fas fa-check"></i></button> <button class="btn btn-danger btn-sm" onclick="rejectVerification(${v.id})"><i class="fas fa-times"></i></button>`:`<span class="badge ${v.status==='approved'?'badge-success':'badge-danger'}">${v.status}</span><br><small style="color:var(--text-muted);">by ${v.executedBy || 'System'}</small>`}</td></tr>
             `).join('');
+        }
+
+
+        function terminateEmployeeAdmin(id) {
+            if (confirm('Are you sure you want to terminate this employee?')) {
+                employees = employees.filter(e => e.id !== id);
+                renderAdmin();
+                if(document.getElementById('hrm-dash').classList.contains('active-dash')){
+                    renderHrm();
+                }
+            }
         }
 
         function approveVerification(id) { 
