@@ -1594,6 +1594,37 @@
             }
             .hrm-overlay.active { display: block; }
         }
+
+        .dev-socials-tooltip {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            box-shadow: var(--shadow-md);
+            white-space: nowrap;
+            z-index: 100;
+        }
+
+        .dev-socials-tooltip.active {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .dev-socials-tooltip a {
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+
+        .dev-socials-tooltip a:hover {
+            transform: scale(1.1);
+        }
 </style>
 </head>
 <body>
@@ -1877,7 +1908,14 @@
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Developed by <a href="https://wa.me/263776998296" target="_blank" style="color: var(--primary); text-decoration: none;">Spudy</a></p>
+                <div style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); position: relative; display: inline-block;">
+                    Developed by <a href="#" onclick="toggleDeveloperSocials(event)" style="color: var(--primary); text-decoration: none;">Spudy</a>
+                    <div class="dev-socials-tooltip">
+                        <a href="https://wa.me/263776998296" target="_blank" title="WhatsApp" style="color: #25d366;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/matipaishe_bessing/" target="_blank" title="Instagram" style="color: #e1306c;"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/matipaishe_bessing/" target="_blank" title="Facebook" style="color: #1877f2;"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1932,7 +1970,14 @@
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
                 <a href="#" style="color: var(--text-muted); margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Developed by <a href="https://wa.me/263776998296" target="_blank" style="color: var(--primary); text-decoration: none;">Spudy</a></p>
+                <div style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); position: relative; display: inline-block;">
+                    Developed by <a href="#" onclick="toggleDeveloperSocials(event)" style="color: var(--primary); text-decoration: none;">Spudy</a>
+                    <div class="dev-socials-tooltip">
+                        <a href="https://wa.me/263776998296" target="_blank" title="WhatsApp" style="color: #25d366;"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/matipaishe_bessing/" target="_blank" title="Instagram" style="color: #e1306c;"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/matipaishe_bessing/" target="_blank" title="Facebook" style="color: #1877f2;"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -4304,6 +4349,34 @@ function renderAdmin() {
         }, 10000); // Check every 10s for prototype
 updateTenantPointsDisplay();
         console.log('HomeBase ready — all features active. AI bot, Points, WhatsApp fallback, Density filters, SmileCash & OneMoney enabled.');
+
+        // Function to toggle developer social links tooltip
+        function toggleDeveloperSocials(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Close all open tooltips first
+            document.querySelectorAll('.dev-socials-tooltip.active').forEach(tooltip => {
+                if (tooltip !== event.target.nextElementSibling) {
+                    tooltip.classList.remove('active');
+                }
+            });
+
+            // Toggle the one clicked
+            const tooltip = event.target.nextElementSibling;
+            if (tooltip && tooltip.classList.contains('dev-socials-tooltip')) {
+                tooltip.classList.toggle('active');
+            }
+        }
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dev-socials-tooltip') && !event.target.closest('a[onclick*="toggleDeveloperSocials"]')) {
+                document.querySelectorAll('.dev-socials-tooltip.active').forEach(tooltip => {
+                    tooltip.classList.remove('active');
+                });
+            }
+        });
     </script>
 </body>
 </html>
