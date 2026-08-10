@@ -1599,31 +1599,84 @@
 <body>
 
     <!-- AUTH SECTION -->
-    <div id="auth-section">
-        <div class="brand auth-brand">
-            <h1>Home<span>Base</span></h1>
-            <p>Verified Rentals. No Phantoms. No Scams.</p>
-            <div class="tagline">Find your next home directly · Save up to 90%</div>
+    <div id="auth-section" class="flex flex-col lg:flex-row min-h-screen bg-white !p-0 !m-0">
+
+        <!-- Left Side - Branding -->
+        <div class="hidden lg:flex lg:w-1/2 bg-blue-600 flex-col justify-between p-12 relative overflow-hidden h-screen text-white text-left shadow-lg">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 20px 20px;"></div>
+            <div class="relative z-10 brand auth-brand !static !block !w-auto">
+                <div class="flex items-center space-x-2 text-white mb-16">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight">HRIMS</span>
+                </div>
+                <h1 class="text-4xl font-bold leading-tight mb-6">Manage your workforce <br/>intelligently.</h1>
+
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3 text-blue-100">
+                        <i class="fas fa-check-circle text-white"></i>
+                        <span>Automated Payroll Processing</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-blue-100">
+                        <i class="fas fa-check-circle text-white"></i>
+                        <span>Streamlined Recruitment Pipeline</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-blue-100">
+                        <i class="fas fa-check-circle text-white"></i>
+                        <span>Comprehensive Leave Management</span>
+                    </div>
+                </div>
+            </div>
+            <div class="relative z-10 text-blue-200 text-sm">
+                &copy; 2024 HRIMS Platform. All rights reserved.
+            </div>
         </div>
 
-        <div class="auth-card-container">
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 min-h-screen relative z-20">
             <!-- LOGIN CARD -->
-            <div id="login-card" class="auth-card active-auth-card">
-                <h2>Welcome Back</h2>
-                <p class="auth-sub">Log in to your account</p>
-                <form id="login-form" onsubmit="handleLogin(event)">
-                    <div class="field">
-                        <label>Email Address</label>
-                        <input type="email" id="login-email" placeholder="e.g. user@example.com" required />
+            <div id="login-card" class="auth-card active-auth-card !max-w-md !w-full !p-8 !rounded-2xl !shadow-sm !border !border-slate-100 !bg-white">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-slate-800">Welcome back</h2>
+                    <p class="auth-sub !text-slate-500 !mt-2">Please enter your details to sign in.</p>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+                    <div class="field !text-left !mb-0">
+                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Email Address</label>
+                        <input type="email" id="login-email" placeholder="e.g. user@example.com" value="hr-marketing@homebase.admin.com" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
                     </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" id="login-password" placeholder="••••••••" required />
+                    <div class="field !text-left !mb-0">
+                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" value="spudy14" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Log In</button>
+
+                    <div class="flex items-center justify-between text-sm py-2">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-600" />
+                            <span class="text-slate-600">Remember me</span>
+                        </label>
+                        <a href="#" class="font-medium text-blue-600 hover:text-blue-700">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm !mt-4">
+                        Sign In
+                    </button>
                 </form>
-                <div class="auth-switch">
-                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice'); return false;">Sign up</a>
+
+                <div class="mt-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+                        <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-slate-500">Or continue with</span></div>
+                    </div>
+                    <div class="mt-6 grid grid-cols-2 gap-4">
+                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Google</button>
+                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Microsoft</button>
+                    </div>
+                </div>
+
+                <div class="auth-switch !mt-8 text-center text-sm text-slate-500">
+                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice'); return false;" class="font-medium text-blue-600 hover:text-blue-700">Sign up</a>
                 </div>
             </div>
 
@@ -1939,70 +1992,239 @@
 
 
     <!-- HRM DASHBOARD -->
-    <div id="hrm-dash" class="dashboard">
-        <div class="hrm-overlay" onclick="toggleHrmSidebar()"></div>
-        <div class="hrm-sidebar" id="hrmSidebar">
-            <div class="logo">Home<span>Base</span><br><span style="font-size:0.8rem;font-weight:500;color:var(--text-muted);">Marketing & HR</span></div>
-            <div class="hrm-nav">
-                <button class="hrm-nav-item active" data-hrm-tab="dashboard" onclick="switchHrmTab('dashboard')"><i class="fas fa-home"></i> Dashboard</button>
-                <div class="divider"><span style="font-size: 0.65rem;">HR</span></div>
-                <button class="hrm-nav-item" data-hrm-tab="employees" onclick="switchHrmTab('employees')"><i class="fas fa-users"></i> Employees</button>
-                <button class="hrm-nav-item" data-hrm-tab="recruitment" onclick="switchHrmTab('recruitment')"><i class="fas fa-file-alt"></i> Recruitment</button>
-                <button class="hrm-nav-item" data-hrm-tab="attendance" onclick="switchHrmTab('attendance')"><i class="fas fa-calendar-check"></i> Attendance</button>
-                <button class="hrm-nav-item" data-hrm-tab="performance" onclick="switchHrmTab('performance')"><i class="fas fa-star"></i> Performance Reviews</button>
-                <button class="hrm-nav-item" data-hrm-tab="training" onclick="switchHrmTab('training')"><i class="fas fa-graduation-cap"></i> Training</button>
-                <div class="divider"><span style="font-size: 0.65rem;">MARKETING</span></div>
-                <button class="hrm-nav-item" data-hrm-tab="marketing" onclick="switchHrmTab('marketing')"><i class="fas fa-bullhorn"></i> Marketing</button>
-                <button class="hrm-nav-item" data-hrm-tab="properties" onclick="switchHrmTab('properties')"><i class="fas fa-building"></i> Properties to Promote</button>
-                <button class="hrm-nav-item" data-hrm-tab="leads" onclick="switchHrmTab('leads')"><i class="fas fa-bullseye"></i> Leads</button>
-                <button class="hrm-nav-item" data-hrm-tab="commissions" onclick="switchHrmTab('commissions')"><i class="fas fa-money-bill-wave"></i> Commissions</button>
-                <div class="divider"><span style="font-size: 0.65rem;">GENERAL</span></div>
-                <button class="hrm-nav-item" data-hrm-tab="reports" onclick="switchHrmTab('reports')"><i class="fas fa-chart-bar"></i> Reports</button>
-                <button class="hrm-nav-item" data-hrm-tab="messages" onclick="switchHrmTab('messages')"><i class="fas fa-comments"></i> Messages</button>
-                <button class="hrm-nav-item" data-hrm-tab="documents" onclick="switchHrmTab('documents')"><i class="fas fa-folder-open"></i> Documents</button>
-                <button class="hrm-nav-item" data-hrm-tab="settings" onclick="switchHrmTab('settings')"><i class="fas fa-cog"></i> Settings</button>
+    <div id="hrm-dash" class="dashboard min-h-screen bg-slate-50 text-slate-800 flex !p-0 !m-0 !max-w-none">
+
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 left-0 z-10 transition-transform hrm-sidebar-tailwind">
+            <div class="h-16 flex items-center px-6 border-b border-slate-200">
+                <i class="fas fa-users text-blue-600 text-2xl mr-2"></i>
+                <span class="text-xl font-bold text-slate-800 tracking-tight">HRIMS</span>
             </div>
-            <div class="hrm-sidebar-footer">
-                <button class="btn btn-outline btn-block" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+
+            <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 hrm-nav">
+                <button class="hrm-nav-item active w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="dashboard" onclick="switchHrmTab('dashboard')">
+                    <i class="fas fa-chart-line w-5 h-5 mr-3 text-center"></i> Dashboard
+                </button>
+
+                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Human Resources</div>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="employees" onclick="switchHrmTab('employees')">
+                    <i class="fas fa-user-friends w-5 h-5 mr-3 text-center"></i> Employees
+                </button>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="attendance" onclick="switchHrmTab('attendance')">
+                    <i class="fas fa-calendar-check w-5 h-5 mr-3 text-center"></i> Leave Management
+                </button>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="performance" onclick="switchHrmTab('performance')">
+                    <i class="fas fa-star w-5 h-5 mr-3 text-center"></i> Performance
+                </button>
+
+                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Administration</div>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="payroll" onclick="switchHrmTab('payroll')">
+                    <i class="fas fa-wallet w-5 h-5 mr-3 text-center"></i> Payroll
+                </button>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="recruitment" onclick="switchHrmTab('recruitment')">
+                    <i class="fas fa-briefcase w-5 h-5 mr-3 text-center"></i> Recruitment
+                </button>
+
+                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">System</div>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="reports" onclick="switchHrmTab('reports')">
+                    <i class="fas fa-chart-pie w-5 h-5 mr-3 text-center"></i> Reports
+                </button>
+                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="settings" onclick="switchHrmTab('settings')">
+                    <i class="fas fa-cog w-5 h-5 mr-3 text-center"></i> Settings
+                </button>
+            </div>
+
+            <div class="p-4 border-t border-slate-200">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
+                        <i class="fas fa-shield-alt text-slate-400 mr-2"></i>
+                        <span class="text-xs font-medium text-slate-500">Your data is secure</span>
+                    </div>
+                    <button class="w-full py-2 flex items-center justify-center text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition" onclick="logout()">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="hrm-main">
-            <div class="hrm-header">
-                <button class="hrm-menu-btn" onclick="toggleHrmSidebar()"><i class="fas fa-bars"></i></button>
-                <div class="hrm-header-title" id="hrmHeaderTitle">Dashboard</div>
-                <div class="right" style="display:flex; align-items:center; gap: 15px;">
-                    <div style="position:relative; cursor:pointer;" onclick="openNotificationsModal()">
-                        <i class="fas fa-bell" style="font-size:1.2rem; color:var(--text-muted);"></i>
-                        <span id="hrmNotifBadge" style="position:absolute; top:-5px; right:-8px; background:var(--danger); color:#fff; font-size:0.65rem; padding:2px 5px; border-radius:10px; display:none;">0</span>
-                    </div>
-                    <span class="user-chip" id="hrmUserChip"><span class="dot"></span> HR & Marketing</span>
+        <!-- Main Area Wrapper -->
+        <div class="flex-1 ml-64 flex flex-col min-h-screen bg-slate-50">
+
+            <!-- Top Header -->
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-10 w-full hrm-header-tailwind">
+                <div>
+                    <h1 class="text-lg font-bold text-slate-800 leading-tight" id="hrmHeaderTitle">Dashboard</h1>
+                    <p class="text-xs text-slate-500" id="hrmHeaderSubtitle">Overview and management</p>
                 </div>
-            </div>
 
-            <div class="hrm-content">
+                <div class="flex items-center space-x-6">
+                    <!-- Search Bar -->
+                    <div class="relative hidden md:block">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" placeholder="Search..." class="pl-9 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 w-64 transition-all text-slate-700" />
+                        <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center space-x-1">
+                            <kbd class="hidden sm:inline-block bg-white border border-slate-200 rounded px-1.5 text-[10px] font-sans font-semibold text-slate-400 shadow-sm">⌘K</kbd>
+                        </div>
+                    </div>
+
+                    <!-- Actions & Profile -->
+                    <div class="flex items-center space-x-4">
+                        <button class="relative text-slate-400 hover:text-slate-600 transition-colors" onclick="openNotificationsModal()">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white" id="hrmNotifBadge"></span>
+                        </button>
+
+                        <button class="text-slate-400 hover:text-slate-600 transition-colors">
+                            <i class="fas fa-comment-dots text-lg"></i>
+                        </button>
+
+                        <div class="h-6 w-px bg-slate-200 mx-2"></div>
+
+                        <button class="flex items-center space-x-2 text-left hover:bg-slate-50 p-1 pr-2 rounded-lg transition-colors border border-transparent hover:border-slate-200">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm" id="hrmUserAvatar">
+                                HR
+                            </div>
+                            <div class="hidden sm:block">
+                                <div class="text-sm font-semibold text-slate-700 leading-none" id="hrmUserChipName">HR & Marketing</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Administrator</div>
+                            </div>
+                            <i class="fas fa-chevron-down text-slate-400 text-xs ml-1 hidden sm:block"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrollable Content -->
+            <div class="p-6 md:p-8 flex-1 hrm-content">
                 <!-- PANELS -->
-                <div id="hrmPane-dashboard" class="hrm-pane active">
-                    <h2 style="margin-bottom:20px;">Welcome back, <span id="hrmWelcomeName">User</span></h2>
-                    <div class="stat-grid" id="hrmDashStats">
-                        <!-- Stats injected via JS -->
+                <div id="hrmPane-dashboard" class="hrm-pane active space-y-6">
+                    <!-- KPI Cards Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+                                    <i class="fas fa-users w-5 h-5 flex items-center justify-center text-lg"></i>
+                                </div>
+                                <h3 class="text-sm font-medium text-slate-500">Total Employees</h3>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-3xl font-bold text-slate-800">165</div>
+                                <div class="text-xs mt-2 font-medium text-green-600">↑ 12% from last month</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+                                    <i class="fas fa-calendar-check w-5 h-5 flex items-center justify-center text-lg"></i>
+                                </div>
+                                <h3 class="text-sm font-medium text-slate-500">Present Today</h3>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-3xl font-bold text-slate-800">142</div>
+                                <div class="text-xs mt-2 font-medium text-red-600">↓ 2.4% from yesterday</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+                                    <i class="fas fa-calendar-times w-5 h-5 flex items-center justify-center text-lg"></i>
+                                </div>
+                                <h3 class="text-sm font-medium text-slate-500">Pending Leave</h3>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-3xl font-bold text-slate-800">12</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+                                    <i class="fas fa-wallet w-5 h-5 flex items-center justify-center text-lg"></i>
+                                </div>
+                                <h3 class="text-sm font-medium text-slate-500">Payroll Due</h3>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-3xl font-bold text-slate-800">$124.5k</div>
+                                <div class="text-xs mt-2 font-medium text-green-600">↑ On track</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="panel" style="margin-top: 20px;">
-                        <div class="panel-header">
-                            <h2><i class="fas fa-tasks"></i> Pending Tasks</h2>
-                        </div>
-                        <div id="hrmPendingTasksList">
-                            <!-- Tasks injected via JS -->
-                        </div>
-                    </div>
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                        <!-- Main Charts Area -->
+                        <div class="xl:col-span-2 space-y-6">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-6">Employee Growth</h3>
+                                <div class="h-[300px] w-full relative">
+                                    <canvas id="employeeGrowthChart"></canvas>
+                                </div>
+                            </div>
 
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h2><i class="fas fa-chart-line"></i> Performance Overview</h2>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-6">Attendance Trend (This Week)</h3>
+                                <div class="h-[250px] w-full relative">
+                                    <canvas id="attendanceTrendChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: var(--radius-sm); border: 1px dashed var(--card-border); color: var(--text-muted);">
-                            <i class="fas fa-chart-pie" style="font-size: 2rem; margin-right: 10px;"></i> Charts Placeholder
+
+                        <!-- Side Widgets -->
+                        <div class="space-y-6">
+                            <!-- Calendar Widget -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-4">Upcoming Events</h3>
+                                <div class="space-y-3">
+                                    <div class="p-3 border border-slate-100 rounded-lg flex items-start space-x-3 hover:bg-slate-50 transition">
+                                        <div class="bg-blue-100 text-blue-600 rounded px-2 py-1 text-center min-w-[3rem]">
+                                            <div class="text-xs font-bold uppercase">Jul</div>
+                                            <div class="text-lg font-bold leading-none">15</div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-700">Q3 Planning Meeting</h4>
+                                            <p class="text-xs text-slate-500 mt-1">10:00 AM - Boardroom</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border border-slate-100 rounded-lg flex items-start space-x-3 hover:bg-slate-50 transition">
+                                        <div class="bg-orange-100 text-orange-600 rounded px-2 py-1 text-center min-w-[3rem]">
+                                            <div class="text-xs font-bold uppercase">Jul</div>
+                                            <div class="text-lg font-bold leading-none">18</div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-700">New Hire Onboarding</h4>
+                                            <p class="text-xs text-slate-500 mt-1">9:00 AM - HR Office</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activity Timeline -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-6">Recent Activity</h3>
+                                <div class="relative pl-4 border-l border-slate-200 space-y-6">
+                                    <div class="relative">
+                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-orange-400"></span>
+                                        <p class="text-sm text-slate-700">Sarah Jenkins submitted a leave request</p>
+                                        <p class="text-xs text-slate-400 mt-1">2 hours ago</p>
+                                    </div>
+                                    <div class="relative">
+                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-green-400"></span>
+                                        <p class="text-sm text-slate-700">Payroll processing completed for June</p>
+                                        <p class="text-xs text-slate-400 mt-1">5 hours ago</p>
+                                    </div>
+                                    <div class="relative">
+                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-blue-400"></span>
+                                        <p class="text-sm text-slate-700">New candidate applied for Frontend Role</p>
+                                        <p class="text-xs text-slate-400 mt-1">1 day ago</p>
+                                    </div>
+                                    <div class="relative">
+                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-purple-400"></span>
+                                        <p class="text-sm text-slate-700">Performance reviews opened for Q2</p>
+                                        <p class="text-xs text-slate-400 mt-1">2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2025,45 +2247,371 @@
                 </div>
 
                 <div id="hrmPane-recruitment" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-file-alt"></i> Recruitment</h2>
-                        <button class="btn btn-primary btn-sm" onclick="openVacancyModal()"><i class="fas fa-plus"></i> Publish Vacancy</button>
-                    </div>
-                    <div class="panel" style="margin-bottom: 20px;">
-                        <h3 style="margin-bottom: 15px; font-size: 1rem;">Active Vacancies</h3>
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>Title</th><th>Department</th><th>Applicants</th><th>Status</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmVacanciesTable"></tbody>
-                            </table>
+                    <div class="h-[calc(100vh-140px)] overflow-x-auto pb-4">
+                        <div class="flex space-x-6 min-w-max h-full">
+                            <!-- Applied Column -->
+                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-4 px-1">
+                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                                        <span>Applied</span>
+                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">2</span>
+                                    </h3>
+                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">JD</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">John Doe</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">Frontend Dev</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-green-600 font-bold">85%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">JS</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Jane Smith</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">UX Designer</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-orange-500 font-bold">72%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-orange-400" style="width: 72%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screening Column -->
+                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-4 px-1">
+                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                                        <span>Screening</span>
+                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">1</span>
+                                    </h3>
+                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">RC</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Robert Chen</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">Backend Dev</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-green-600 font-bold">92%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 92%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interview Column -->
+                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-4 px-1">
+                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                                        <span>Interview</span>
+                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">2</span>
+                                    </h3>
+                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">ED</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Emily Davis</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">Product Manager</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-green-600 font-bold">88%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 88%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">MW</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Michael Wilson</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">Frontend Dev</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-blue-600 font-bold">78%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-blue-500" style="width: 78%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Offer Column -->
+                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-4 px-1">
+                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                                        <span>Offer</span>
+                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">1</span>
+                                    </h3>
+                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
+                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">SJ</div>
+                                                <div>
+                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Sarah Jenkins</h4>
+                                                    <p class="text-xs text-slate-500 mt-0.5">Marketing Lead</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="flex justify-between text-xs mb-1">
+                                                <span class="text-slate-500 font-medium">Match</span>
+                                                <span class="text-green-600 font-bold">95%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 95%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hired Column -->
+                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-4 px-1">
+                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
+                                        <span>Hired</span>
+                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">0</span>
+                                    </h3>
+                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
+                                    <div class="h-24 border-2 border-dashed border-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-sm font-medium">
+                                        Drop candidate here
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="hrmPane-attendance" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-calendar-check"></i> Attendance</h2>
-                    </div>
-                    <div class="panel">
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>Employee</th><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmAttendanceTable"></tbody>
-                            </table>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-slate-800">Leave Planner</h3>
+                            <div class="flex space-x-4 text-xs font-medium">
+                                <div class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-sm mr-2"></span> Annual</div>
+                                <div class="flex items-center"><span class="w-3 h-3 bg-red-500 rounded-sm mr-2"></span> Sick</div>
+                                <div class="flex items-center"><span class="w-3 h-3 bg-purple-500 rounded-sm mr-2"></span> Paternity/Maternity</div>
+                                <div class="flex items-center"><span class="w-3 h-3 bg-orange-500 rounded-sm mr-2"></span> Personal</div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <div class="min-w-[800px]">
+                                <!-- Header Row (Dates) -->
+                                <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 mb-4 border-b border-slate-200 pb-2">
+                                    <div class="font-semibold text-sm text-slate-500 uppercase">Employee</div>
+                                    <!-- Generating a few mock dates -->
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Mon</div><div class="font-bold text-slate-700">10</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Tue</div><div class="font-bold text-slate-700">11</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Wed</div><div class="font-bold text-slate-700">12</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Thu</div><div class="font-bold text-slate-700">13</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Fri</div><div class="font-bold text-slate-700">14</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sat</div><div class="font-bold text-slate-700">15</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sun</div><div class="font-bold text-slate-700">16</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Mon</div><div class="font-bold text-slate-700">17</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Tue</div><div class="font-bold text-slate-700">18</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Wed</div><div class="font-bold text-slate-700">19</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Thu</div><div class="font-bold text-slate-700">20</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Fri</div><div class="font-bold text-slate-700">21</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sat</div><div class="font-bold text-slate-700">22</div></div>
+                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sun</div><div class="font-bold text-slate-700">23</div></div>
+                                </div>
+
+                                <!-- Timeline Rows -->
+                                <div class="space-y-4">
+                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">AM</div>
+                                            <span class="font-medium text-slate-700 text-sm">Alex Morgan</span>
+                                        </div>
+                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
+                                            <div class="absolute inset-0 grid grid-cols-14 gap-1 pointer-events-none">
+                                                <!-- Mock lines -->
+                                                <div class="border-r border-slate-200 h-full w-[calc(100%/14)] absolute left-[calc((100%/14)*1)]"></div>
+                                                <div class="border-r border-slate-200 h-full w-[calc(100%/14)] absolute left-[calc((100%/14)*2)]"></div>
+                                            </div>
+                                            <!-- Leave Bar -->
+                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((2 / 14) * 100%); width: calc((3 / 14) * 100% - 4px);" title="Annual Leave">Annual</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">SJ</div>
+                                            <span class="font-medium text-slate-700 text-sm">Sarah Jenkins</span>
+                                        </div>
+                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
+                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-red-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: 0%; width: calc((2 / 14) * 100% - 4px);" title="Sick Leave">Sick</div>
+                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((8 / 14) * 100%); width: calc((4 / 14) * 100% - 4px);" title="Annual Leave">Annual</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">MC</div>
+                                            <span class="font-medium text-slate-700 text-sm">Michael Chang</span>
+                                        </div>
+                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
+                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-purple-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((5 / 14) * 100%); width: calc((5 / 14) * 100% - 4px);" title="Paternity Leave">Paternity</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="hrmPane-performance" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-star"></i> Performance Reviews</h2>
+                <div id="hrmPane-performance" class="hrm-pane space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <!-- Radar Chart -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                            <h3 class="text-lg font-bold text-slate-800 mb-6">Competency Radar</h3>
+                            <div class="h-[300px] w-full relative">
+                                <canvas id="competencyRadarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- OKRs Tracking -->
+                        <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                            <h3 class="text-lg font-bold text-slate-800 mb-6">Current Goals (OKRs)</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between items-end mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-700">Increase Q3 Sales by 15%</h4>
+                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-blue-100 text-blue-700">On Track</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">75%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                        <div class="h-2.5 rounded-full bg-blue-500" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-end mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-700">Complete Leadership Training</h4>
+                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-green-100 text-green-700">Completed</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">100%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                        <div class="h-2.5 rounded-full bg-green-500" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-end mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-700">Reduce Bug Rate by 5%</h4>
+                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-orange-100 text-orange-700">At Risk</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">40%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                        <div class="h-2.5 rounded-full bg-orange-500" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                     <div class="panel">
-                        <p class="text-muted text-center" style="padding: 20px;">Monthly evaluations and KPI tracking will appear here.</p>
+
+                    <!-- Competency Heatmap Table -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-lg font-bold text-slate-800 mb-6">Department Competency Heatmap</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase">Employee</th>
+                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Tech Skills</th>
+                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Comm.</th>
+                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Leadership</th>
+                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Initiative</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="p-3 font-medium text-slate-700">Alex M.</td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.5</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.0</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.8</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.2</div></td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="p-3 font-medium text-slate-700">Sarah J.</td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.5</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.8</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-50 text-slate-600">3.2</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.5</div></td>
+                                    </tr>
+                                    <tr class="border-t border-slate-100">
+                                        <td class="p-3 font-medium text-slate-700">Michael C.</td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.9</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.5</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.8</div></td>
+                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.0</div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -2120,23 +2668,150 @@
                     </div>
                 </div>
 
-                <div id="hrmPane-commissions" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-money-bill-wave"></i> Commissions</h2>
-                    </div>
-                    <div class="stat-grid" style="margin-bottom: 20px;">
-                        <div class="stat-card"><div class="label">Pending</div><div class="value orange" id="hrmCommPending">$0</div></div>
-                        <div class="stat-card"><div class="label">Approved</div><div class="value blue" id="hrmCommApproved">$0</div></div>
-                        <div class="stat-card"><div class="label">Paid</div><div class="value green" id="hrmCommPaid">$0</div></div>
-                    </div>
-                    <div class="panel">
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>Marketer</th><th>Property / Action</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmCommissionsTable"></tbody>
-                            </table>
+                <div id="hrmPane-payroll" class="hrm-pane">
+                    <div class="flex flex-col lg:flex-row gap-6">
+                        <div class="flex-1 space-y-6">
+
+                            <!-- Payroll Data Table -->
+                            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-50 border-b border-slate-200">
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">ID</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Employee</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Gross Pay</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Deductions</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Net Pay</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-100">
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-001</td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">AM</div>
+                                                        <span class="font-medium text-slate-800 text-sm">Alex Morgan</span>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">Management</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$8,500</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$1,200</td>
+                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$7,300</td>
+                                                <td class="px-6 py-4"><span class="bg-success-100 text-success-700 rounded-full px-2.5 py-1 text-xs font-medium">Paid</span></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-003</td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">MC</div>
+                                                        <span class="font-medium text-slate-800 text-sm">Michael Chang</span>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">Design</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$6,800</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$800</td>
+                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$6,000</td>
+                                                <td class="px-6 py-4"><span class="bg-warning-100 text-warning-700 rounded-full px-2.5 py-1 text-xs font-medium">Pending</span></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-004</td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">EW</div>
+                                                        <span class="font-medium text-slate-800 text-sm">Emma Wilson</span>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">Marketing</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$5,500</td>
+                                                <td class="px-6 py-4 text-sm text-slate-700">$650</td>
+                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$4,850</td>
+                                                <td class="px-6 py-4"><span class="bg-danger-100 text-danger-700 rounded-full px-2.5 py-1 text-xs font-medium">Failed</span></td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
+                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="px-6 py-4 bg-white border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
+                                    <div>Showing 1 to 3 of 124 entries</div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-1 rounded hover:bg-slate-100 disabled:opacity-50"><i class="fas fa-chevron-left w-4 h-4 text-center"></i></button>
+                                        <button class="px-3 py-1 rounded bg-blue-600 text-white font-medium">1</button>
+                                        <button class="px-3 py-1 rounded hover:bg-slate-100 text-slate-600 font-medium">2</button>
+                                        <button class="px-3 py-1 rounded hover:bg-slate-100 text-slate-600 font-medium">3</button>
+                                        <button class="p-1 rounded hover:bg-slate-100 disabled:opacity-50"><i class="fas fa-chevron-right w-4 h-4 text-center"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Monthly Trend Area Chart -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-6">Monthly Payroll Trend (Last 6 Months)</h3>
+                                <div class="h-[250px] w-full relative">
+                                    <canvas id="monthlyPayrollTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar/Right Column -->
+                        <div class="w-full lg:w-80 space-y-6">
+                            <!-- Next Payroll Run -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center">
+                                <h3 class="text-slate-500 font-medium text-sm uppercase tracking-wider mb-2">Next Payroll Run</h3>
+                                <div class="text-3xl font-bold text-slate-800 mb-1">July 25</div>
+                                <div class="text-sm text-slate-500 mb-6">10:00 AM EST</div>
+                                <button class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">
+                                    Review Payroll
+                                </button>
+                            </div>
+
+                            <!-- Payroll Summary Donut Chart -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                                <h3 class="text-lg font-bold text-slate-800 mb-4">Payroll Summary</h3>
+                                <div class="h-[200px] w-full relative flex justify-center">
+                                    <canvas id="payrollSummaryChart"></canvas>
+                                </div>
+                                <div class="space-y-3 mt-4" id="payrollSummaryLegend">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                            <span class="text-slate-600 font-medium">Paid</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">$85,000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                            <span class="text-slate-600 font-medium">Pending</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">$25,000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                            <span class="text-slate-600 font-medium">Failed</span>
+                                        </div>
+                                        <span class="font-bold text-slate-800">$5,000</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2844,6 +3519,130 @@
         }
 
 
+        // HRIMS Chart.js Initialization
+        window.hrimsChartsInitialized = false;
+        window.initHRIMSCharts = function() {
+            if (typeof Chart === 'undefined') return;
+            window.hrimsChartsInitialized = true;
+
+            // Common Options
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, border: { display: false } },
+                    y: { grid: { borderDash: [3, 3], color: '#e2e8f0' }, border: { display: false } }
+                }
+            };
+
+            // Employee Growth Area Chart
+            const empCtx = document.getElementById('employeeGrowthChart');
+            if (empCtx) {
+                new Chart(empCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                        datasets: [{
+                            label: 'Employees',
+                            data: [120, 125, 132, 140, 145, 158, 165],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: commonOptions
+                });
+            }
+
+            // Attendance Trend Area Chart
+            const attCtx = document.getElementById('attendanceTrendChart');
+            if (attCtx) {
+                new Chart(attCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                        datasets: [{
+                            label: 'Attendance Rate',
+                            data: [95, 98, 94, 96, 89],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, min: 80, max: 100 } } }
+                });
+            }
+
+            // Payroll Summary Pie Chart
+            const pieCtx = document.getElementById('payrollSummaryChart');
+            if (pieCtx) {
+                new Chart(pieCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Paid', 'Pending', 'Failed'],
+                        datasets: [{
+                            data: [85000, 25000, 5000],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                            borderWidth: 0,
+                            cutout: '75%'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                });
+            }
+
+            // Monthly Payroll Trend
+            const payCtx = document.getElementById('monthlyPayrollTrendChart');
+            if (payCtx) {
+                new Chart(payCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Amount ($k)',
+                            data: [105, 108, 112, 110, 115, 124.5],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: commonOptions
+                });
+            }
+
+            // Competency Radar Chart
+            const radarCtx = document.getElementById('competencyRadarChart');
+            if (radarCtx) {
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Productivity', 'Quality', 'Teamwork', 'Leadership', 'Attendance'],
+                        datasets: [{
+                            label: 'Employee Score',
+                            data: [4.2, 4.8, 3.5, 4.0, 4.9],
+                            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                            borderColor: '#2563eb',
+                            pointBackgroundColor: '#2563eb',
+                            pointHoverBorderColor: '#2563eb'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { r: { min: 0, max: 5, ticks: { display: false } } },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+        };
+
         function toggleHrmSidebar() {
             document.getElementById('hrmSidebar').classList.toggle('open');
             document.querySelector('.hrm-overlay').classList.toggle('active');
@@ -2863,12 +3662,29 @@
             // Update header title
             const titles = {
                 'dashboard': 'Dashboard', 'employees': 'Employee Management', 'recruitment': 'Recruitment',
-                'attendance': 'Attendance', 'performance': 'Performance Reviews', 'training': 'Training',
+                'attendance': 'Leave Management', 'performance': 'Performance', 'training': 'Training',
                 'marketing': 'Campaigns', 'properties': 'Properties to Promote', 'leads': 'Leads',
-                'commissions': 'Commissions', 'reports': 'Reports', 'messages': 'Messages',
+                'payroll': 'Payroll', 'reports': 'Reports', 'messages': 'Messages',
                 'documents': 'Documents', 'settings': 'Settings'
             };
             document.getElementById('hrmHeaderTitle').textContent = titles[tabId] || 'Dashboard';
+
+            // Subtitles mapping
+            const subtitles = {
+                'payroll': 'Manage salaries and processing',
+                'attendance': 'Visualize employee time off',
+                'performance': 'Track KPIs and evaluations',
+                'recruitment': 'Manage hiring pipeline'
+            };
+            const subtitleEl = document.getElementById('hrmHeaderSubtitle');
+            if(subtitleEl) {
+                subtitleEl.textContent = subtitles[tabId] || 'Overview and management';
+            }
+
+            // Init charts if needed
+            if(typeof window.initHRIMSCharts === 'function' && !window.hrimsChartsInitialized) {
+                window.initHRIMSCharts();
+            }
 
             // On mobile, close sidebar after clicking
             if (window.innerWidth <= 900) {
