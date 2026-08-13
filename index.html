@@ -1606,6 +1606,143 @@
             .hrm-overlay.active { display: block; }
         }
 </style>
+
+<style>
+/* Clean Auth Styles */
+.auth-wrapper {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.auth-card-wrapper {
+    max-width: 28rem;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f5f9;
+    background-color: #ffffff;
+    margin: 0 auto;
+}
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+.auth-subtitle {
+    color: #64748b;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.auth-field {
+    margin-bottom: 1.25rem;
+}
+.auth-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 0.375rem;
+}
+.auth-input {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #1e293b;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+.auth-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+.auth-btn-primary {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.auth-btn-primary:hover {
+    background-color: #1d4ed8;
+}
+.auth-btn-outline {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background-color: transparent;
+    color: #475569;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-sizing: border-box;
+}
+.auth-btn-outline:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+.auth-divider {
+    position: relative;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e2e8f0;
+    z-index: 1;
+}
+.auth-divider span {
+    position: relative;
+    z-index: 2;
+    background-color: #ffffff;
+    padding: 0 0.75rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+.auth-link {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+}
+.auth-link:hover {
+    text-decoration: underline;
+}
+.auth-switch-text {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 1.5rem;
+}
+.hidden-auth-view {
+    display: none !important;
+}
+</style>
 </head>
 <body>
 
@@ -1645,119 +1782,118 @@
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 min-h-screen relative z-20">
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 min-h-screen relative z-20 auth-wrapper">
             <!-- LOGIN CARD -->
-            <div id="login-card" class="auth-card active-auth-card !max-w-md !w-full !p-8 !rounded-2xl !shadow-sm !border !border-slate-100 !bg-white">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-slate-800">Welcome back</h2>
-                    <p class="auth-sub !text-slate-500 !mt-2">Please enter your details to sign in.</p>
-                </div>
+            <div id="login-card" class="auth-card-wrapper active-auth-card">
+                <h2 class="auth-title">Welcome back</h2>
+                <p class="auth-subtitle">Please enter your details to sign in.</p>
 
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
-                    <div class="field !text-left !mb-0">
-                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Email Address</label>
-                        <input type="email" id="login-email" placeholder="e.g. user@example.com" value="hr-marketing@homebase.admin.com" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="auth-field">
+                        <label class="auth-label">Email Address</label>
+                        <input type="email" id="login-email" placeholder="e.g. user@example.com" required class="auth-input" />
                     </div>
-                    <div class="field !text-left !mb-0">
-                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Password</label>
-                        <input type="password" id="login-password" placeholder="••••••••" value="spudy14" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
+                    <div class="auth-field">
+                        <label class="auth-label">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required class="auth-input" />
                     </div>
-
-                    <div class="flex items-center justify-between text-sm py-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-600" />
-                            <span class="text-slate-600">Remember me</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; font-size: 0.875rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; color: #475569; cursor: pointer;">
+                            <input type="checkbox" id="remember-me" style="border-radius: 0.25rem; border-color: #cbd5e1;" />
+                            <span>Remember me</span>
                         </label>
-                        <a href="#" class="font-medium text-blue-600 hover:text-blue-700">Forgot password?</a>
+                        <a href="#" class="auth-link">Forgot password?</a>
                     </div>
-
-                    <button id="login-btn" type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm !mt-4">
+                    <button id="login-btn" type="submit" class="auth-btn-primary" style="margin-top: 1rem;">
                         Sign In
                     </button>
                 </form>
 
-                <div class="mt-8">
-                    <div class="relative">
-                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-                        <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-slate-500">Or continue with</span></div>
-                    </div>
-                    <div class="mt-6 grid grid-cols-2 gap-4">
-                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Google</button>
-                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Microsoft</button>
-                    </div>
+                <div class="auth-divider">
+                    <span>Or</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <button class="auth-btn-outline" onclick="alert('Google login simulated');">
+                        <i class="fab fa-google" style="color: #ea4335;"></i> Sign in with Google
+                    </button>
                 </div>
 
-                <div class="auth-switch !mt-8 text-center text-sm text-slate-500">
-                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice'); return false;" class="font-medium text-blue-600 hover:text-blue-700">Sign up</a>
+                <div class="auth-switch-text">
+                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice-card'); return false;" class="auth-link">Sign up</a>
                 </div>
             </div>
 
             <!-- SIGNUP CHOICE CARD -->
-            <div id="signup-choice-card" class="auth-card">
-                <h2>Create an Account</h2>
-                <p class="auth-sub">Join HomeBase today</p>
-                <div class="signup-options">
-                    <button class="btn btn-outline btn-block" type="button" onclick="alert('Google login simulated');"><i class="fab fa-google" style="color:#db4437;"></i> Sign up with Google</button>
-                    <div class="divider"><span>OR</span></div>
-                    <button class="btn btn-primary btn-block" type="button" onclick="toggleAuthView('signup')"><i class="fas fa-envelope"></i> Sign up with Email</button>
+            <div id="signup-choice-card" class="auth-card-wrapper hidden-auth-view" style="display:none;">
+                <h2 class="auth-title">Create an Account</h2>
+                <p class="auth-subtitle">Join HomeBase today.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <button class="auth-btn-outline" type="button" onclick="alert('Google login simulated');">
+                        <i class="fab fa-google" style="color:#db4437;"></i> Sign up with Google
+                    </button>
+
+                    <div class="auth-divider"><span>Or</span></div>
+
+                    <button class="auth-btn-primary" type="button" onclick="toggleAuthView('signup-form-card')">
+                        Sign up with Email
+                    </button>
                 </div>
-                <div class="auth-switch">
-                    Already have an account? <a href="#" onclick="toggleAuthView('login'); return false;">Log in</a>
+
+                <div class="auth-switch-text">
+                    Already have an account? <a href="#" onclick="toggleAuthView('login-card'); return false;" class="auth-link">Log in</a>
                 </div>
             </div>
 
             <!-- SIGNUP FORM CARD -->
-            <div id="signup-form-card" class="auth-card">
-                <h2>Register</h2>
-                <p class="auth-sub">Fill in your details</p>
+            <div id="signup-form-card" class="auth-card-wrapper hidden-auth-view" style="display:none;">
+                <h2 class="auth-title">Register</h2>
+                <p class="auth-subtitle">Fill in your details</p>
                 <form id="signup-form" onsubmit="handleSignup(event)">
-                    <div class="field">
-                        <label>Full Name</label>
-                        <input type="text" id="reg-name" placeholder="John Doe" required />
+                    <div class="auth-field">
+                        <label class="auth-label">Full Name</label>
+                        <input type="text" id="reg-name" class="auth-input" placeholder="John Doe" required />
                     </div>
-                    <div class="field">
-                        <label>Email Address</label>
-                        <input type="email" id="reg-email" placeholder="john@example.com" required />
+                    <div class="auth-field">
+                        <label class="auth-label">Email Address</label>
+                        <input type="email" id="reg-email" class="auth-input" placeholder="john@example.com" required />
                     </div>
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" id="reg-password" placeholder="Create a password" required />
+                    <div class="auth-field">
+                        <label class="auth-label">Password</label>
+                        <input type="password" id="reg-password" class="auth-input" placeholder="Create a password" required />
                     </div>
-                    <div class="field-group">
-                        <div class="field">
-                            <label>Role</label>
-                            <select id="reg-role" required onchange="toggleRegLocation()">
-                                <option value="">-- Select Role --</option>
-                                <option value="tenant">Tenant</option>
-                                <option value="landlord">Landlord</option>
-                            </select>
-                        </div>
-                        <div class="field" id="reg-location-wrapper" style="display:none;">
-                            <label>Location</label>
-                            <select id="reg-location">
-                                <option value="Harare">Harare</option>
-                                <option value="Bulawayo">Bulawayo</option>
-                                <option value="Gweru">Gweru</option>
-                                <option value="Mutare">Mutare</option>
-                                <option value="Chitungwiza">Chitungwiza</option>
-                                <option value="Victoria Falls">Victoria Falls</option>
-                            </select>
-                        </div>
+                    <div class="auth-field">
+                        <label class="auth-label">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="auth-input" placeholder="e.g. +263 77 123 4567" required />
                     </div>
-                    <div class="field-group">
-                        <div class="field">
-                            <label>Phone Number</label>
-                            <input type="tel" id="reg-phone" placeholder="077 123 4567" required />
-                        </div>
-                        <div class="field">
-                            <label>National ID</label>
-                            <input type="text" id="reg-id" placeholder="XX-XXXXXXX-X XX" required />
-                        </div>
+                    <div class="auth-field">
+                        <label class="auth-label">National ID</label>
+                        <input type="text" id="reg-id" class="auth-input" placeholder="e.g. 12-345678X12" required />
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mt-2"><i class="fas fa-user-plus"></i> Register</button>
+                    <div class="auth-field">
+                        <label class="auth-label">Role</label>
+                        <select id="reg-role" class="auth-input" required onchange="toggleRegLocation()">
+                            <option value="">-- Select Role --</option>
+                            <option value="tenant">Tenant</option>
+                            <option value="landlord">Landlord</option>
+                        </select>
+                    </div>
+                    <div class="auth-field" id="reg-location-wrapper" style="display:none;">
+                        <label class="auth-label">Location</label>
+                        <select id="reg-location" class="auth-input">
+                            <option value="Harare">Harare</option>
+                            <option value="Bulawayo">Bulawayo</option>
+                            <option value="Gweru">Gweru</option>
+                            <option value="Mutare">Mutare</option>
+                            <option value="Chitungwiza">Chitungwiza</option>
+                            <option value="Victoria Falls">Victoria Falls</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="auth-btn-primary" style="margin-top: 1rem;">Register</button>
                 </form>
-                <div class="auth-switch">
-                    <a href="#" onclick="toggleAuthView('signup-choice'); return false;"><i class="fas fa-arrow-left"></i> Back</a>
+                <div class="auth-switch-text">
+                    <a href="#" onclick="toggleAuthView('signup-choice-card'); return false;" class="auth-link">Back</a>
                 </div>
             </div>
         </div>
@@ -3390,20 +3526,18 @@
         // ============================================================
         // NAVIGATION & AUTHENTICATION
         // ============================================================
-        function toggleAuthView(view) {
-            document.querySelectorAll('.auth-card').forEach(el => {
+        function toggleAuthView(viewId) {
+            document.querySelectorAll('.auth-card-wrapper').forEach(el => {
                 el.classList.remove('active-auth-card');
-                setTimeout(() => el.style.display = 'none', 400); // Wait for transition
+                el.classList.add('hidden-auth-view');
+                el.style.display = 'none';
             });
-            setTimeout(() => {
-                const target = document.getElementById(view + '-card') || document.getElementById(view + '-form-card');
-                if (target) {
-                    target.style.display = 'block';
-                    // Trigger reflow
-                    void target.offsetWidth;
-                    target.classList.add('active-auth-card');
-                }
-            }, 400);
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.style.display = 'block';
+                target.classList.remove('hidden-auth-view');
+                target.classList.add('active-auth-card');
+            }
         }
 
         function toggleRegLocation() {
@@ -3801,7 +3935,7 @@
 
             document.getElementById('login-email').value = '';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
-            toggleAuthView('login');
+            toggleAuthView('login-card');
             document.body.style.backgroundColor = '#f1f5f9';
             document.getElementById('aiChatBtn').style.display = 'none';
             document.getElementById('aiChatWindow').classList.remove('open');
