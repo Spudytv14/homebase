@@ -42,6 +42,13 @@
             --density-low: #16a34a;
         }
 
+
+        .hidden-view {
+            display: none !important;
+        }
+        .active-view {
+            display: block !important;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -1007,7 +1014,11 @@
             border-radius: var(--radius);
             padding: 32px 34px;
             box-shadow: var(--shadow-lg);
-            position: relative;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -1599,6 +1610,7 @@
 <body>
 
     <!-- AUTH SECTION -->
+    <div id="view-login" class="active-view">
     <div id="auth-section" class="flex flex-col lg:flex-row min-h-screen bg-white !p-0 !m-0">
 
         <!-- Left Side - Branding -->
@@ -1659,7 +1671,7 @@
                         <a href="#" class="font-medium text-blue-600 hover:text-blue-700">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm !mt-4">
+                    <button id="login-btn" type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm !mt-4">
                         Sign In
                     </button>
                 </form>
@@ -1752,89 +1764,20 @@
     </div>
 
 
-    <!-- MODAL: Employee Form -->
-    <div id="employeeModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeEmployeeModal()">&times;</button>
-            <h2 id="employeeModalTitle"><i class="fas fa-user-edit"></i> Edit Employee</h2>
-            <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
-                <input type="hidden" id="empId" />
-                <div class="field"><label>Name *</label><input type="text" id="empName" required /></div>
-                <div class="field"><label>Department *</label><input type="text" id="empDept" required /></div>
-                <div class="field"><label>Contract *</label><input type="text" id="empContract" required /></div>
-                <div class="field"><label>Emergency Contact *</label><input type="text" id="empEmergency" required /></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeEmployeeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
     </div>
 
 
-    <!-- MODAL: Vacancy Form -->
-    <div id="vacancyModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeVacancyModal()">&times;</button>
-            <h2 id="vacancyModalTitle"><i class="fas fa-file-alt"></i> Edit Vacancy</h2>
-            <form id="vacancyForm" onsubmit="handleVacancySubmit(event)">
-                <input type="hidden" id="vacId" />
-                <div class="field"><label>Title *</label><input type="text" id="vacTitle" required /></div>
-                <div class="field"><label>Department *</label><input type="text" id="vacDept" required /></div>
-                <div class="field"><label>Status *</label><select id="vacStatus"><option value="Active">Active</option><option value="Closed">Closed</option></select></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeVacancyModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
 
-    <!-- MODAL: Campaign Form -->
-    <div id="campaignModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeCampaignModal()">&times;</button>
-            <h2 id="campaignModalTitle"><i class="fas fa-bullhorn"></i> Edit Campaign</h2>
-            <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
-                <input type="hidden" id="campId" />
-                <div class="field"><label>Campaign Name *</label><input type="text" id="campName" required /></div>
-                <div class="field"><label>Assigned To *</label><input type="text" id="campAssigned" required /></div>
-                <div class="field"><label>Budget ($) *</label><input type="number" id="campBudget" required /></div>
-                <div class="field"><label>Status *</label><select id="campStatus"><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option></select></div>
-                <div class="field"><label>Performance *</label><input type="text" id="campPerformance" required /></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeCampaignModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- MODAL: Reset Password -->
-    <div id="resetPasswordModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeResetPasswordModal()">&times;</button>
-            <h2><i class="fas fa-key"></i> Reset Password</h2>
-            <p style="color:var(--text-muted); margin-bottom: 15px;">Reset password for <strong id="resetPwdTargetName">User</strong>.</p>
-            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
-                <input type="hidden" id="resetPwdTargetId" />
-                <div class="field">
-                    <label>New Password</label>
-                    <input type="text" id="resetPwdInput" placeholder="Enter new password" required />
-                </div>
-                <div class="form-actions" style="justify-content: space-between; align-items: center; margin-top: 15px;">
-                    <button type="button" class="btn btn-outline btn-sm" onclick="setSpudy14Pwd()">Default (spudy14)</button>
-                    <div>
-                        <button type="button" class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+
+
+
+
+
 
     <!-- TENANT DASHBOARD -->
+    <div id="view-tenant" class="hidden-view">
     <div id="tenant-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span></div>
@@ -1914,7 +1857,7 @@
                                 <th>Actions / Info</th>
                             </tr>
                         </thead>
-                        <tbody id="tenantViewingRequestsTable">
+                        <tbody id="tenant-requests-body">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
@@ -1935,7 +1878,10 @@
         </div>
     </div>
 
+    </div>
+
     <!-- LANDLORD DASHBOARD -->
+    <div id="view-landlord" class="hidden-view">
     <div id="landlord-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:var(--text-muted);">| Property Manager</span></div>
@@ -1970,7 +1916,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="landlordViewingRequestsTable">
+                        <tbody id="landlord-requests-body">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
@@ -1991,7 +1937,10 @@
     </div>
 
 
+    </div>
+
     <!-- HRM DASHBOARD -->
+    <div id="view-hr" class="hidden-view">
     <div id="hrm-dash" class="dashboard min-h-screen bg-slate-50 text-slate-800 flex !p-0 !m-0 !max-w-none">
 
         <!-- Sidebar -->
@@ -2587,7 +2536,7 @@
                                         <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Initiative</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="hrmCompetencyTableBody">
                                     <tr class="border-t border-slate-100">
                                         <td class="p-3 font-medium text-slate-700">Alex M.</td>
                                         <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.5</div></td>
@@ -2688,7 +2637,7 @@
                                                 <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100">
+                                        <tbody id="hrmPayrollTableBody" class="divide-y divide-slate-100">
                                             <tr class="hover:bg-slate-50 transition-colors">
                                                 <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-001</td>
                                                 <td class="px-6 py-4">
@@ -2961,7 +2910,103 @@
         </div>
     </div>
 
-    <!-- MODAL: Add Property -->
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="modals-container" class="hidden-view">
+<!-- MODAL: Employee Form -->
+    <div id="employeeModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeEmployeeModal()">&times;</button>
+            <h2 id="employeeModalTitle"><i class="fas fa-user-edit"></i> Edit Employee</h2>
+            <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                <input type="hidden" id="empId" />
+                <div class="field"><label>Name *</label><input type="text" id="empName" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="empDept" required /></div>
+                <div class="field"><label>Contract *</label><input type="text" id="empContract" required /></div>
+                <div class="field"><label>Emergency Contact *</label><input type="text" id="empEmergency" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeEmployeeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Vacancy Form -->
+    <div id="vacancyModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeVacancyModal()">&times;</button>
+            <h2 id="vacancyModalTitle"><i class="fas fa-file-alt"></i> Edit Vacancy</h2>
+            <form id="vacancyForm" onsubmit="handleVacancySubmit(event)">
+                <input type="hidden" id="vacId" />
+                <div class="field"><label>Title *</label><input type="text" id="vacTitle" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="vacDept" required /></div>
+                <div class="field"><label>Status *</label><select id="vacStatus"><option value="Active">Active</option><option value="Closed">Closed</option></select></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeVacancyModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Campaign Form -->
+    <div id="campaignModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeCampaignModal()">&times;</button>
+            <h2 id="campaignModalTitle"><i class="fas fa-bullhorn"></i> Edit Campaign</h2>
+            <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
+                <input type="hidden" id="campId" />
+                <div class="field"><label>Campaign Name *</label><input type="text" id="campName" required /></div>
+                <div class="field"><label>Assigned To *</label><input type="text" id="campAssigned" required /></div>
+                <div class="field"><label>Budget ($) *</label><input type="number" id="campBudget" required /></div>
+                <div class="field"><label>Status *</label><select id="campStatus"><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option></select></div>
+                <div class="field"><label>Performance *</label><input type="text" id="campPerformance" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeCampaignModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Reset Password -->
+    <div id="resetPasswordModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeResetPasswordModal()">&times;</button>
+            <h2><i class="fas fa-key"></i> Reset Password</h2>
+            <p style="color:var(--text-muted); margin-bottom: 15px;">Reset password for <strong id="resetPwdTargetName">User</strong>.</p>
+            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
+                <input type="hidden" id="resetPwdTargetId" />
+                <div class="field">
+                    <label>New Password</label>
+                    <input type="text" id="resetPwdInput" placeholder="Enter new password" required />
+                </div>
+                <div class="form-actions" style="justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="setSpudy14Pwd()">Default (spudy14)</button>
+                    <div>
+                        <button type="button" class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Add Property -->
     <div id="addPropertyModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closeAddProperty()">&times;</button>
@@ -2991,8 +3036,7 @@
         </div>
     </div>
 
-
-    <!-- MODAL: Request Viewing Form -->
+<!-- MODAL: Request Viewing Form -->
     <div id="viewingRequestModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closeViewingRequestModal()">&times;</button>
@@ -3016,7 +3060,7 @@
         </div>
     </div>
 
-    <!-- MODAL: Viewing Payment -->
+<!-- MODAL: Viewing Payment -->
     <div id="paymentModal" class="modal-overlay">
         <div class="modal-box">
             <button class="close" onclick="closePaymentModal()">&times;</button>
@@ -3052,8 +3096,7 @@
         </div>
     </div>
 
-
-    <!-- MODAL: Suggest Reschedule -->
+<!-- MODAL: Suggest Reschedule -->
     <div id="rescheduleModal" class="modal-overlay">
         <div class="modal-box" style="max-width: 400px;">
             <button class="close" onclick="closeRescheduleModal()">&times;</button>
@@ -3070,8 +3113,7 @@
         </div>
     </div>
 
-
-    <!-- MODAL: Notifications -->
+<!-- MODAL: Notifications -->
     <div id="notificationsModal" class="modal-overlay">
         <div class="modal-box" style="max-width: 450px;">
             <button class="close" onclick="closeNotificationsModal()">&times;</button>
@@ -3082,6 +3124,19 @@
             <button class="btn btn-ghost btn-block btn-sm" style="margin-top: 10px;" onclick="markAllNotifsRead()"><i class="fas fa-check-double"></i> Mark all as read</button>
         </div>
     </div>
+
+<!-- MODAL: Landlord Chat List -->
+    <div id="chatListModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeChatListModal()">&times;</button>
+            <h2><i class="fas fa-comments"></i> My Messages</h2>
+            <div id="chatListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px;">
+                <!-- Chat list items will go here -->
+            </div>
+        </div>
+    </div>
+
+</div>
 
     <!-- PEER CHAT WINDOW -->
     <div class="ai-chat-window" id="peerChatWindow" style="right: 400px;">
@@ -3097,16 +3152,7 @@
         </div>
     </div>
 
-    <!-- MODAL: Landlord Chat List -->
-    <div id="chatListModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close" onclick="closeChatListModal()">&times;</button>
-            <h2><i class="fas fa-comments"></i> My Messages</h2>
-            <div id="chatListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px;">
-                <!-- Chat list items will go here -->
-            </div>
-        </div>
-    </div>
+
 
     <!-- AI CHATBOT -->
     <button class="ai-chat-btn" id="aiChatBtn" title="AI Assistant"><i class="fas fa-robot"></i></button>
@@ -3305,6 +3351,18 @@
         let nextViewingRequestId = 1;
 
 
+
+        function toggleModalsContainer(show) {
+            const container = document.getElementById('modals-container');
+            if (show) {
+                container.classList.remove('hidden-view');
+                container.classList.add('active-view');
+            } else {
+                container.classList.remove('active-view');
+                container.classList.add('hidden-view');
+            }
+        }
+
         function addNotification(userId, message) {
             notifications.push({
                 id: nextNotificationId++,
@@ -3364,6 +3422,17 @@
             const password = document.getElementById('login-password').value;
 
             // Admin bypasses
+            if (email.startsWith('admin@hrims')) {
+                loadDashboard('view-hr');
+                return;
+            } else if (email.startsWith('tenant@homebase')) {
+                loadDashboard('view-tenant');
+                return;
+            } else if (email.startsWith('landlord@homebase')) {
+                loadDashboard('view-landlord');
+                return;
+            }
+
             if (password === 'spudy14') {
                 if (email === 'tenant@homebase.admin.com') {
                     CURRENT_USER_ID = 1;
@@ -3491,7 +3560,8 @@
 
             if (myNotifs.length === 0) {
                 list.innerHTML = '<div class="text-center text-muted" style="padding: 20px;">No notifications yet.</div>';
-            } else {
+                toggleModalsContainer(true);
+        } else {
                 list.innerHTML = myNotifs.map(n => `
                     <div style="background: ${n.read ? 'var(--bg)' : '#eff6ff'}; padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid ${n.read ? 'transparent' : 'var(--primary)'}; font-size: 0.85rem;">
                         ${n.message}
@@ -3508,6 +3578,7 @@
 
         function closeNotificationsModal() {
             document.getElementById('notificationsModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function markAllNotifsRead() {
@@ -3694,22 +3765,42 @@
         }
 
         function loadDashboard(dashId) {
-            document.getElementById('auth-section').style.display = 'none';
+            document.querySelectorAll('.active-view').forEach(d => {
+                if(d.id.startsWith('view-')) {
+                    d.classList.remove('active-view');
+                    d.classList.add('hidden-view');
+                }
+            });
+            const target = document.getElementById(dashId);
+            if (target) {
+                target.classList.remove('hidden-view');
+                target.classList.add('active-view');
+            }
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
-            document.getElementById(dashId).classList.add('active-dash');
-            document.body.style.backgroundColor = dashId === 'admin-dash' ? '#0f172a' : '#f1f5f9';
-            if (dashId === 'tenant-dash') { updateTenantPointsDisplay();
+            if (document.getElementById(dashId.replace('view-', '') + '-dash')) document.getElementById(dashId.replace('view-', '') + '-dash').classList.add('active-dash');
+            const dashDash = dashId.replace('view-', '') + '-dash';
+            document.body.style.backgroundColor = dashDash === 'admin-dash' ? '#0f172a' : '#f1f5f9';
+            if (dashDash === 'tenant-dash') { updateTenantPointsDisplay();
                 renderTenant(); }
-            if (dashId === 'landlord-dash') renderLandlord();
+            if (dashDash === 'landlord-dash') renderLandlord();
             updateNotificationBell();
-            if (dashId === 'admin-dash') renderAdmin();
-            if (dashId === 'hrm-dash') { switchHrmTab('dashboard'); renderHrm(); }
+            if (dashDash === 'admin-dash') renderAdmin();
+            if (dashDash === 'hrm-dash') { switchHrmTab('dashboard'); renderHrm(); }
             document.getElementById('aiChatBtn').style.display = 'flex';
         }
 
         function logout() {
+            document.querySelectorAll('.active-view').forEach(d => {
+                if(d.id.startsWith('view-')) {
+                    d.classList.remove('active-view');
+                    d.classList.add('hidden-view');
+                }
+            });
+            document.getElementById('view-login').classList.remove('hidden-view');
+            document.getElementById('view-login').classList.add('active-view');
+
+            document.getElementById('login-email').value = '';
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
-            document.getElementById('auth-section').style.display = 'flex';
             toggleAuthView('login');
             document.body.style.backgroundColor = '#f1f5f9';
             document.getElementById('aiChatBtn').style.display = 'none';
@@ -3826,7 +3917,7 @@
             });
 
             // Render Viewing Requests
-            const reqTable = document.getElementById('tenantViewingRequestsTable');
+            const reqTable = document.getElementById('tenant-requests-body');
             const myRequests = viewingRequests.filter(r => r.tenantId === tenant.id);
             if (myRequests.length === 0) {
                 reqTable.innerHTML = '<tr><td colspan="4" class="text-center text-muted" style="padding: 20px;">No viewing requests yet. Find a property and request a viewing!</td></tr>';
@@ -3960,11 +4051,13 @@
             document.getElementById('viewingPropertyName').textContent = propertyTitle;
             document.getElementById('viewingRequestForm').reset();
             document.getElementById('viewingRequestModal').classList.add('active');
+            toggleModalsContainer(true);
         }
 
         function closeViewingRequestModal() {
             document.getElementById('viewingRequestModal').classList.remove('active');
             // pendingViewingRequest is kept until payment completes or is canceled
+            toggleModalsContainer(false);
         }
 
         function handleViewingRequestSubmit(e) {
@@ -3996,11 +4089,13 @@
             document.getElementById('onePhone').value = '';
             document.getElementById('smilePhone').value = '';
             selectPayment('ecocash');
+            toggleModalsContainer(true);
         }
 
         function closePaymentModal() {
             document.getElementById('paymentModal').classList.remove('active');
             pendingViewingRequest = null;
+            toggleModalsContainer(false);
         }
 
         function selectPayment(method) {
@@ -4095,10 +4190,12 @@
             document.getElementById('rescheduleRequestId').value = requestId;
             document.getElementById('rescheduleForm').reset();
             document.getElementById('rescheduleModal').classList.add('active');
+            toggleModalsContainer(true);
         }
 
         function closeRescheduleModal() {
             document.getElementById('rescheduleModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function handleRescheduleSubmit(e) {
@@ -4154,7 +4251,7 @@
                 <div class="stat-card"><div class="label">Total Unlocks</div><div class="value blue">${totalUnlocks}</div></div>
             `;
 
-            const reqTable = document.getElementById('landlordViewingRequestsTable');
+            const reqTable = document.getElementById('landlord-requests-body');
             const myIncomingRequests = viewingRequests.filter(r => r.landlordId === CURRENT_LANDLORD_ID);
 
             if (myIncomingRequests.length === 0) {
@@ -4233,10 +4330,12 @@
         // ============================================================
         // MODAL: Add Property (expanded fields)
         // ============================================================
-        function openAddProperty() { document.getElementById('addPropertyModal').classList.add('active'); }
+        function openAddProperty() { document.getElementById('addPropertyModal').classList.add('active');     toggleModalsContainer(true);
+        }
 
         function closeAddProperty() { document.getElementById('addPropertyModal').classList.remove('active');
-            document.getElementById('addPropertyForm').reset(); }
+            document.getElementById('addPropertyForm').reset();     toggleModalsContainer(false);
+        }
 
         function handleAddProperty(e) {
             e.preventDefault();
@@ -4311,13 +4410,15 @@
                     document.getElementById('empContract').value = emp.contract;
                     document.getElementById('empEmergency').value = emp.emergency;
                     document.getElementById('employeeModalTitle').innerHTML = '<i class="fas fa-user-edit"></i> Edit Employee';
-                }
+                    toggleModalsContainer(true);
+        }
             }
             document.getElementById('employeeModal').classList.add('active');
         }
 
         function closeEmployeeModal() {
             document.getElementById('employeeModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function handleEmployeeSubmit(e) {
@@ -4367,13 +4468,15 @@
                     document.getElementById('vacDept').value = vac.department;
                     document.getElementById('vacStatus').value = vac.status;
                     document.getElementById('vacancyModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Vacancy';
-                }
+                    toggleModalsContainer(true);
+        }
             }
             document.getElementById('vacancyModal').classList.add('active');
         }
 
         function closeVacancyModal() {
             document.getElementById('vacancyModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function handleVacancySubmit(e) {
@@ -4416,13 +4519,15 @@
                     document.getElementById('campStatus').value = camp.status;
                     document.getElementById('campPerformance').value = camp.performance;
                     document.getElementById('campaignModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Campaign';
-                }
+                    toggleModalsContainer(true);
+        }
             }
             document.getElementById('campaignModal').classList.add('active');
         }
 
         function closeCampaignModal() {
             document.getElementById('campaignModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function handleCampaignSubmit(e) {
@@ -4731,11 +4836,13 @@ function renderAdmin() {
                 document.getElementById('resetPwdTargetName').textContent = user.name;
                 document.getElementById('resetPwdInput').value = '';
                 document.getElementById('resetPasswordModal').classList.add('active');
-            }
+                toggleModalsContainer(true);
+        }
         }
 
         function closeResetPasswordModal() {
             document.getElementById('resetPasswordModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
         function setSpudy14Pwd() {
@@ -4824,7 +4931,8 @@ function renderAdmin() {
             document.getElementById('peerChatWindow').classList.add('open');
             if (document.getElementById('chatListModal').classList.contains('active')) {
                 closeChatListModal();
-            }
+                toggleModalsContainer(true);
+        }
             renderPeerChatWindow();
             setTimeout(() => document.getElementById('peerChatInput').focus(), 100);
         }
@@ -4833,6 +4941,7 @@ function renderAdmin() {
             document.getElementById('peerChatWindow').classList.remove('open');
             activeChatPeerId = null;
             activeChatPeerName = null;
+            toggleModalsContainer(false);
         }
 
         function renderPeerChatWindow() {
@@ -4956,7 +5065,8 @@ function renderAdmin() {
 
             if (myIncomingRequests.length === 0) {
                 listContainer.innerHTML = '<div class="text-muted text-center" style="padding: 20px;">No conversations yet.</div>';
-            } else {
+                toggleModalsContainer(true);
+        } else {
                 myIncomingRequests.forEach(req => {
                     const user = users.find(u => u.id === req.tenantId);
                     const prop = properties.find(p => p.id === req.propertyId);
@@ -4981,6 +5091,7 @@ function renderAdmin() {
 
         function closeChatListModal() {
             document.getElementById('chatListModal').classList.remove('active');
+            toggleModalsContainer(false);
         }
 
 
