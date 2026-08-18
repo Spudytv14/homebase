@@ -1605,175 +1605,269 @@
             }
             .hrm-overlay.active { display: block; }
         }
+
+    /* Auth Container Styles Added via Script */
+    .auth-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 10;
+      margin: 0 auto;
+    }
+
+    .auth-container .auth-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                  0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .auth-container .brand-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-container .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #ffffff;
+      font-size: 1.6rem;
+      border-radius: 16px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 10px 20px -3px rgba(79, 70, 229, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .auth-container .brand-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.025em;
+    }
+
+    .auth-container .brand-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .auth-container .portal-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 30px;
+      margin-bottom: 1.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+
+    .auth-container .portal-badge.role-tenant { background: #e0f2fe; border-color: #bae6fd; color: #0369a1; }
+    .auth-container .portal-badge.role-landlord { background: #dcfce7; border-color: #bbf7d0; color: #15803d; }
+    .auth-container .portal-badge.role-admin { background: #fef3c7; border-color: #fde68a; color: #b45309; }
+
+    .auth-container .form-group { margin-bottom: 1.25rem; text-align: left; }
+    .auth-container .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.45rem; }
+    .auth-container .input-wrapper { position: relative; display: flex; align-items: center; }
+    .auth-container .input-wrapper i.prefix-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 1rem; pointer-events: none; transition: color 0.2s ease; }
+    .auth-container .input-wrapper input { width: 100%; padding: 0.85rem 1rem 0.85rem 2.65rem; font-size: 0.95rem; color: var(--text-main); background: #f8fafc; border: 1.5px solid var(--border-color); border-radius: 12px; outline: none; transition: all 0.2s ease; }
+    .auth-container .input-wrapper input:focus { background: #ffffff; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
+    .auth-container .toggle-password { position: absolute; right: 14px; background: none; border: none; color: var(--text-muted); font-size: 1rem; cursor: pointer; padding: 4px; }
+    .auth-container .field-hint { font-size: 0.76rem; color: var(--text-muted); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+    .auth-container .form-options { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .auth-container .remember-me { display: flex; align-items: center; gap: 8px; color: var(--text-muted); cursor: pointer; }
+    .auth-container .remember-me input { accent-color: var(--primary); width: 16px; height: 16px; }
+    .auth-container .forgot-link { color: var(--primary); text-decoration: none; font-weight: 500; }
+    .auth-container .forgot-link:hover { text-decoration: underline; }
+    .auth-container .submit-btn { width: 100%; padding: 0.95rem 1.5rem; font-size: 1rem; font-weight: 600; color: #ffffff; background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px -3px rgba(79, 70, 229, 0.4); transition: all 0.25s ease; }
+    .auth-container .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -3px rgba(79, 70, 229, 0.5); }
+    .auth-container .card-footer { text-align: center; margin-top: 1.75rem; font-size: 0.875rem; color: var(--text-muted); }
+    .auth-container .card-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    /* Background for body in view-login */
+    #view-login {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.78), rgba(30, 27, 75, 0.88)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') center center / cover no-repeat fixed;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+    }
+
 </style>
 </head>
 <body>
 
     <!-- AUTH SECTION -->
+
     <div id="view-login" class="active-view">
-    <div id="auth-section" class="flex flex-col lg:flex-row min-h-screen bg-white !p-0 !m-0">
-
-        <!-- Left Side - Branding -->
-        <div class="hidden lg:flex lg:w-1/2 bg-blue-600 flex-col justify-between p-12 relative overflow-hidden h-screen text-white text-left shadow-lg">
-            <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 20px 20px;"></div>
-            <div class="relative z-10 brand auth-brand !static !block !w-auto">
-                <div class="flex items-center space-x-2 text-white mb-16">
-                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                        <i class="fas fa-users text-white text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold tracking-tight">HRIMS</span>
-                </div>
-                <h1 class="text-4xl font-bold leading-tight mb-6">Manage your workforce <br/>intelligently.</h1>
-
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-3 text-blue-100">
-                        <i class="fas fa-check-circle text-white"></i>
-                        <span>Automated Payroll Processing</span>
-                    </div>
-                    <div class="flex items-center space-x-3 text-blue-100">
-                        <i class="fas fa-check-circle text-white"></i>
-                        <span>Streamlined Recruitment Pipeline</span>
-                    </div>
-                    <div class="flex items-center space-x-3 text-blue-100">
-                        <i class="fas fa-check-circle text-white"></i>
-                        <span>Comprehensive Leave Management</span>
-                    </div>
-                </div>
-            </div>
-            <div class="relative z-10 text-blue-200 text-sm">
-                &copy; 2024 HRIMS Platform. All rights reserved.
-            </div>
-        </div>
-
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 min-h-screen relative z-20">
+        <div class="auth-container">
             <!-- LOGIN CARD -->
-            <div id="login-card" class="auth-card active-auth-card !max-w-md !w-full !p-8 !rounded-2xl !shadow-sm !border !border-slate-100 !bg-white">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-slate-800">Welcome back</h2>
-                    <p class="auth-sub !text-slate-500 !mt-2">Please enter your details to sign in.</p>
+            <div id="login-card" class="auth-card active-auth-card">
+              <div class="brand-header">
+                <div class="brand-logo" id="brandLogo">
+                  <i class="fa-solid fa-house-chimney"></i>
+                </div>
+                <h1 class="brand-title">HomeBase</h1>
+                <p class="brand-subtitle">Smart Unified Housing Access</p>
+              </div>
+
+              <div class="portal-badge" id="portalBadge">
+                <i class="fa-solid fa-circle-dot badge-icon" id="badgeIcon"></i>
+                <span id="badgeText">Enter email to route portal</span>
+              </div>
+
+              <form id="login-form" onsubmit="handleLogin(event)">
+                <input type="hidden" name="detected_role" id="detectedRole" value="tenant">
+
+                <div class="form-group">
+                  <label for="login-email">Email Address</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope prefix-icon"></i>
+                    <input type="email" id="login-email" placeholder="e.g. resident@mail.com, manager@domain.com" required autocomplete="email">
+                  </div>
+                  <div class="field-hint">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Portal dynamically routes depending on account type</span>
+                  </div>
                 </div>
 
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
-                    <div class="field !text-left !mb-0">
-                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Email Address</label>
-                        <input type="email" id="login-email" placeholder="e.g. user@example.com" value="hr-marketing@homebase.admin.com" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
-                    </div>
-                    <div class="field !text-left !mb-0">
-                        <label class="!block !text-sm !font-medium !text-slate-700 !mb-1.5">Password</label>
-                        <input type="password" id="login-password" placeholder="••••••••" value="spudy14" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition text-slate-800" />
-                    </div>
-
-                    <div class="flex items-center justify-between text-sm py-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-600" />
-                            <span class="text-slate-600">Remember me</span>
-                        </label>
-                        <a href="#" class="font-medium text-blue-600 hover:text-blue-700">Forgot password?</a>
-                    </div>
-
-                    <button id="login-btn" type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm !mt-4">
-                        Sign In
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-lock prefix-icon"></i>
+                    <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                      <i class="fa-regular fa-eye" id="eyeIcon"></i>
                     </button>
-                </form>
-
-                <div class="mt-8">
-                    <div class="relative">
-                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-                        <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-slate-500">Or continue with</span></div>
-                    </div>
-                    <div class="mt-6 grid grid-cols-2 gap-4">
-                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Google</button>
-                        <button class="flex items-center justify-center px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition text-slate-600 font-medium text-sm">Microsoft</button>
-                    </div>
+                  </div>
                 </div>
 
-                <div class="auth-switch !mt-8 text-center text-sm text-slate-500">
-                    Don't have an account? <a href="#" onclick="toggleAuthView('signup-choice'); return false;" class="font-medium text-blue-600 hover:text-blue-700">Sign up</a>
+                <div class="form-options">
+                  <label class="remember-me">
+                    <input type="checkbox" name="remember" id="remember">
+                    <span>Remember me</span>
+                  </label>
+                  <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                  <span id="btnText">Sign In to Portal</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+              </form>
+
+              <div class="card-footer">
+                Need registration? <a href="#" onclick="toggleAuthView('signup-choice'); return false;">Contact management</a>
+              </div>
             </div>
 
             <!-- SIGNUP CHOICE CARD -->
-            <div id="signup-choice-card" class="auth-card">
-                <h2>Create an Account</h2>
-                <p class="auth-sub">Join HomeBase today</p>
-                <div class="signup-options">
-                    <button class="btn btn-outline btn-block" type="button" onclick="alert('Google login simulated');"><i class="fab fa-google" style="color:#db4437;"></i> Sign up with Google</button>
-                    <div class="divider"><span>OR</span></div>
-                    <button class="btn btn-primary btn-block" type="button" onclick="toggleAuthView('signup')"><i class="fas fa-envelope"></i> Sign up with Email</button>
+            <div id="signup-choice-card" class="auth-card" style="display:none;">
+              <div class="brand-header">
+                <div class="brand-logo" id="brandLogoSignup">
+                  <i class="fa-solid fa-house-chimney"></i>
                 </div>
-                <div class="auth-switch">
-                    Already have an account? <a href="#" onclick="toggleAuthView('login'); return false;">Log in</a>
+                <h1 class="brand-title">HomeBase</h1>
+                <p class="brand-subtitle">Smart Unified Housing Access</p>
+              </div>
+
+                <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:6px;text-align:center;">Create an Account</h2>
+                <p class="auth-sub" style="font-size:0.9rem;color:var(--text-muted);margin-bottom:24px;text-align:center;">Join HomeBase today</p>
+                <div class="signup-options" style="display:flex;flex-direction:column;gap:12px;">
+                    <button class="submit-btn" style="background:#fff;border:1px solid #ddd;color:#333;box-shadow:none;" type="button" onclick="alert('Google login simulated');"><i class="fab fa-google" style="color:#db4437;"></i> Sign up with Google</button>
+                    <div class="divider" style="display:flex;align-items:center;text-align:center;color:var(--text-muted);font-size:0.75rem;font-weight:600;margin:10px 0;"><span>OR</span></div>
+                    <button class="submit-btn" type="button" onclick="toggleAuthView('signup')"><i class="fas fa-envelope"></i> Sign up with Email</button>
+                </div>
+                <div class="auth-switch" style="text-align:center;margin-top:24px;font-size:0.85rem;color:var(--text-muted);">
+                    Already have an account? <a href="#" onclick="toggleAuthView('login'); return false;" style="color:var(--primary);text-decoration:none;font-weight:600;">Log in</a>
                 </div>
             </div>
 
             <!-- SIGNUP FORM CARD -->
-            <div id="signup-form-card" class="auth-card">
-                <h2>Register</h2>
-                <p class="auth-sub">Fill in your details</p>
-                <form id="signup-form" onsubmit="handleSignup(event)">
-                    <div class="field">
+            <div id="signup-form-card" class="auth-card" style="display:none;">
+                <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:6px;">Register</h2>
+                <p class="auth-sub" style="font-size:0.9rem;color:var(--text-muted);margin-bottom:24px;">Fill in your details</p>
+                <form id="signup-form" onsubmit="handleSignup(event)" style="display:flex;flex-direction:column;gap:16px;">
+                    <div class="form-group" style="margin-bottom:0;">
                         <label>Full Name</label>
-                        <input type="text" id="reg-name" placeholder="John Doe" required />
+                        <div class="input-wrapper">
+                            <input type="text" id="reg-name" placeholder="John Doe" required />
+                        </div>
                     </div>
-                    <div class="field">
+                    <div class="form-group" style="margin-bottom:0;">
                         <label>Email Address</label>
-                        <input type="email" id="reg-email" placeholder="john@example.com" required />
+                        <div class="input-wrapper">
+                            <input type="email" id="reg-email" placeholder="john@example.com" required />
+                        </div>
                     </div>
-                    <div class="field">
+                    <div class="form-group" style="margin-bottom:0;">
                         <label>Password</label>
-                        <input type="password" id="reg-password" placeholder="Create a password" required />
+                        <div class="input-wrapper">
+                            <input type="password" id="reg-password" placeholder="Create a password" required />
+                        </div>
                     </div>
-                    <div class="field-group">
-                        <div class="field">
+                    <div style="display:flex;gap:12px;">
+                        <div class="form-group" style="margin-bottom:0;flex:1;">
                             <label>Role</label>
-                            <select id="reg-role" required onchange="toggleRegLocation()">
-                                <option value="">-- Select Role --</option>
-                                <option value="tenant">Tenant</option>
-                                <option value="landlord">Landlord</option>
-                            </select>
+                            <div class="input-wrapper">
+                                <select id="reg-role" required onchange="toggleRegLocation()" style="width:100%;padding:0.85rem 1rem;font-size:0.95rem;color:var(--text-main);background:#f8fafc;border:1.5px solid var(--border-color);border-radius:12px;outline:none;">
+                                    <option value="">-- Select Role --</option>
+                                    <option value="tenant">Tenant</option>
+                                    <option value="landlord">Landlord</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="field" id="reg-location-wrapper" style="display:none;">
+                        <div class="form-group" id="reg-location-wrapper" style="display:none;margin-bottom:0;flex:1;">
                             <label>Location</label>
-                            <select id="reg-location">
-                                <option value="Harare">Harare</option>
-                                <option value="Bulawayo">Bulawayo</option>
-                                <option value="Gweru">Gweru</option>
-                                <option value="Mutare">Mutare</option>
-                                <option value="Chitungwiza">Chitungwiza</option>
-                                <option value="Victoria Falls">Victoria Falls</option>
-                            </select>
+                            <div class="input-wrapper">
+                                <select id="reg-location" style="width:100%;padding:0.85rem 1rem;font-size:0.95rem;color:var(--text-main);background:#f8fafc;border:1.5px solid var(--border-color);border-radius:12px;outline:none;">
+                                    <option value="Harare">Harare</option>
+                                    <option value="Bulawayo">Bulawayo</option>
+                                    <option value="Gweru">Gweru</option>
+                                    <option value="Mutare">Mutare</option>
+                                    <option value="Chitungwiza">Chitungwiza</option>
+                                    <option value="Victoria Falls">Victoria Falls</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="field-group">
-                        <div class="field">
+                    <div style="display:flex;gap:12px;">
+                        <div class="form-group" style="margin-bottom:0;flex:1;">
                             <label>Phone Number</label>
-                            <input type="tel" id="reg-phone" placeholder="077 123 4567" required />
+                            <div class="input-wrapper">
+                                <input type="tel" id="reg-phone" placeholder="077 123 4567" required />
+                            </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group" style="margin-bottom:0;flex:1;">
                             <label>National ID</label>
-                            <input type="text" id="reg-id" placeholder="XX-XXXXXXX-X XX" required />
+                            <div class="input-wrapper">
+                                <input type="text" id="reg-id" placeholder="XX-XXXXXXX-X XX" required />
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mt-2"><i class="fas fa-user-plus"></i> Register</button>
+                    <button type="submit" class="submit-btn" style="margin-top:10px;"><i class="fas fa-user-plus"></i> Register</button>
                 </form>
-                <div class="auth-switch">
-                    <a href="#" onclick="toggleAuthView('signup-choice'); return false;"><i class="fas fa-arrow-left"></i> Back</a>
+                <div class="auth-switch" style="text-align:center;margin-top:24px;font-size:0.85rem;">
+                    <a href="#" onclick="toggleAuthView('signup-choice'); return false;" style="color:var(--text-muted);text-decoration:none;font-weight:600;"><i class="fas fa-arrow-left"></i> Back</a>
                 </div>
             </div>
         </div>
     </div>
-
-
-    </div>
-
-
-
-
-
-
-
-
-
 
 
     <!-- TENANT DASHBOARD -->
@@ -5231,6 +5325,80 @@ function renderAdmin() {
         }, 10000); // Check every 10s for prototype
 updateTenantPointsDisplay();
         console.log('HomeBase ready — all features active. AI bot, Points, WhatsApp fallback, Density filters, SmileCash & OneMoney enabled.');
-    </script>
+
+    const emailInput = document.getElementById('login-email');
+    if (emailInput) {
+        const portalBadge = document.getElementById('portalBadge');
+        const badgeText = document.getElementById('badgeText');
+        const badgeIcon = document.getElementById('badgeIcon');
+        const brandLogo = document.getElementById('brandLogo');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const detectedRole = document.getElementById('detectedRole');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('login-password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener('click', () => {
+              const isPassword = passwordInput.getAttribute('type') === 'password';
+              passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+              eyeIcon.classList.toggle('fa-eye');
+              eyeIcon.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Auto-detect portal type based on email input without manual tab switching
+        emailInput.addEventListener('input', (e) => {
+          const val = e.target.value.toLowerCase().trim();
+          if (portalBadge) {
+              portalBadge.classList.remove('role-tenant', 'role-landlord', 'role-admin');
+
+              if (!val) {
+                portalBadge.className = 'portal-badge';
+                badgeIcon.className = 'fa-solid fa-circle-dot badge-icon';
+                badgeText.textContent = 'Enter email to route portal';
+                btnText.textContent = 'Sign In to Portal';
+                detectedRole.value = 'tenant';
+                brandLogo.style.background = 'linear-gradient(135deg, #4f46e5, #7c3aed)';
+                submitBtn.style.background = 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)';
+                return;
+              }
+
+              // 1. Admin Role (admin@, staff@, root@, etc.)
+              if (val.includes('admin') || val.includes('staff') || val.includes('root') || val.includes('hr-marketing')) {
+                portalBadge.classList.add('role-admin');
+                badgeIcon.className = 'fa-solid fa-shield-halved badge-icon';
+                badgeText.textContent = 'Admin Control Portal detected';
+                btnText.textContent = 'Sign In as Administrator';
+                detectedRole.value = 'admin';
+                brandLogo.style.background = 'linear-gradient(135deg, #d97706, #f59e0b)';
+                submitBtn.style.background = 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)';
+              }
+              // 2. Landlord / Property Manager Role
+              else if (val.includes('landlord') || val.includes('owner') || val.includes('host') || val.includes('manager')) {
+                portalBadge.classList.add('role-landlord');
+                badgeIcon.className = 'fa-solid fa-building-user badge-icon';
+                badgeText.textContent = 'Landlord Portal detected';
+                btnText.textContent = 'Sign In to Landlord Portal';
+                detectedRole.value = 'landlord';
+                brandLogo.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                submitBtn.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
+              }
+              // 3. Default Tenant / Resident
+              else {
+                portalBadge.classList.add('role-tenant');
+                badgeIcon.className = 'fa-solid fa-user-tag badge-icon';
+                badgeText.textContent = 'Tenant Resident Portal detected';
+                btnText.textContent = 'Sign In to Tenant Portal';
+                detectedRole.value = 'tenant';
+                brandLogo.style.background = 'linear-gradient(135deg, #0284c7, #38bdf8)';
+                submitBtn.style.background = 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)';
+              }
+          }
+        });
+    }
+
+</script>
 </body>
 </html>
