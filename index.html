@@ -1616,15 +1616,20 @@
     }
 
     .auth-container .auth-card {
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 24px;
       padding: 2.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                  0 0 0 1px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
+
+    .auth-container .auth-card h2 { color: #ffffff !important; }
+    .auth-container .auth-card .auth-sub { color: rgba(255, 255, 255, 0.8) !important; }
+    .auth-container .auth-card .divider { color: rgba(255, 255, 255, 0.8) !important; }
+    .auth-container .auth-card .auth-switch { color: rgba(255, 255, 255, 0.8) !important; }
+    .auth-container .auth-card .auth-switch a { color: #60a5fa !important; }
 
     .auth-container .brand-header {
       text-align: center;
@@ -1649,13 +1654,13 @@
     .auth-container .brand-title {
       font-size: 1.65rem;
       font-weight: 700;
-      color: var(--text-main);
+      color: #ffffff;
       letter-spacing: -0.025em;
     }
 
     .auth-container .brand-subtitle {
       font-size: 0.9rem;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.8);
       margin-top: 0.3rem;
     }
 
@@ -1665,37 +1670,39 @@
       justify-content: center;
       gap: 8px;
       padding: 8px 14px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 30px;
       margin-bottom: 1.5rem;
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: #ffffff;
       transition: all 0.3s ease;
     }
 
-    .auth-container .portal-badge.role-tenant { background: #e0f2fe; border-color: #bae6fd; color: #0369a1; }
-    .auth-container .portal-badge.role-landlord { background: #dcfce7; border-color: #bbf7d0; color: #15803d; }
-    .auth-container .portal-badge.role-admin { background: #fef3c7; border-color: #fde68a; color: #b45309; }
+    .auth-container .portal-badge.role-tenant { background: rgba(3, 105, 161, 0.2); border-color: rgba(186, 230, 253, 0.3); color: #bae6fd; }
+    .auth-container .portal-badge.role-landlord { background: rgba(21, 128, 61, 0.2); border-color: rgba(187, 247, 208, 0.3); color: #bbf7d0; }
+    .auth-container .portal-badge.role-admin { background: rgba(180, 83, 9, 0.2); border-color: rgba(253, 230, 138, 0.3); color: #fde68a; }
 
     .auth-container .form-group { margin-bottom: 1.25rem; text-align: left; }
-    .auth-container .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.45rem; }
+    .auth-container .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 0.45rem; }
     .auth-container .input-wrapper { position: relative; display: flex; align-items: center; }
-    .auth-container .input-wrapper i.prefix-icon { position: absolute; left: 14px; color: var(--text-muted); font-size: 1rem; pointer-events: none; transition: color 0.2s ease; }
-    .auth-container .input-wrapper input { width: 100%; padding: 0.85rem 1rem 0.85rem 2.65rem; font-size: 0.95rem; color: var(--text-main); background: #f8fafc; border: 1.5px solid var(--border-color); border-radius: 12px; outline: none; transition: all 0.2s ease; }
-    .auth-container .input-wrapper input:focus { background: #ffffff; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }
-    .auth-container .toggle-password { position: absolute; right: 14px; background: none; border: none; color: var(--text-muted); font-size: 1rem; cursor: pointer; padding: 4px; }
-    .auth-container .field-hint { font-size: 0.76rem; color: var(--text-muted); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+    .auth-container .input-wrapper i.prefix-icon { position: absolute; left: 14px; color: rgba(255, 255, 255, 0.6); font-size: 1rem; pointer-events: none; transition: color 0.2s ease; }
+    .auth-container .input-wrapper input, .auth-container .input-wrapper select { width: 100%; padding: 0.85rem 1rem 0.85rem 2.65rem; font-size: 0.95rem; color: #ffffff; background: rgba(255, 255, 255, 0.1); border: 1.5px solid rgba(255, 255, 255, 0.2); border-radius: 12px; outline: none; transition: all 0.2s ease; }
+    .auth-container .input-wrapper input:focus, .auth-container .input-wrapper select:focus { background: rgba(255, 255, 255, 0.15); border-color: #60a5fa; box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15); }
+    .auth-container .input-wrapper input::placeholder, .auth-container .input-wrapper select::placeholder { color: rgba(255, 255, 255, 0.5); }
+    .auth-container .input-wrapper select option { background: #1e1b4b; color: #ffffff; }
+    .auth-container .toggle-password { position: absolute; right: 14px; background: none; border: none; color: rgba(255, 255, 255, 0.6); font-size: 1rem; cursor: pointer; padding: 4px; }
+    .auth-container .field-hint { font-size: 0.76rem; color: rgba(255, 255, 255, 0.7); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
     .auth-container .form-options { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; margin-bottom: 1.5rem; }
-    .auth-container .remember-me { display: flex; align-items: center; gap: 8px; color: var(--text-muted); cursor: pointer; }
-    .auth-container .remember-me input { accent-color: var(--primary); width: 16px; height: 16px; }
-    .auth-container .forgot-link { color: var(--primary); text-decoration: none; font-weight: 500; }
+    .auth-container .remember-me { display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.8); cursor: pointer; }
+    .auth-container .remember-me input { accent-color: #60a5fa; width: 16px; height: 16px; }
+    .auth-container .forgot-link { color: #60a5fa; text-decoration: none; font-weight: 500; }
     .auth-container .forgot-link:hover { text-decoration: underline; }
     .auth-container .submit-btn { width: 100%; padding: 0.95rem 1.5rem; font-size: 1rem; font-weight: 600; color: #ffffff; background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px -3px rgba(79, 70, 229, 0.4); transition: all 0.25s ease; }
     .auth-container .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -3px rgba(79, 70, 229, 0.5); }
-    .auth-container .card-footer { text-align: center; margin-top: 1.75rem; font-size: 0.875rem; color: var(--text-muted); }
-    .auth-container .card-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .auth-container .card-footer { text-align: center; margin-top: 1.75rem; font-size: 0.875rem; color: rgba(255, 255, 255, 0.8); }
+    .auth-container .card-footer a { color: #60a5fa; text-decoration: none; font-weight: 600; }
 
     /* Background for body in view-login */
     #view-login {
