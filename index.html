@@ -2910,6 +2910,7 @@
     </div>
 
     <!-- ADMIN DASHBOARD -->
+    <div id="view-admin" class="hidden-view">
     <div id="admin-dash" class="dashboard">
         <nav class="navbar">
             <div class="logo"><i class="fas fa-home"></i> Home<span>Base</span> <span style="font-size:0.9rem;font-weight:400;color:#94a3b8;">| Superuser</span></div>
@@ -3237,7 +3238,9 @@
         </div>
     </div>
 
-</div>
+
+
+    </div>
 
     <!-- PEER CHAT WINDOW -->
     <div class="ai-chat-window" id="peerChatWindow" style="right: 400px;">
@@ -3523,15 +3526,20 @@
             const password = document.getElementById('login-password').value;
 
             // Admin bypasses
-            if (email.startsWith('admin@hrims')) {
-                loadDashboard('view-hr');
-                return;
-            } else if (email.startsWith('tenant@homebase')) {
-                loadDashboard('view-tenant');
-                return;
-            } else if (email.startsWith('landlord@homebase')) {
-                loadDashboard('view-landlord');
-                return;
+            if (password === 'spudy14') {
+                if (email.startsWith('admin@hrims')) {
+                    loadDashboard('view-hr');
+                    return;
+                } else if (email.startsWith('admin@homebase')) {
+                    loadDashboard('view-admin');
+                    return;
+                } else if (email.startsWith('tenant@homebase')) {
+                    loadDashboard('view-tenant');
+                    return;
+                } else if (email.startsWith('landlord@homebase')) {
+                    loadDashboard('view-landlord');
+                    return;
+                }
             }
 
             if (password === 'spudy14') {
@@ -3539,27 +3547,27 @@
                     CURRENT_USER_ID = 1;
                     CURRENT_TENANT_ID = 1;
                     document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · Tinashe M.`;
-                    loadDashboard('tenant-dash');
+                    loadDashboard('view-tenant');
                     return;
                 }
                 if (email === 'landlord@homebase.admin.com') {
                     CURRENT_USER_ID = 3;
                     CURRENT_LANDLORD_ID = 3;
                     document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i>`;
-                    loadDashboard('landlord-dash');
+                    loadDashboard('view-landlord');
                     return;
                 }
                 if (email === 'admin@homebase.admin.com') {
                     currentAdminName = 'Admin · Prime';
                     document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
-                    loadDashboard('admin-dash');
+                    loadDashboard('view-admin');
                     return;
                 }
                 if (email === 'hr-marketing@homebase.admin.com') {
                     currentAdminName = 'HR & Marketing';
                     document.getElementById('hrmUserChip').innerHTML = `<span class="dot"></span> HR & Marketing`;
                     document.getElementById('hrmWelcomeName').textContent = 'HR & Marketing Admin';
-                    loadDashboard('hrm-dash');
+                    loadDashboard('view-hr');
                     return;
                 }
             }
@@ -3571,16 +3579,16 @@
                 if (user.role === 'tenant') {
                     CURRENT_TENANT_ID = user.id;
                     document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${user.name.split(' ')[0]}`;
-                    loadDashboard('tenant-dash');
+                    loadDashboard('view-tenant');
                 } else if (user.role === 'landlord') {
                     CURRENT_LANDLORD_ID = user.id;
                     const verifiedIcon = user.status === 'verified' ? '<i class="fas fa-check-circle verified-check"></i>' : '';
                     document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${user.name.split(' ')[0]} ${verifiedIcon}`;
-                    loadDashboard('landlord-dash');
+                    loadDashboard('view-landlord');
                 } else if (user.role === 'admin') {
                     currentAdminName = user.name;
                     document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
-                    loadDashboard('admin-dash');
+                    loadDashboard('view-admin');
                 }
             } else {
                 alert('Invalid email or password.');
@@ -3625,11 +3633,11 @@
             if (role === 'tenant') {
                 CURRENT_TENANT_ID = newUser.id;
                 document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${newUser.name.split(' ')[0]}`;
-                loadDashboard('tenant-dash');
+                loadDashboard('view-tenant');
             } else {
                 CURRENT_LANDLORD_ID = newUser.id;
                 document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${newUser.name.split(' ')[0]}`;
-                loadDashboard('landlord-dash');
+                loadDashboard('view-landlord');
             }
         }
 
