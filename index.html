@@ -2908,6 +2908,8 @@
             </div>
         </div>
     </div>
+    </div>
+    </div>
 
     <!-- ADMIN DASHBOARD -->
     <div id="view-admin" class="hidden-view">
@@ -3010,11 +3012,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
     </div>
 
 
@@ -3886,8 +3883,11 @@
                 target.classList.add('active-view');
             }
             document.querySelectorAll('.dashboard').forEach(d => d.classList.remove('active-dash'));
-            if (document.getElementById(dashId.replace('view-', '') + '-dash')) document.getElementById(dashId.replace('view-', '') + '-dash').classList.add('active-dash');
-            const dashDash = dashId.replace('view-', '') + '-dash';
+            let dashDash = dashId.replace('view-', '') + '-dash';
+            if (dashId === 'view-hr') {
+                dashDash = 'hrm-dash';
+            }
+            if (document.getElementById(dashDash)) document.getElementById(dashDash).classList.add('active-dash');
             document.body.style.backgroundColor = dashDash === 'admin-dash' ? '#0f172a' : '#f1f5f9';
             if (dashDash === 'tenant-dash') { updateTenantPointsDisplay();
                 renderTenant(); }
