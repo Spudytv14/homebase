@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HomeBase — Premium Rental Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
@@ -2041,874 +2043,229 @@
     </div>
 
     <!-- HRM DASHBOARD -->
+
     <div id="view-hr" class="hidden-view">
-    <div id="hrm-dash" class="dashboard min-h-screen bg-slate-50 text-slate-800 flex !p-0 !m-0 !max-w-none">
-
-        <!-- Sidebar -->
-        <div class="w-64 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 left-0 z-10 transition-transform hrm-sidebar-tailwind">
-            <div class="h-16 flex items-center px-6 border-b border-slate-200">
-                <i class="fas fa-users text-blue-600 text-2xl mr-2"></i>
-                <span class="text-xl font-bold text-slate-800 tracking-tight">HRIMS</span>
-            </div>
-
-            <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1 hrm-nav">
-                <button class="hrm-nav-item active w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="dashboard" onclick="switchHrmTab('dashboard')">
-                    <i class="fas fa-chart-line w-5 h-5 mr-3 text-center"></i> Dashboard
-                </button>
-
-                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Human Resources</div>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="employees" onclick="switchHrmTab('employees')">
-                    <i class="fas fa-user-friends w-5 h-5 mr-3 text-center"></i> Employees
-                </button>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="attendance" onclick="switchHrmTab('attendance')">
-                    <i class="fas fa-calendar-check w-5 h-5 mr-3 text-center"></i> Leave Management
-                </button>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="performance" onclick="switchHrmTab('performance')">
-                    <i class="fas fa-star w-5 h-5 mr-3 text-center"></i> Performance
-                </button>
-
-                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Administration</div>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="payroll" onclick="switchHrmTab('payroll')">
-                    <i class="fas fa-wallet w-5 h-5 mr-3 text-center"></i> Payroll
-                </button>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="recruitment" onclick="switchHrmTab('recruitment')">
-                    <i class="fas fa-briefcase w-5 h-5 mr-3 text-center"></i> Recruitment
-                </button>
-
-                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">System</div>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="reports" onclick="switchHrmTab('reports')">
-                    <i class="fas fa-chart-pie w-5 h-5 mr-3 text-center"></i> Reports
-                </button>
-                <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900" data-hrm-tab="settings" onclick="switchHrmTab('settings')">
-                    <i class="fas fa-cog w-5 h-5 mr-3 text-center"></i> Settings
-                </button>
-            </div>
-
-            <div class="p-4 border-t border-slate-200">
-                <div class="flex flex-col gap-2">
-                    <div class="flex items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
-                        <i class="fas fa-shield-alt text-slate-400 mr-2"></i>
-                        <span class="text-xs font-medium text-slate-500">Your data is secure</span>
+        <div id="hrm-dash" class="dashboard min-h-screen bg-slate-50 text-slate-800 flex !p-0 !m-0 !max-w-none">
+            <!-- Sidebar -->
+            <div class="w-64 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 left-0 z-10 transition-transform hrm-sidebar-tailwind shadow-sm">
+                <div class="h-16 flex items-center px-6 border-b border-slate-200">
+                    <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center mr-3 shadow-inner">
+                        <i class="fas fa-layer-group text-white text-sm"></i>
                     </div>
-                    <button class="w-full py-2 flex items-center justify-center text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition" onclick="logout()">
-                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    <span class="text-xl font-bold text-slate-800 tracking-tight">HomeBase HR</span>
+                </div>
+                <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1 hrm-nav">
+                    <button class="hrm-nav-item active w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900 mb-2" data-hrm-tab="dashboard" onclick="switchHrmTab('dashboard')">
+                        <i class="fas fa-home w-5 h-5 mr-3 text-center text-slate-400 group-hover:text-blue-500"></i> Dashboard
+                    </button>
+                    <div class="pt-4 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-widest">Team Management</div>
+                    <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-hrm-tab="employees" onclick="switchHrmTab('employees')">
+                        <i class="fas fa-users w-5 h-5 mr-3 text-center text-slate-400"></i> Directory
+                    </button>
+                    <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-hrm-tab="onboarding" onclick="switchHrmTab('onboarding')">
+                        <i class="fas fa-user-plus w-5 h-5 mr-3 text-center text-slate-400"></i> Onboarding
+                    </button>
+                    <div class="pt-4 pb-2 px-3 text-xs font-bold text-slate-400 uppercase tracking-widest">Operations</div>
+                    <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-hrm-tab="leave" onclick="switchHrmTab('leave')">
+                        <i class="fas fa-calendar-alt w-5 h-5 mr-3 text-center text-slate-400"></i> Time Off
+                    </button>
+                    <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-hrm-tab="performance" onclick="switchHrmTab('performance')">
+                        <i class="fas fa-chart-line w-5 h-5 mr-3 text-center text-slate-400"></i> Performance
+                    </button>
+                    <button class="hrm-nav-item w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-600 hover:bg-slate-100 hover:text-slate-900" data-hrm-tab="recruitment" onclick="switchHrmTab('recruitment')">
+                        <i class="fas fa-briefcase w-5 h-5 mr-3 text-center text-slate-400"></i> Recruitment
+                    </button>
+                </div>
+                <div class="p-4 border-t border-slate-200 bg-slate-50">
+                    <button class="w-full py-2.5 flex items-center justify-center text-sm font-medium text-slate-700 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 hover:text-red-600 rounded-lg transition-all" onclick="logout()">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log out
                     </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Main Area Wrapper -->
-        <div class="flex-1 ml-64 flex flex-col min-h-screen bg-slate-50">
-
-            <!-- Top Header -->
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-10 w-full hrm-header-tailwind">
-                <div>
-                    <h1 class="text-lg font-bold text-slate-800 leading-tight" id="hrmHeaderTitle">Dashboard</h1>
-                    <p class="text-xs text-slate-500" id="hrmHeaderSubtitle">Overview and management</p>
-                </div>
-
-                <div class="flex items-center space-x-6">
-                    <!-- Search Bar -->
-                    <div class="relative hidden md:block">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" placeholder="Search..." class="pl-9 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 w-64 transition-all text-slate-700" />
-                        <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center space-x-1">
-                            <kbd class="hidden sm:inline-block bg-white border border-slate-200 rounded px-1.5 text-[10px] font-sans font-semibold text-slate-400 shadow-sm">⌘K</kbd>
-                        </div>
+            <!-- Main Content Area -->
+            <div class="flex-1 ml-64 flex flex-col min-h-screen bg-slate-50/50">
+                <!-- Header -->
+                <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10 w-full shadow-sm">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 leading-tight" id="hrmHeaderTitle">Dashboard</h1>
+                        <p class="text-sm text-slate-500" id="hrmHeaderSubtitle">Overview of HR operations</p>
                     </div>
-
-                    <!-- Actions & Profile -->
-                    <div class="flex items-center space-x-4">
-                        <button class="relative text-slate-400 hover:text-slate-600 transition-colors" onclick="openNotificationsModal()">
+                    <div class="flex items-center space-x-5">
+                        <div class="relative hidden md:block">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" placeholder="Search employees..." class="pl-10 pr-4 py-2 bg-slate-100 border-transparent focus:bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64 transition-all text-slate-700 placeholder-slate-400" />
+                        </div>
+                        <button class="relative text-slate-400 hover:text-blue-600 transition-colors p-2" onclick="openNotificationsModal()">
                             <i class="fas fa-bell text-lg"></i>
-                            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white" id="hrmNotifBadge"></span>
+                            <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
                         </button>
-
-                        <button class="text-slate-400 hover:text-slate-600 transition-colors">
-                            <i class="fas fa-comment-dots text-lg"></i>
-                        </button>
-
-                        <div class="h-6 w-px bg-slate-200 mx-2"></div>
-
-                        <button class="flex items-center space-x-2 text-left hover:bg-slate-50 p-1 pr-2 rounded-lg transition-colors border border-transparent hover:border-slate-200">
-                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm" id="hrmUserAvatar">
-                                HR
-                            </div>
+                        <div class="h-6 w-px bg-slate-200"></div>
+                        <button class="flex items-center space-x-3 text-left hover:bg-slate-50 p-1.5 rounded-lg transition-colors">
+                            <img src="https://ui-avatars.com/api/?name=Marketing+Admin&background=2563eb&color=fff" class="w-9 h-9 rounded-full shadow-sm" alt="Admin">
                             <div class="hidden sm:block">
-                                <div class="text-sm font-semibold text-slate-700 leading-none" id="hrmUserChipName">HR & Marketing</div>
-                                <div class="text-xs text-slate-500 mt-0.5">Administrator</div>
+                                <div class="text-sm font-bold text-slate-700 leading-none">Marketing Admin</div>
+                                <div class="text-xs text-slate-500 mt-1 font-medium">HR Director</div>
                             </div>
-                            <i class="fas fa-chevron-down text-slate-400 text-xs ml-1 hidden sm:block"></i>
                         </button>
                     </div>
-                </div>
-            </header>
+                </header>
 
-            <!-- Scrollable Content -->
-            <div class="p-6 md:p-8 flex-1 hrm-content">
-                <!-- PANELS -->
-                <div id="hrmPane-dashboard" class="hrm-pane active space-y-6">
-                    <!-- KPI Cards Row -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
-                                    <i class="fas fa-users w-5 h-5 flex items-center justify-center text-lg"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-slate-500">Total Employees</h3>
-                            </div>
-                            <div class="mt-auto">
-                                <div class="text-3xl font-bold text-slate-800">165</div>
-                                <div class="text-xs mt-2 font-medium text-green-600">↑ 12% from last month</div>
-                            </div>
+                <!-- Page Content -->
+                <main class="flex-1 p-8 overflow-y-auto">
+                    <!-- Dashboard Tab -->
+                    <div id="hrm-tab-dashboard" class="hrm-tab-content active space-y-6">
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="hrmDashStats">
+                            <!-- Populated by JS -->
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
-                                    <i class="fas fa-calendar-check w-5 h-5 flex items-center justify-center text-lg"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-slate-500">Present Today</h3>
-                            </div>
-                            <div class="mt-auto">
-                                <div class="text-3xl font-bold text-slate-800">142</div>
-                                <div class="text-xs mt-2 font-medium text-red-600">↓ 2.4% from yesterday</div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
-                                    <i class="fas fa-calendar-times w-5 h-5 flex items-center justify-center text-lg"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-slate-500">Pending Leave</h3>
-                            </div>
-                            <div class="mt-auto">
-                                <div class="text-3xl font-bold text-slate-800">12</div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
-                                    <i class="fas fa-wallet w-5 h-5 flex items-center justify-center text-lg"></i>
-                                </div>
-                                <h3 class="text-sm font-medium text-slate-500">Payroll Due</h3>
-                            </div>
-                            <div class="mt-auto">
-                                <div class="text-3xl font-bold text-slate-800">$124.5k</div>
-                                <div class="text-xs mt-2 font-medium text-green-600">↑ On track</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                        <!-- Main Charts Area -->
-                        <div class="xl:col-span-2 space-y-6">
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-6">Employee Growth</h3>
-                                <div class="h-[300px] w-full relative">
-                                    <canvas id="employeeGrowthChart"></canvas>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-6">Attendance Trend (This Week)</h3>
-                                <div class="h-[250px] w-full relative">
-                                    <canvas id="attendanceTrendChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Side Widgets -->
-                        <div class="space-y-6">
-                            <!-- Calendar Widget -->
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-4">Upcoming Events</h3>
-                                <div class="space-y-3">
-                                    <div class="p-3 border border-slate-100 rounded-lg flex items-start space-x-3 hover:bg-slate-50 transition">
-                                        <div class="bg-blue-100 text-blue-600 rounded px-2 py-1 text-center min-w-[3rem]">
-                                            <div class="text-xs font-bold uppercase">Jul</div>
-                                            <div class="text-lg font-bold leading-none">15</div>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-sm font-bold text-slate-700">Q3 Planning Meeting</h4>
-                                            <p class="text-xs text-slate-500 mt-1">10:00 AM - Boardroom</p>
-                                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Recent Activity / Upcoming -->
+                            <div class="lg:col-span-2 space-y-6">
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
+                                        <h2 class="text-base font-bold text-slate-800"><i class="fas fa-calendar-check mr-2 text-blue-500"></i>Pending Leave Requests</h2>
+                                        <button class="text-sm text-blue-600 hover:text-blue-700 font-medium" onclick="switchHrmTab('leave')">View All</button>
                                     </div>
-                                    <div class="p-3 border border-slate-100 rounded-lg flex items-start space-x-3 hover:bg-slate-50 transition">
-                                        <div class="bg-orange-100 text-orange-600 rounded px-2 py-1 text-center min-w-[3rem]">
-                                            <div class="text-xs font-bold uppercase">Jul</div>
-                                            <div class="text-lg font-bold leading-none">18</div>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-sm font-bold text-slate-700">New Hire Onboarding</h4>
-                                            <p class="text-xs text-slate-500 mt-1">9:00 AM - HR Office</p>
-                                        </div>
+                                    <div class="p-0">
+                                        <ul class="divide-y divide-slate-100" id="hrmPendingLeaveList">
+                                            <!-- Populated by JS -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
+                                        <h2 class="text-base font-bold text-slate-800"><i class="fas fa-user-plus mr-2 text-indigo-500"></i>Active Recruitment</h2>
+                                    </div>
+                                    <div class="p-0">
+                                        <table class="w-full text-left border-collapse">
+                                            <thead class="bg-slate-50 text-xs uppercase text-slate-500 font-bold border-b border-slate-200">
+                                                <tr>
+                                                    <th class="px-6 py-3">Role</th>
+                                                    <th class="px-6 py-3">Department</th>
+                                                    <th class="px-6 py-3">Candidates</th>
+                                                    <th class="px-6 py-3">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-slate-100 text-sm" id="hrmActiveRecruitmentTable">
+                                                <!-- Populated by JS -->
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Recent Activity Timeline -->
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-6">Recent Activity</h3>
-                                <div class="relative pl-4 border-l border-slate-200 space-y-6">
-                                    <div class="relative">
-                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-orange-400"></span>
-                                        <p class="text-sm text-slate-700">Sarah Jenkins submitted a leave request</p>
-                                        <p class="text-xs text-slate-400 mt-1">2 hours ago</p>
-                                    </div>
-                                    <div class="relative">
-                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-green-400"></span>
-                                        <p class="text-sm text-slate-700">Payroll processing completed for June</p>
-                                        <p class="text-xs text-slate-400 mt-1">5 hours ago</p>
-                                    </div>
-                                    <div class="relative">
-                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-blue-400"></span>
-                                        <p class="text-sm text-slate-700">New candidate applied for Frontend Role</p>
-                                        <p class="text-xs text-slate-400 mt-1">1 day ago</p>
-                                    </div>
-                                    <div class="relative">
-                                        <span class="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-white bg-purple-400"></span>
-                                        <p class="text-sm text-slate-700">Performance reviews opened for Q2</p>
-                                        <p class="text-xs text-slate-400 mt-1">2 days ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-employees" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-users"></i> Employee Management</h2>
-                        <button class="btn btn-primary btn-sm" onclick="openEmployeeModal()"><i class="fas fa-plus"></i> Add Employee</button>
-                    </div>
-                    <div class="panel">
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>ID</th><th>Name</th><th>Department</th><th>Contract</th><th>Emergency Contact</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmEmployeesTable"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-recruitment" class="hrm-pane">
-                    <div class="h-[calc(100vh-140px)] overflow-x-auto pb-4">
-                        <div class="flex space-x-6 min-w-max h-full">
-                            <!-- Applied Column -->
-                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
-                                <div class="flex items-center justify-between mb-4 px-1">
-                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
-                                        <span>Applied</span>
-                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">2</span>
-                                    </h3>
-                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
-                                </div>
-                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">JD</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">John Doe</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">Frontend Dev</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-green-600 font-bold">85%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 85%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">JS</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Jane Smith</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">UX Designer</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-orange-500 font-bold">72%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-orange-400" style="width: 72%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Screening Column -->
-                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
-                                <div class="flex items-center justify-between mb-4 px-1">
-                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
-                                        <span>Screening</span>
-                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">1</span>
-                                    </h3>
-                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
-                                </div>
-                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">RC</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Robert Chen</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">Backend Dev</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-green-600 font-bold">92%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 92%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Interview Column -->
-                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
-                                <div class="flex items-center justify-between mb-4 px-1">
-                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
-                                        <span>Interview</span>
-                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">2</span>
-                                    </h3>
-                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
-                                </div>
-                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">ED</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Emily Davis</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">Product Manager</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-green-600 font-bold">88%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 88%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">MW</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Michael Wilson</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">Frontend Dev</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-blue-600 font-bold">78%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-blue-500" style="width: 78%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Offer Column -->
-                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
-                                <div class="flex items-center justify-between mb-4 px-1">
-                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
-                                        <span>Offer</span>
-                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">1</span>
-                                    </h3>
-                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
-                                </div>
-                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
-                                    <div draggable="true" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-grab active:cursor-grabbing hover:border-blue-300 transition-colors">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">SJ</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm leading-tight">Sarah Jenkins</h4>
-                                                    <p class="text-xs text-slate-500 mt-0.5">Marketing Lead</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="flex justify-between text-xs mb-1">
-                                                <span class="text-slate-500 font-medium">Match</span>
-                                                <span class="text-green-600 font-bold">95%</span>
-                                            </div>
-                                            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                                                <div class="h-1.5 rounded-full bg-green-500" style="width: 95%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Hired Column -->
-                            <div class="w-80 bg-slate-100 rounded-xl p-4 flex flex-col h-full border border-slate-200 shadow-sm">
-                                <div class="flex items-center justify-between mb-4 px-1">
-                                    <h3 class="font-bold text-slate-700 flex items-center space-x-2">
-                                        <span>Hired</span>
-                                        <span class="bg-slate-200 text-slate-500 text-xs py-0.5 px-2 rounded-full font-medium">0</span>
-                                    </h3>
-                                    <button class="text-slate-400 hover:text-slate-600"><i class="fas fa-ellipsis-h w-5 h-5"></i></button>
-                                </div>
-                                <div class="flex-1 overflow-y-auto space-y-3 pr-1 pb-2 custom-scrollbar">
-                                    <div class="h-24 border-2 border-dashed border-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-sm font-medium">
-                                        Drop candidate here
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-attendance" class="hrm-pane">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold text-slate-800">Leave Planner</h3>
-                            <div class="flex space-x-4 text-xs font-medium">
-                                <div class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-sm mr-2"></span> Annual</div>
-                                <div class="flex items-center"><span class="w-3 h-3 bg-red-500 rounded-sm mr-2"></span> Sick</div>
-                                <div class="flex items-center"><span class="w-3 h-3 bg-purple-500 rounded-sm mr-2"></span> Paternity/Maternity</div>
-                                <div class="flex items-center"><span class="w-3 h-3 bg-orange-500 rounded-sm mr-2"></span> Personal</div>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <div class="min-w-[800px]">
-                                <!-- Header Row (Dates) -->
-                                <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 mb-4 border-b border-slate-200 pb-2">
-                                    <div class="font-semibold text-sm text-slate-500 uppercase">Employee</div>
-                                    <!-- Generating a few mock dates -->
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Mon</div><div class="font-bold text-slate-700">10</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Tue</div><div class="font-bold text-slate-700">11</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Wed</div><div class="font-bold text-slate-700">12</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Thu</div><div class="font-bold text-slate-700">13</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Fri</div><div class="font-bold text-slate-700">14</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sat</div><div class="font-bold text-slate-700">15</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sun</div><div class="font-bold text-slate-700">16</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Mon</div><div class="font-bold text-slate-700">17</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Tue</div><div class="font-bold text-slate-700">18</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Wed</div><div class="font-bold text-slate-700">19</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Thu</div><div class="font-bold text-slate-700">20</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Fri</div><div class="font-bold text-slate-700">21</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sat</div><div class="font-bold text-slate-700">22</div></div>
-                                    <div class="text-center text-xs"><div class="text-slate-400 font-medium">Sun</div><div class="font-bold text-slate-700">23</div></div>
-                                </div>
-
-                                <!-- Timeline Rows -->
-                                <div class="space-y-4">
-                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">AM</div>
-                                            <span class="font-medium text-slate-700 text-sm">Alex Morgan</span>
-                                        </div>
-                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
-                                            <div class="absolute inset-0 grid grid-cols-14 gap-1 pointer-events-none">
-                                                <!-- Mock lines -->
-                                                <div class="border-r border-slate-200 h-full w-[calc(100%/14)] absolute left-[calc((100%/14)*1)]"></div>
-                                                <div class="border-r border-slate-200 h-full w-[calc(100%/14)] absolute left-[calc((100%/14)*2)]"></div>
-                                            </div>
-                                            <!-- Leave Bar -->
-                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((2 / 14) * 100%); width: calc((3 / 14) * 100% - 4px);" title="Annual Leave">Annual</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">SJ</div>
-                                            <span class="font-medium text-slate-700 text-sm">Sarah Jenkins</span>
-                                        </div>
-                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
-                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-red-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: 0%; width: calc((2 / 14) * 100% - 4px);" title="Sick Leave">Sick</div>
-                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-blue-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((8 / 14) * 100%); width: calc((4 / 14) * 100% - 4px);" title="Annual Leave">Annual</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="grid grid-cols-[200px_repeat(14,_1fr)] gap-1 items-center">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">MC</div>
-                                            <span class="font-medium text-slate-700 text-sm">Michael Chang</span>
-                                        </div>
-                                        <div class="col-span-14 relative h-8 bg-slate-50 rounded">
-                                            <div class="absolute top-1 bottom-1 rounded-md shadow-sm bg-purple-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden px-1" style="left: calc((5 / 14) * 100%); width: calc((5 / 14) * 100% - 4px);" title="Paternity Leave">Paternity</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-performance" class="hrm-pane space-y-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                        <!-- Radar Chart -->
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                            <h3 class="text-lg font-bold text-slate-800 mb-6">Competency Radar</h3>
-                            <div class="h-[300px] w-full relative">
-                                <canvas id="competencyRadarChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- OKRs Tracking -->
-                        <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                            <h3 class="text-lg font-bold text-slate-800 mb-6">Current Goals (OKRs)</h3>
+                            <!-- Side Panel -->
                             <div class="space-y-6">
-                                <div>
-                                    <div class="flex justify-between items-end mb-2">
-                                        <div>
-                                            <h4 class="font-bold text-slate-700">Increase Q3 Sales by 15%</h4>
-                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-blue-100 text-blue-700">On Track</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">75%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="h-2.5 rounded-full bg-blue-500" style="width: 75%"></div>
-                                    </div>
+                                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-sm p-6 text-white relative overflow-hidden">
+                                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
+                                    <h3 class="text-lg font-bold mb-1 relative z-10">Company All-Hands</h3>
+                                    <p class="text-blue-100 text-sm mb-4 relative z-10">Tomorrow at 10:00 AM</p>
+                                    <button class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-bold shadow hover:bg-blue-50 transition w-full relative z-10">Prepare Agenda</button>
                                 </div>
-                                <div>
-                                    <div class="flex justify-between items-end mb-2">
-                                        <div>
-                                            <h4 class="font-bold text-slate-700">Complete Leadership Training</h4>
-                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-green-100 text-green-700">Completed</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">100%</span>
+
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                                    <div class="px-6 py-4 border-b border-slate-200">
+                                        <h2 class="text-base font-bold text-slate-800">New Hires Onboarding</h2>
                                     </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="h-2.5 rounded-full bg-green-500" style="width: 100%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-end mb-2">
-                                        <div>
-                                            <h4 class="font-bold text-slate-700">Reduce Bug Rate by 5%</h4>
-                                            <span class="text-xs font-medium px-2 py-0.5 rounded-full mt-1 inline-block bg-orange-100 text-orange-700">At Risk</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">40%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="h-2.5 rounded-full bg-orange-500" style="width: 40%"></div>
+                                    <div class="p-4" id="hrmOnboardingMiniList">
+                                        <!-- Populated by JS -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Competency Heatmap Table -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <h3 class="text-lg font-bold text-slate-800 mb-6">Department Competency Heatmap</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase">Employee</th>
-                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Tech Skills</th>
-                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Comm.</th>
-                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Leadership</th>
-                                        <th class="p-3 text-xs font-semibold text-slate-500 uppercase text-center">Initiative</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="hrmCompetencyTableBody">
-                                    <tr class="border-t border-slate-100">
-                                        <td class="p-3 font-medium text-slate-700">Alex M.</td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.5</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.0</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.8</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.2</div></td>
-                                    </tr>
-                                    <tr class="border-t border-slate-100">
-                                        <td class="p-3 font-medium text-slate-700">Sarah J.</td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.5</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.8</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-50 text-slate-600">3.2</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.5</div></td>
-                                    </tr>
-                                    <tr class="border-t border-slate-100">
-                                        <td class="p-3 font-medium text-slate-700">Michael C.</td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-600 text-white">4.9</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.5</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-200 text-slate-800">3.8</div></td>
-                                        <td class="p-1.5 text-center"><div class="w-10 h-10 mx-auto flex items-center justify-center rounded font-bold text-sm bg-blue-400 text-white">4.0</div></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-training" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-graduation-cap"></i> Training</h2>
-                        <button class="btn btn-primary btn-sm" onclick="alert('Assign Course Modal')"><i class="fas fa-plus"></i> Assign Course</button>
-                    </div>
-                    <div class="panel">
-                        <p class="text-muted text-center" style="padding: 20px;">Assigned courses and skills development tracking will appear here.</p>
-                    </div>
-                </div>
-
-                <div id="hrmPane-marketing" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-bullhorn"></i> Campaigns</h2>
-                        <button class="btn btn-primary btn-sm" onclick="openCampaignModal()"><i class="fas fa-plus"></i> Create Campaign</button>
-                    </div>
-                    <div class="panel">
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>Campaign Name</th><th>Assigned To</th><th>Budget</th><th>Status</th><th>Performance</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmCampaignsTable"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-properties" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-building"></i> Properties to Promote</h2>
-                    </div>
-                    <div class="panel">
-                        <p class="text-muted" style="margin-bottom: 15px; font-size: 0.9rem;">Generate shareable links and marketing materials for assigned properties.</p>
-                        <div class="property-grid" id="hrmPromotePropsGrid"></div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-leads" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-bullseye"></i> Leads</h2>
-                    </div>
-                    <div class="panel">
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>Lead Name</th><th>Contact</th><th>Source</th><th>Status</th><th>Actions</th></tr>
-                                </thead>
-                                <tbody id="hrmLeadsTable"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="hrmPane-payroll" class="hrm-pane">
-                    <div class="flex flex-col lg:flex-row gap-6">
-                        <div class="flex-1 space-y-6">
-
-                            <!-- Payroll Data Table -->
-                            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-left border-collapse">
-                                        <thead>
-                                            <tr class="bg-slate-50 border-b border-slate-200">
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">ID</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Employee</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Gross Pay</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Deductions</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Net Pay</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="hrmPayrollTableBody" class="divide-y divide-slate-100">
-                                            <tr class="hover:bg-slate-50 transition-colors">
-                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-001</td>
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center space-x-3">
-                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">AM</div>
-                                                        <span class="font-medium text-slate-800 text-sm">Alex Morgan</span>
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">Management</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$8,500</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$1,200</td>
-                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$7,300</td>
-                                                <td class="px-6 py-4"><span class="bg-success-100 text-success-700 rounded-full px-2.5 py-1 text-xs font-medium">Paid</span></td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr class="hover:bg-slate-50 transition-colors">
-                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-003</td>
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center space-x-3">
-                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">MC</div>
-                                                        <span class="font-medium text-slate-800 text-sm">Michael Chang</span>
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">Design</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$6,800</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$800</td>
-                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$6,000</td>
-                                                <td class="px-6 py-4"><span class="bg-warning-100 text-warning-700 rounded-full px-2.5 py-1 text-xs font-medium">Pending</span></td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr class="hover:bg-slate-50 transition-colors">
-                                                <td class="px-6 py-4 text-sm font-mono text-slate-500">EMP-004</td>
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center space-x-3">
-                                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">EW</div>
-                                                        <span class="font-medium text-slate-800 text-sm">Emma Wilson</span>
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">Marketing</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$5,500</td>
-                                                <td class="px-6 py-4 text-sm text-slate-700">$650</td>
-                                                <td class="px-6 py-4 text-sm font-bold text-slate-800">$4,850</td>
-                                                <td class="px-6 py-4"><span class="bg-danger-100 text-danger-700 rounded-full px-2.5 py-1 text-xs font-medium">Failed</span></td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-eye w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-pencil-alt w-4 h-4"></i></button>
-                                                    <button class="text-slate-400 hover:text-blue-600"><i class="fas fa-download w-4 h-4"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="px-6 py-4 bg-white border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
-                                    <div>Showing 1 to 3 of 124 entries</div>
-                                    <div class="flex space-x-2">
-                                        <button class="p-1 rounded hover:bg-slate-100 disabled:opacity-50"><i class="fas fa-chevron-left w-4 h-4 text-center"></i></button>
-                                        <button class="px-3 py-1 rounded bg-blue-600 text-white font-medium">1</button>
-                                        <button class="px-3 py-1 rounded hover:bg-slate-100 text-slate-600 font-medium">2</button>
-                                        <button class="px-3 py-1 rounded hover:bg-slate-100 text-slate-600 font-medium">3</button>
-                                        <button class="p-1 rounded hover:bg-slate-100 disabled:opacity-50"><i class="fas fa-chevron-right w-4 h-4 text-center"></i></button>
-                                    </div>
-                                </div>
+                    <!-- Employees Tab -->
+                    <div id="hrm-tab-employees" class="hrm-tab-content hidden space-y-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex space-x-2">
+                                <input type="text" placeholder="Search by name or ID..." class="px-4 py-2 border border-slate-200 rounded-lg text-sm w-64 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <select class="px-4 py-2 border border-slate-200 rounded-lg text-sm bg-white text-slate-700">
+                                    <option value="">All Departments</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Sales">Sales</option>
+                                </select>
                             </div>
-
-                            <!-- Monthly Trend Area Chart -->
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-6">Monthly Payroll Trend (Last 6 Months)</h3>
-                                <div class="h-[250px] w-full relative">
-                                    <canvas id="monthlyPayrollTrendChart"></canvas>
-                                </div>
-                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Add Employee
+                            </button>
                         </div>
-
-                        <!-- Sidebar/Right Column -->
-                        <div class="w-full lg:w-80 space-y-6">
-                            <!-- Next Payroll Run -->
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center">
-                                <h3 class="text-slate-500 font-medium text-sm uppercase tracking-wider mb-2">Next Payroll Run</h3>
-                                <div class="text-3xl font-bold text-slate-800 mb-1">July 25</div>
-                                <div class="text-sm text-slate-500 mb-6">10:00 AM EST</div>
-                                <button class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">
-                                    Review Payroll
-                                </button>
-                            </div>
-
-                            <!-- Payroll Summary Donut Chart -->
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-lg font-bold text-slate-800 mb-4">Payroll Summary</h3>
-                                <div class="h-[200px] w-full relative flex justify-center">
-                                    <canvas id="payrollSummaryChart"></canvas>
-                                </div>
-                                <div class="space-y-3 mt-4" id="payrollSummaryLegend">
-                                    <div class="flex justify-between items-center text-sm">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                                            <span class="text-slate-600 font-medium">Paid</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">$85,000</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-sm">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                                            <span class="text-slate-600 font-medium">Pending</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">$25,000</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-sm">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                                            <span class="text-slate-600 font-medium">Failed</span>
-                                        </div>
-                                        <span class="font-bold text-slate-800">$5,000</span>
-                                    </div>
-                                </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead class="bg-slate-50 text-xs uppercase text-slate-500 font-bold border-b border-slate-200">
+                                        <tr>
+                                            <th class="px-6 py-4">Employee</th>
+                                            <th class="px-6 py-4">Role & Dept</th>
+                                            <th class="px-6 py-4">Status</th>
+                                            <th class="px-6 py-4">Join Date</th>
+                                            <th class="px-6 py-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 text-sm" id="hrmEmployeesTableBody">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div id="hrmPane-reports" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-chart-bar"></i> Reports</h2>
+                    <!-- Leave Tab -->
+                    <div id="hrm-tab-leave" class="hrm-tab-content hidden space-y-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 flex justify-between items-center">
+                                <h2 class="text-base font-bold text-slate-800">Leave Requests</h2>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead class="bg-slate-50 text-xs uppercase text-slate-500 font-bold border-b border-slate-200">
+                                        <tr>
+                                            <th class="px-6 py-4">Employee</th>
+                                            <th class="px-6 py-4">Type</th>
+                                            <th class="px-6 py-4">Duration</th>
+                                            <th class="px-6 py-4">Status</th>
+                                            <th class="px-6 py-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 text-sm" id="hrmLeaveTableBody">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-grid">
-                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating HR Report...')"><i class="fas fa-users" style="font-size: 2rem; color: var(--primary); margin-bottom: 10px;"></i><br><strong>HR & Attendance</strong></div>
-                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating Marketing Report...')"><i class="fas fa-bullhorn" style="font-size: 2rem; color: var(--warning); margin-bottom: 10px;"></i><br><strong>Marketing Performance</strong></div>
-                        <div class="stat-card" style="cursor: pointer; text-align: center;" onclick="alert('Generating Financial Report...')"><i class="fas fa-money-bill-wave" style="font-size: 2rem; color: var(--success); margin-bottom: 10px;"></i><br><strong>Commissions & Leads</strong></div>
-                    </div>
-                </div>
 
-                <div id="hrmPane-messages" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-comments"></i> Messages</h2>
+                    <!-- Placeholder tabs for others to avoid errors if clicked -->
+                    <div id="hrm-tab-onboarding" class="hrm-tab-content hidden space-y-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+                            <i class="fas fa-tools text-4xl text-slate-300 mb-4"></i>
+                            <h2 class="text-xl font-bold text-slate-700">Onboarding Module</h2>
+                            <p class="text-slate-500 mt-2">This module is under development.</p>
+                        </div>
                     </div>
-                     <div class="panel">
-                        <p class="text-muted text-center" style="padding: 20px;">Internal communication with Employees, Marketers, Managers, Admins, and Owners.</p>
-                        <button class="btn btn-primary" style="margin: 0 auto; display: block;" onclick="alert('Open Message Composer')"><i class="fas fa-paper-plane"></i> Compose Message</button>
+                    <div id="hrm-tab-performance" class="hrm-tab-content hidden space-y-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+                            <i class="fas fa-tools text-4xl text-slate-300 mb-4"></i>
+                            <h2 class="text-xl font-bold text-slate-700">Performance Module</h2>
+                            <p class="text-slate-500 mt-2">This module is under development.</p>
+                        </div>
                     </div>
-                </div>
-
-                <div id="hrmPane-documents" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-folder-open"></i> Documents</h2>
+                    <div id="hrm-tab-recruitment" class="hrm-tab-content hidden space-y-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+                            <i class="fas fa-tools text-4xl text-slate-300 mb-4"></i>
+                            <h2 class="text-xl font-bold text-slate-700">Recruitment Module</h2>
+                            <p class="text-slate-500 mt-2">This module is under development.</p>
+                        </div>
                     </div>
-                     <div class="panel">
-                        <p class="text-muted text-center" style="padding: 20px;">Company policies, marketing assets, and HR templates.</p>
-                    </div>
-                </div>
-
-                <div id="hrmPane-settings" class="hrm-pane">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-cog"></i> Settings</h2>
-                    </div>
-                     <div class="panel">
-                        <p class="text-muted text-center" style="padding: 20px;">Dashboard display and notification preferences.</p>
-                    </div>
-                </div>
-
+                </main>
             </div>
         </div>
     </div>
-    </div>
+
     </div>
 
     <!-- ADMIN DASHBOARD -->
@@ -3411,43 +2768,32 @@
         // ============================================================
         // HR & MARKETING DATA
         // ============================================================
+        // --- HRIMS Mock Data (Redesigned) ---
         let employees = [
-            { id: 1, name: 'Spudy Prime', department: 'Admin', contract: 'Full-time', emergency: '077 111 2222' },
-            { id: 2, name: 'Samlic Support', department: 'Support', contract: 'Full-time', emergency: '071 222 3333' },
-            { id: 3, name: 'Topstriker Support', department: 'Support', contract: 'Part-time', emergency: '078 333 4444' },
-            { id: 4, name: 'Jane Doe', department: 'Marketing', contract: 'Contract', emergency: '077 444 5555' },
-            { id: 5, name: 'John Smith', department: 'HR', contract: 'Full-time', emergency: '071 555 6666' }
+            { id: 1, name: 'Alice Smith', email: 'alice.s@homebase.com', role: 'Senior Developer', department: 'Engineering', status: 'Active', joinDate: '2022-03-15', avatar: 'https://ui-avatars.com/api/?name=Alice+Smith&background=10b981&color=fff' },
+            { id: 2, name: 'Bob Johnson', email: 'bob.j@homebase.com', role: 'Marketing Manager', department: 'Marketing', status: 'Active', joinDate: '2021-11-01', avatar: 'https://ui-avatars.com/api/?name=Bob+Johnson&background=f59e0b&color=fff' },
+            { id: 3, name: 'Charlie Davis', email: 'charlie.d@homebase.com', role: 'Sales Executive', department: 'Sales', status: 'On Leave', joinDate: '2023-01-10', avatar: 'https://ui-avatars.com/api/?name=Charlie+Davis&background=3b82f6&color=fff' },
+            { id: 4, name: 'Diana Prince', email: 'diana.p@homebase.com', role: 'HR Specialist', department: 'Human Resources', status: 'Active', joinDate: '2023-05-20', avatar: 'https://ui-avatars.com/api/?name=Diana+Prince&background=8b5cf6&color=fff' },
+            { id: 5, name: 'Evan Wright', email: 'evan.w@homebase.com', role: 'Junior Developer', department: 'Engineering', status: 'Terminated', joinDate: '2023-08-01', avatar: 'https://ui-avatars.com/api/?name=Evan+Wright&background=ef4444&color=fff' }
         ];
 
-        let vacancies = [
-            { id: 1, title: 'Senior Marketer', department: 'Marketing', applicants: 12, status: 'Active' },
-            { id: 2, title: 'Support Agent', department: 'Support', applicants: 45, status: 'Active' },
-            { id: 3, title: 'HR Assistant', department: 'HR', applicants: 8, status: 'Closed' }
+        let leaveRequests = [
+            { id: 101, empId: 3, name: 'Charlie Davis', type: 'Annual Leave', startDate: '2023-11-20', endDate: '2023-11-25', status: 'Approved', days: 5 },
+            { id: 102, empId: 1, name: 'Alice Smith', type: 'Sick Leave', startDate: '2023-10-24', endDate: '2023-10-25', status: 'Pending', days: 2 },
+            { id: 103, empId: 2, name: 'Bob Johnson', type: 'Personal', startDate: '2023-12-01', endDate: '2023-12-01', status: 'Pending', days: 1 }
         ];
 
-        let campaigns = [
-            { id: 1, name: 'Summer Rentals Boost', assignedTo: 'Jane Doe', budget: 500, status: 'Active', performance: 'Good' },
-            { id: 2, name: 'Student Accommodation', assignedTo: 'Tinashe Moyo', budget: 200, status: 'Paused', performance: 'Needs Review' },
-            { id: 3, name: 'Luxury Villa Promo', assignedTo: 'Jane Doe', budget: 1000, status: 'Active', performance: 'Excellent' }
+        let recruitmentCandidates = [
+            { id: 201, role: 'Frontend Engineer', department: 'Engineering', candidates: 12, status: 'Active' },
+            { id: 202, role: 'Sales Director', department: 'Sales', candidates: 5, status: 'Interviewing' },
+            { id: 203, role: 'Content Writer', department: 'Marketing', candidates: 24, status: 'Active' },
+            { id: 204, role: 'Support Agent', department: 'Operations', candidates: 0, status: 'Closed' }
         ];
 
-        let leads = [
-            { id: 1, name: 'Tendai Mutasa', contact: '077 999 8888', source: 'Facebook', status: 'New' },
-            { id: 2, name: 'Sarah Gumbo', contact: 'sarah@email.com', source: 'Referral', status: 'Qualified' },
-            { id: 3, name: 'David Moyo', contact: '071 888 7777', source: 'Instagram', status: 'Converted' },
-            { id: 4, name: 'Lisa Chidu', contact: 'lisa@email.com', source: 'Campaign 1', status: 'Lost' }
-        ];
-
-        let commissions = [
-            { id: 1, marketer: 'Jane Doe', action: 'Lead Converted (Sarah Gumbo)', amount: 50, status: 'Approved' },
-            { id: 2, marketer: 'Tinashe Moyo', action: 'Property Rented (ID: 5)', amount: 120, status: 'Pending' },
-            { id: 3, marketer: 'Jane Doe', action: 'Campaign Bonus', amount: 200, status: 'Paid' }
-        ];
-
-        let attendance = [
-            { id: 1, empId: 1, date: '2026-10-25', clockIn: '08:00', clockOut: '17:00', status: 'Present' },
-            { id: 2, empId: 2, date: '2026-10-25', clockIn: '08:15', clockOut: '17:05', status: 'Late' },
-            { id: 3, empId: 4, date: '2026-10-25', clockIn: '-', clockOut: '-', status: 'Sick Leave' }
+        let onboardingTasks = [
+            { id: 301, name: 'Frank Ocean', role: 'Designer', progress: 85, dueDate: 'Tomorrow' },
+            { id: 302, name: 'Grace Hopper', role: 'DevOps', progress: 40, dueDate: 'In 3 days' },
+            { id: 303, name: 'Henry Ford', role: 'Sales Rep', progress: 10, dueDate: 'Next week' }
         ];
 
         let viewingRequests = [];
@@ -3562,10 +2908,12 @@
                     loadDashboard('view-admin');
                     return;
                 }
-                if (email === 'hr-marketing@homebase.admin.com') {
+                if (email === 'marketing@homebase.admin.com') {
                     currentAdminName = 'HR & Marketing';
-                    document.getElementById('hrmUserChip').innerHTML = `<span class="dot"></span> HR & Marketing`;
-                    document.getElementById('hrmWelcomeName').textContent = 'HR & Marketing Admin';
+                    const hrmUserChip = document.getElementById('hrmUserChip');
+                    if (hrmUserChip) hrmUserChip.innerHTML = `<span class="dot"></span> HR & Marketing`;
+                    const hrmWelcomeName = document.getElementById('hrmWelcomeName');
+                    if (hrmWelcomeName) hrmWelcomeName.textContent = 'HR & Marketing Admin';
                     loadDashboard('view-hr');
                     return;
                 }
@@ -3827,48 +3175,50 @@
             document.querySelector('.hrm-overlay').classList.toggle('active');
         }
 
-        function switchHrmTab(tabId) {
-            // Update active states on nav items
-            document.querySelectorAll('.hrm-nav-item').forEach(el => el.classList.remove('active'));
-            const targetBtn = document.querySelector(`.hrm-nav-item[data-hrm-tab="${tabId}"]`);
-            if (targetBtn) targetBtn.classList.add('active');
+        function switchHrmTab(tabName) {
+            // Update nav items
+            document.querySelectorAll('.hrm-nav-item').forEach(el => {
+                if(el.dataset.hrmTab === tabName) {
+                    el.classList.add('active', 'bg-slate-100', 'text-slate-900');
+                    el.classList.remove('text-slate-600');
+                    const icon = el.querySelector('i');
+                    if(icon && tabName === 'dashboard') icon.classList.add('text-blue-500');
+                } else {
+                    el.classList.remove('active', 'bg-slate-100', 'text-slate-900');
+                    el.classList.add('text-slate-600');
+                    const icon = el.querySelector('i');
+                    if(icon && tabName !== 'dashboard' && el.dataset.hrmTab === 'dashboard') icon.classList.remove('text-blue-500');
+                }
+            });
 
-            // Update pane visibility
-            document.querySelectorAll('.hrm-pane').forEach(el => el.classList.remove('active'));
-            const targetPane = document.getElementById('hrmPane-' + tabId);
-            if (targetPane) targetPane.classList.add('active');
+            // Update content areas
+            document.querySelectorAll('.hrm-tab-content').forEach(el => {
+                if(el.id === 'hrm-tab-' + tabName) {
+                    el.classList.remove('hidden');
+                    el.classList.add('active');
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('active');
+                }
+            });
 
-            // Update header title
-            const titles = {
-                'dashboard': 'Dashboard', 'employees': 'Employee Management', 'recruitment': 'Recruitment',
-                'attendance': 'Leave Management', 'performance': 'Performance', 'training': 'Training',
-                'marketing': 'Campaigns', 'properties': 'Properties to Promote', 'leads': 'Leads',
-                'payroll': 'Payroll', 'reports': 'Reports', 'messages': 'Messages',
-                'documents': 'Documents', 'settings': 'Settings'
-            };
-            document.getElementById('hrmHeaderTitle').textContent = titles[tabId] || 'Dashboard';
+            // Update header title based on tab
+            const headerTitle = document.getElementById('hrmHeaderTitle');
+            const headerSubtitle = document.getElementById('hrmHeaderSubtitle');
+            if (headerTitle) {
+                const titles = {
+                    'dashboard': { title: 'Dashboard', sub: 'Overview of HR operations' },
+                    'employees': { title: 'Employee Directory', sub: 'Manage your team members' },
+                    'onboarding': { title: 'Onboarding', sub: 'New hire checklists and tasks' },
+                    'leave': { title: 'Time Off', sub: 'Manage leave requests and balances' },
+                    'performance': { title: 'Performance', sub: 'Reviews and goals' },
+                    'recruitment': { title: 'Recruitment', sub: 'Active roles and candidates' }
+                };
 
-            // Subtitles mapping
-            const subtitles = {
-                'payroll': 'Manage salaries and processing',
-                'attendance': 'Visualize employee time off',
-                'performance': 'Track KPIs and evaluations',
-                'recruitment': 'Manage hiring pipeline'
-            };
-            const subtitleEl = document.getElementById('hrmHeaderSubtitle');
-            if(subtitleEl) {
-                subtitleEl.textContent = subtitles[tabId] || 'Overview and management';
-            }
-
-            // Init charts if needed
-            if(typeof window.initHRIMSCharts === 'function' && !window.hrimsChartsInitialized) {
-                window.initHRIMSCharts();
-            }
-
-            // On mobile, close sidebar after clicking
-            if (window.innerWidth <= 900) {
-                document.getElementById('hrmSidebar').classList.remove('open');
-                document.querySelector('.hrm-overlay').classList.remove('active');
+                if (titles[tabName]) {
+                    headerTitle.textContent = titles[tabName].title;
+                    headerSubtitle.textContent = titles[tabName].sub;
+                }
             }
         }
 
@@ -4728,134 +4078,183 @@
         function renderHrm() {
             // Dashboard Stats
             document.getElementById('hrmDashStats').innerHTML = `
-                <div class="stat-card"><div class="label">Total Employees</div><div class="value">${employees.length}</div></div>
-                <div class="stat-card"><div class="label">Active Vacancies</div><div class="value blue">${vacancies.filter(v=>v.status==='Active').length}</div></div>
-                <div class="stat-card"><div class="label">Active Campaigns</div><div class="value orange">${campaigns.filter(c=>c.status==='Active').length}</div></div>
-                <div class="stat-card"><div class="label">Pending Commissions</div><div class="value red">${commissions.filter(c=>c.status==='Pending').length}</div></div>
-            `;
-
-            // Dashboard Tasks
-            document.getElementById('hrmPendingTasksList').innerHTML = `
-                <div class="lprop-item">
-                    <div class="info"><strong>Review Sarah Gumbo's Application</strong><div class="sub">Support Agent Vacancy</div></div>
-                    <div class="actions"><button class="btn btn-primary btn-sm">Review</button></div>
-                </div>
-                <div class="lprop-item">
-                    <div class="info"><strong>Approve Tinashe's Commission</strong><div class="sub">$120 for Property ID 5</div></div>
-                    <div class="actions"><button class="btn btn-success btn-sm">Approve</button></div>
-                </div>
-            `;
-
-            // Employees
-            document.getElementById('hrmEmployeesTable').innerHTML = employees.map(e => `
-                <tr>
-                    <td>EMP-${String(e.id).padStart(3, '0')}</td>
-                    <td><strong>${e.name}</strong></td>
-                    <td><span class="badge badge-info">${e.department}</span></td>
-                    <td>${e.contract}</td>
-                    <td>${e.emergency}</td>
-                    <td>
-                        <button class="btn btn-outline btn-sm" onclick="openEmployeeModal(${e.id})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="terminateEmployee(${e.id})"><i class="fas fa-user-times"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-
-            // Recruitment
-            document.getElementById('hrmVacanciesTable').innerHTML = vacancies.map(v => `
-                <tr>
-                    <td><strong>${v.title}</strong></td>
-                    <td>${v.department}</td>
-                    <td>${v.applicants}</td>
-                    <td><span class="badge ${v.status==='Active'?'badge-success':'badge-danger'}">${v.status}</span></td>
-                    <td>
-                        <button class="btn btn-outline btn-sm" onclick="openVacancyModal(${v.id})">Edit</button>
-                    </td>
-                </tr>
-            `).join('');
-
-            // Attendance
-            document.getElementById('hrmAttendanceTable').innerHTML = attendance.map(a => {
-                const emp = employees.find(e => e.id === a.empId);
-                return `
-                <tr>
-                    <td><strong>${emp ? emp.name : 'Unknown'}</strong></td>
-                    <td>${a.date}</td>
-                    <td>${a.clockIn}</td>
-                    <td>${a.clockOut}</td>
-                    <td><span class="badge ${a.status==='Present'?'badge-success':a.status==='Late'?'badge-warning':'badge-danger'}">${a.status}</span></td>
-                    <td>
-                        <button class="btn btn-outline btn-sm" onclick="alert('Edit record')"><i class="fas fa-edit"></i></button>
-                    </td>
-                </tr>
-            `}).join('');
-
-            // Marketing Campaigns
-            document.getElementById('hrmCampaignsTable').innerHTML = campaigns.map(c => `
-                <tr>
-                    <td><strong>${c.name}</strong></td>
-                    <td>${c.assignedTo}</td>
-                    <td>$${c.budget}</td>
-                    <td><span class="badge ${c.status==='Active'?'badge-success':'badge-warning'}">${c.status}</span></td>
-                    <td>${c.performance}</td>
-                    <td><button class="btn btn-outline btn-sm" onclick="openCampaignModal(${c.id})"><i class="fas fa-edit"></i></button></td>
-                </tr>
-            `).join('');
-
-            // Properties to Promote (Mocking taking first 4 properties)
-            document.getElementById('hrmPromotePropsGrid').innerHTML = properties.slice(0, 4).map(p => `
-                <div class="property-card">
-                    <div class="img-wrap"><img src="${p.images[0]}" alt="${p.title}" /></div>
-                    <div class="body">
-                        <div class="price">$${p.price}</div>
-                        <div class="title">${p.title}</div>
-                        <div class="meta"><span><i class="fas fa-map-pin"></i> ${p.location}</span></div>
-                        <div style="display:flex; gap: 8px; margin-top: 10px;">
-                            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="alert('Link Copied: https://homebase.co.zw/p/${p.id}')"><i class="fas fa-link"></i> Copy Link</button>
-                            <button class="btn btn-outline btn-sm" onclick="alert('QR Code generated')"><i class="fas fa-qrcode"></i></button>
-                        </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">Total Employees</p>
+                        <h3 class="text-3xl font-bold text-slate-800">${employees.filter(e => e.status === 'Active' || e.status === 'On Leave').length}</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                        <i class="fas fa-users text-xl"></i>
                     </div>
                 </div>
-            `).join('');
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">On Leave</p>
+                        <h3 class="text-3xl font-bold text-slate-800">${employees.filter(e => e.status === 'On Leave').length}</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                        <i class="fas fa-calendar-minus text-xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">Open Roles</p>
+                        <h3 class="text-3xl font-bold text-slate-800">${recruitmentCandidates.filter(c => c.status === 'Active').length}</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                        <i class="fas fa-briefcase text-xl"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500 mb-1">Pending Leave</p>
+                        <h3 class="text-3xl font-bold text-slate-800">${leaveRequests.filter(l => l.status === 'Pending').length}</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                        <i class="fas fa-clock text-xl"></i>
+                    </div>
+                </div>
+            `;
 
-            // Leads
-            document.getElementById('hrmLeadsTable').innerHTML = leads.map(l => `
-                <tr>
-                    <td><strong>${l.name}</strong></td>
-                    <td>${l.contact}</td>
-                    <td>${l.source}</td>
-                    <td><span class="badge ${l.status==='Converted'?'badge-success':l.status==='Lost'?'badge-danger':'badge-info'}">${l.status}</span></td>
-                    <td>
-                        <select class="btn btn-outline btn-sm" style="padding: 4px; font-size: 0.8rem; background: transparent;" onchange="updateLeadStatus(${l.id}, this.value)">
-                            <option value="New" ${l.status==='New'?'selected':''}>New</option>
-                            <option value="Qualified" ${l.status==='Qualified'?'selected':''}>Qualified</option>
-                            <option value="Converted" ${l.status==='Converted'?'selected':''}>Converted</option>
-                            <option value="Lost" ${l.status==='Lost'?'selected':''}>Lost</option>
-                        </select>
-                    </td>
-                </tr>
-            `).join('');
+            // Dashboard Pending Leave
+            const pendingLeaveList = document.getElementById('hrmPendingLeaveList');
+            if (pendingLeaveList) {
+                pendingLeaveList.innerHTML = leaveRequests.filter(l => l.status === 'Pending').map(l => `
+                    <li class="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold">
+                                ${l.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800">${l.name}</h4>
+                                <p class="text-xs text-slate-500">${l.type} &bull; ${l.days} days (${l.startDate} to ${l.endDate})</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 bg-green-50 text-green-700 hover:bg-green-100 rounded-md text-xs font-bold transition">Approve</button>
+                            <button class="px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-md text-xs font-bold transition">Deny</button>
+                        </div>
+                    </li>
+                `).join('') || '<li class="px-6 py-8 text-center text-slate-500 text-sm">No pending leave requests.</li>';
+            }
 
-            // Commissions
-            let pen = 0, app = 0, paid = 0;
-            document.getElementById('hrmCommissionsTable').innerHTML = commissions.map(c => {
-                if(c.status==='Pending') pen+=c.amount;
-                else if(c.status==='Approved') app+=c.amount;
-                else paid+=c.amount;
-                return `
-                <tr>
-                    <td><strong>${c.marketer}</strong></td>
-                    <td>${c.action}</td>
-                    <td>$${c.amount}</td>
-                    <td><span class="badge ${c.status==='Paid'?'badge-success':c.status==='Approved'?'badge-info':'badge-warning'}">${c.status}</span></td>
-                    <td>
-                        ${c.status==='Pending' ? `<button class="btn btn-success btn-sm" onclick="alert('Approved!')">Approve</button>` : `<button class="btn btn-outline btn-sm" disabled>Processed</button>`}
-                    </td>
-                </tr>
-            `}).join('');
-            document.getElementById('hrmCommPending').textContent = '$'+pen;
-            document.getElementById('hrmCommApproved').textContent = '$'+app;
-            document.getElementById('hrmCommPaid').textContent = '$'+paid;
+            // Dashboard Active Recruitment
+            const activeRecruitmentTable = document.getElementById('hrmActiveRecruitmentTable');
+            if (activeRecruitmentTable) {
+                activeRecruitmentTable.innerHTML = recruitmentCandidates.filter(c => c.status !== 'Closed').map(c => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-3">
+                            <div class="font-bold text-slate-800">${c.role}</div>
+                        </td>
+                        <td class="px-6 py-3 text-slate-600">${c.department}</td>
+                        <td class="px-6 py-3">
+                            <div class="flex items-center">
+                                <span class="text-slate-800 font-medium mr-2">${c.candidates}</span>
+                                <div class="flex -space-x-2">
+                                    ${Array.from({length: Math.min(3, c.candidates)}).map((_, i) => `<div class="w-6 h-6 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] text-blue-600 font-bold">${i+1}</div>`).join('')}
+                                    ${c.candidates > 3 ? `<div class="w-6 h-6 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] text-slate-600 font-bold">+${c.candidates - 3}</div>` : ''}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-3">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${c.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                                ${c.status}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Onboarding Mini List
+            const onboardingMiniList = document.getElementById('hrmOnboardingMiniList');
+            if (onboardingMiniList) {
+                onboardingMiniList.innerHTML = onboardingTasks.map(t => `
+                    <div class="mb-4 last:mb-0">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-bold text-slate-700">${t.name}</span>
+                            <span class="text-xs font-medium text-slate-500">${t.dueDate}</span>
+                        </div>
+                        <div class="text-xs text-slate-500 mb-2">${t.role}</div>
+                        <div class="w-full bg-slate-100 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: ${t.progress}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Employees Table
+            const employeesTableBody = document.getElementById('hrmEmployeesTableBody');
+            if (employeesTableBody) {
+                employeesTableBody.innerHTML = employees.map(e => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="${e.avatar}" alt="${e.name}" class="h-10 w-10 rounded-full mr-4 shadow-sm">
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800">${e.name}</div>
+                                    <div class="text-xs text-slate-500">${e.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-medium text-slate-800">${e.role}</div>
+                            <div class="text-xs text-slate-500">${e.department}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                e.status === 'Active' ? 'bg-green-100 text-green-800' :
+                                e.status === 'On Leave' ? 'bg-orange-100 text-orange-800' :
+                                'bg-red-100 text-red-800'
+                            }">
+                                ${e.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-slate-600 whitespace-nowrap">
+                            ${e.joinDate}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="text-blue-600 hover:text-blue-900 mx-1 p-1" title="Edit Profile"><i class="fas fa-edit"></i></button>
+                            <button class="text-red-600 hover:text-red-900 mx-1 p-1" title="Terminate"><i class="fas fa-user-times"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Leave Table
+            const leaveTableBody = document.getElementById('hrmLeaveTableBody');
+            if (leaveTableBody) {
+                leaveTableBody.innerHTML = leaveRequests.map(l => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-bold text-slate-800">${l.name}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded border border-slate-200 text-xs font-medium bg-slate-50 text-slate-700">
+                                ${l.type}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm font-medium text-slate-800">${l.days} days</div>
+                            <div class="text-xs text-slate-500">${l.startDate} to ${l.endDate}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                l.status === 'Approved' ? 'bg-green-100 text-green-800' :
+                                l.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-red-100 text-red-800'
+                            }">
+                                ${l.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            ${l.status === 'Pending' ? `
+                                <button class="text-green-600 hover:text-green-900 font-medium text-sm mr-3">Approve</button>
+                                <button class="text-red-600 hover:text-red-900 font-medium text-sm">Deny</button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+            }
         }
 
 function renderAdmin() {
