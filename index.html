@@ -3025,221 +3025,7 @@
 
 
     </div>
-<div id="modals-container" class="hidden-view">
-<!-- MODAL: Employee Form -->
-    <div id="employeeModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeEmployeeModal()">&times;</button>
-            <h2 id="employeeModalTitle"><i class="fas fa-user-edit"></i> Edit Employee</h2>
-            <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
-                <input type="hidden" id="empId" />
-                <div class="field"><label>Name *</label><input type="text" id="empName" required /></div>
-                <div class="field"><label>Department *</label><input type="text" id="empDept" required /></div>
-                <div class="field"><label>Contract *</label><input type="text" id="empContract" required /></div>
-                <div class="field"><label>Emergency Contact *</label><input type="text" id="empEmergency" required /></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeEmployeeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-<!-- MODAL: Vacancy Form -->
-    <div id="vacancyModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeVacancyModal()">&times;</button>
-            <h2 id="vacancyModalTitle"><i class="fas fa-file-alt"></i> Edit Vacancy</h2>
-            <form id="vacancyForm" onsubmit="handleVacancySubmit(event)">
-                <input type="hidden" id="vacId" />
-                <div class="field"><label>Title *</label><input type="text" id="vacTitle" required /></div>
-                <div class="field"><label>Department *</label><input type="text" id="vacDept" required /></div>
-                <div class="field"><label>Status *</label><select id="vacStatus"><option value="Active">Active</option><option value="Closed">Closed</option></select></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeVacancyModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Campaign Form -->
-    <div id="campaignModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeCampaignModal()">&times;</button>
-            <h2 id="campaignModalTitle"><i class="fas fa-bullhorn"></i> Edit Campaign</h2>
-            <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
-                <input type="hidden" id="campId" />
-                <div class="field"><label>Campaign Name *</label><input type="text" id="campName" required /></div>
-                <div class="field"><label>Assigned To *</label><input type="text" id="campAssigned" required /></div>
-                <div class="field"><label>Budget ($) *</label><input type="number" id="campBudget" required /></div>
-                <div class="field"><label>Status *</label><select id="campStatus"><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option></select></div>
-                <div class="field"><label>Performance *</label><input type="text" id="campPerformance" required /></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeCampaignModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Reset Password -->
-    <div id="resetPasswordModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeResetPasswordModal()">&times;</button>
-            <h2><i class="fas fa-key"></i> Reset Password</h2>
-            <p style="color:var(--text-muted); margin-bottom: 15px;">Reset password for <strong id="resetPwdTargetName">User</strong>.</p>
-            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
-                <input type="hidden" id="resetPwdTargetId" />
-                <div class="field">
-                    <label>New Password</label>
-                    <input type="text" id="resetPwdInput" placeholder="Enter new password" required />
-                </div>
-                <div class="form-actions" style="justify-content: space-between; align-items: center; margin-top: 15px;">
-                    <button type="button" class="btn btn-outline btn-sm" onclick="setSpudy14Pwd()">Default (spudy14)</button>
-                    <div>
-                        <button type="button" class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Add Property -->
-    <div id="addPropertyModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close" onclick="closeAddProperty()">&times;</button>
-            <h2><i class="fas fa-home"></i> List New Property</h2>
-            <form id="addPropertyForm" onsubmit="handleAddProperty(event)">
-                <div class="field"><label>Property Title *</label><input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required /></div>
-                <div class="field"><label>City *</label><input type="text" id="propLocation" placeholder="e.g. Harare" required /></div>
-                <div class="field"><label>Full Address *</label><input type="text" id="propAddress" placeholder="e.g. 42 Samora Machel Ave, Eastlea" required /></div>
-                <div class="field"><label>Meeting Point</label><input type="text" id="propMeetingPoint" placeholder="e.g. Main Gate, Security Office, GPS Pin (Optional)" /></div>
-                <div class="field"><label>Monthly Rent (USD) *</label><input type="number" id="propPrice" placeholder="e.g. 450" required min="1" /></div>
-                <div class="field"><label>Bedrooms *</label><input type="number" id="propRooms" placeholder="e.g. 2" required min="1" /></div>
-                <div class="field"><label>Density *</label><select id="propDensity" required><option value="">-- Select --</option><option value="high">High Density</option><option value="middle">Middle Density</option><option value="low">Low Density</option></select></div>
-                <div class="field"><label>Property Type *</label><select id="propType" required><option value="">-- Select --</option><option value="house">House</option><option value="apartment">Apartment</option><option value="cottage">Cottage</option><option value="townhouse">Townhouse</option><option value="room">Single Room</option><option value="estate">Estate Home</option></select></div>
-                <div class="field"><label>Furnished?</label><select id="propFurnished"><option value="no">No</option><option value="yes">Yes</option><option value="semi">Semi-furnished</option></select></div>
-                <div class="field"><label>Parking</label><input type="text" id="propParking" placeholder="e.g. 2 covered bays" /></div>
-                <div class="field"><label>Security Features</label><input type="text" id="propSecurity" placeholder="e.g. 24/7 guard, electric fence" /></div>
-                <div class="field"><label>Utilities Included</label><input type="text" id="propUtilities" placeholder="e.g. Water, WiFi" /></div>
-                <div class="field"><label>Status</label><select id="propStatus"><option value="vacant">Vacant</option><option value="occupied">Occupied</option></select></div>
-                <div class="field"><label>Description</label><textarea id="propDesc" placeholder="Full amenities, features, nearby landmarks, etc." rows="3"></textarea></div>
-                <div class="field">
-                    <label>Property Images *</label>
-                    <input type="file" id="propImages" multiple accept="image/*" required />
-                    <small style="color:var(--text-muted);font-size:0.75rem;">You must upload exactly 2 images per room.</small>
-                </div>
-                <div class="form-actions"><button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button><button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button></div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Request Viewing Form -->
-    <div id="viewingRequestModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close" onclick="closeViewingRequestModal()">&times;</button>
-            <h2><i class="fas fa-calendar-alt"></i> Request House Viewing</h2>
-            <p style="color:var(--text-muted); margin-bottom:12px;">Fill in your preferred viewing details.</p>
-            <form id="viewingRequestForm" onsubmit="handleViewingRequestSubmit(event)">
-                <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
-                    <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="viewingPropertyName">—</span></div>
-                </div>
-                <div class="field-group">
-                    <div class="field"><label>Preferred Date *</label><input type="date" id="viewDate" required /></div>
-                    <div class="field"><label>Preferred Time *</label><input type="time" id="viewTime" required /></div>
-                </div>
-                <div class="field"><label>Number of Attendees (Optional)</label><input type="number" id="viewAttendees" min="1" placeholder="e.g. 2" /></div>
-                <div class="field"><label>Note for Landlord</label><textarea id="viewNote" placeholder="e.g. I will arrive right after work." rows="2"></textarea></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeViewingRequestModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Continue to Payment <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Viewing Payment -->
-    <div id="paymentModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close" onclick="closePaymentModal()">&times;</button>
-            <h2><i class="fas fa-credit-card"></i> Viewing Fee Payment</h2>
-            <p style="color:var(--text-muted); margin-bottom:12px;">Pay <strong>$2.00</strong> or use <strong>10 Points</strong> to secure your viewing request.</p>
-            <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
-                <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="paymentPropertyName">—</span></div>
-                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;"><span>Cost:</span><span style="color:var(--primary);">$2.00 <span style="font-size:0.8rem;">or</span> 10 Points</span></div>
-                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:2px;"><span>Your Points:</span><span style="color:var(--points-gold);" id="paymentYourPoints">0</span></div>
-            </div>
-            <div id="paymentPointsSection" style="margin-bottom:12px;">
-                <button class="btn btn-points btn-block btn-sm" id="usePointsBtn" onclick="processViewingPayment('points')" disabled>
-                    <i class="fas fa-star"></i> Use 10 Points to Pay (FREE)
-                </button>
-                <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">You need 10 points. Current balance: <span id="pointsBalanceLabel">0</span></p>
-            </div>
-            <div style="text-align:center;color:var(--text-muted);margin:8px 0;font-weight:600;">— OR pay $2 —</div>
-            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:10px;">Please send payments to PayPal: <strong>spudytv14@gmail.com</strong> or EcoCash: <strong>0776998296</strong></p>
-            <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:8px;">Select Payment Method</label>
-            <div class="payment-selector" id="paymentMethodSelector">
-                <div class="pm-option eco active" data-method="ecocash" onclick="selectPayment('ecocash')"><i class="fas fa-mobile-alt"></i>EcoCash</div>
-                <div class="pm-option one" data-method="onemoney" onclick="selectPayment('onemoney')"><i class="fas fa-mobile-alt"></i>OneMoney</div>
-                <div class="pm-option smile" data-method="smilecash" onclick="selectPayment('smilecash')"><i class="fas fa-mobile-alt"></i>SmileCash</div>
-                <div class="pm-option paypal" data-method="paypal" onclick="selectPayment('paypal')"><i class="fab fa-paypal"></i>PayPal</div>
-                <div class="pm-option inbucks" data-method="inbucks" onclick="selectPayment('inbucks')"><i class="fas fa-coins"></i>InBucks</div>
-            </div>
-            <div id="paymentEcoCashFields" style="margin-top:14px;"><div class="field"><label>EcoCash Number</label><input type="tel" id="ecoPhone" placeholder="e.g. 077 123 4567" /></div></div>
-            <div id="paymentOneMoneyFields" style="display:none; margin-top:14px;"><div class="field"><label>OneMoney Number</label><input type="tel" id="onePhone" placeholder="e.g. 071 123 4567" /></div></div>
-            <div id="paymentSmileCashFields" style="display:none; margin-top:14px;"><div class="field"><label>SmileCash Number</label><input type="tel" id="smilePhone" placeholder="e.g. 078 123 4567" /></div></div>
-            <div id="paymentPaypalFields" style="display:none; margin-top:14px;"><div class="field"><label>PayPal Email</label><input type="email" id="paypalEmail" placeholder="you@example.com" /></div></div>
-            <div id="paymentInbucksFields" style="display:none; margin-top:14px;"><div class="field"><label>InBucks Account</label><input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" /></div></div>
-            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processViewingPayment('cash')"><i class="fas fa-check-circle"></i> Pay $2.00 &amp; Submit Request</button>
-            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-shield-alt"></i> Secure payment. Your viewing request will be sent to the landlord.</p>
-        </div>
-    </div>
-
-<!-- MODAL: Suggest Reschedule -->
-    <div id="rescheduleModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 400px;">
-            <button class="close" onclick="closeRescheduleModal()">&times;</button>
-            <h2><i class="fas fa-calendar-plus"></i> Suggest Reschedule</h2>
-            <form id="rescheduleForm" onsubmit="handleRescheduleSubmit(event)">
-                <input type="hidden" id="rescheduleRequestId" />
-                <div class="field"><label>New Date *</label><input type="date" id="rescheduleDate" required /></div>
-                <div class="field"><label>New Time *</label><input type="time" id="rescheduleTime" required /></div>
-                <div class="form-actions" style="margin-top: 15px;">
-                    <button type="button" class="btn btn-outline" onclick="closeRescheduleModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Send Proposal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<!-- MODAL: Notifications -->
-    <div id="notificationsModal" class="modal-overlay">
-        <div class="modal-box" style="max-width: 450px;">
-            <button class="close" onclick="closeNotificationsModal()">&times;</button>
-            <h2><i class="fas fa-bell"></i> Notifications</h2>
-            <div id="notificationsList" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px; max-height: 400px; overflow-y:auto;">
-                <!-- Populated via JS -->
-            </div>
-            <button class="btn btn-ghost btn-block btn-sm" style="margin-top: 10px;" onclick="markAllNotifsRead()"><i class="fas fa-check-double"></i> Mark all as read</button>
-        </div>
-    </div>
-
-<!-- MODAL: Landlord Chat List -->
-    <div id="chatListModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="close" onclick="closeChatListModal()">&times;</button>
-            <h2><i class="fas fa-comments"></i> My Messages</h2>
-            <div id="chatListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px;">
-                <!-- Chat list items will go here -->
-            </div>
-        </div>
-    </div>
-
-
-
-    </div>
 
     <!-- PEER CHAT WINDOW -->
     <div class="ai-chat-window" id="peerChatWindow" style="right: 400px;">
@@ -5464,5 +5250,220 @@ updateTenantPointsDisplay();
     }
 
 </script>
+<div id="modals-container" class="hidden-view">
+<!-- MODAL: Employee Form -->
+    <div id="employeeModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeEmployeeModal()">&times;</button>
+            <h2 id="employeeModalTitle"><i class="fas fa-user-edit"></i> Edit Employee</h2>
+            <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                <input type="hidden" id="empId" />
+                <div class="field"><label>Name *</label><input type="text" id="empName" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="empDept" required /></div>
+                <div class="field"><label>Contract *</label><input type="text" id="empContract" required /></div>
+                <div class="field"><label>Emergency Contact *</label><input type="text" id="empEmergency" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeEmployeeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Vacancy Form -->
+    <div id="vacancyModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeVacancyModal()">&times;</button>
+            <h2 id="vacancyModalTitle"><i class="fas fa-file-alt"></i> Edit Vacancy</h2>
+            <form id="vacancyForm" onsubmit="handleVacancySubmit(event)">
+                <input type="hidden" id="vacId" />
+                <div class="field"><label>Title *</label><input type="text" id="vacTitle" required /></div>
+                <div class="field"><label>Department *</label><input type="text" id="vacDept" required /></div>
+                <div class="field"><label>Status *</label><select id="vacStatus"><option value="Active">Active</option><option value="Closed">Closed</option></select></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeVacancyModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Campaign Form -->
+    <div id="campaignModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeCampaignModal()">&times;</button>
+            <h2 id="campaignModalTitle"><i class="fas fa-bullhorn"></i> Edit Campaign</h2>
+            <form id="campaignForm" onsubmit="handleCampaignSubmit(event)">
+                <input type="hidden" id="campId" />
+                <div class="field"><label>Campaign Name *</label><input type="text" id="campName" required /></div>
+                <div class="field"><label>Assigned To *</label><input type="text" id="campAssigned" required /></div>
+                <div class="field"><label>Budget ($) *</label><input type="number" id="campBudget" required /></div>
+                <div class="field"><label>Status *</label><select id="campStatus"><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option></select></div>
+                <div class="field"><label>Performance *</label><input type="text" id="campPerformance" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeCampaignModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Reset Password -->
+    <div id="resetPasswordModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeResetPasswordModal()">&times;</button>
+            <h2><i class="fas fa-key"></i> Reset Password</h2>
+            <p style="color:var(--text-muted); margin-bottom: 15px;">Reset password for <strong id="resetPwdTargetName">User</strong>.</p>
+            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
+                <input type="hidden" id="resetPwdTargetId" />
+                <div class="field">
+                    <label>New Password</label>
+                    <input type="text" id="resetPwdInput" placeholder="Enter new password" required />
+                </div>
+                <div class="form-actions" style="justify-content: space-between; align-items: center; margin-top: 15px;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="setSpudy14Pwd()">Default (spudy14)</button>
+                    <div>
+                        <button type="button" class="btn btn-ghost" onclick="closeResetPasswordModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Add Property -->
+    <div id="addPropertyModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeAddProperty()">&times;</button>
+            <h2><i class="fas fa-home"></i> List New Property</h2>
+            <form id="addPropertyForm" onsubmit="handleAddProperty(event)">
+                <div class="field"><label>Property Title *</label><input type="text" id="propTitle" placeholder="e.g. Cozy 2-bed flat in Borrowdale" required /></div>
+                <div class="field"><label>City *</label><input type="text" id="propLocation" placeholder="e.g. Harare" required /></div>
+                <div class="field"><label>Full Address *</label><input type="text" id="propAddress" placeholder="e.g. 42 Samora Machel Ave, Eastlea" required /></div>
+                <div class="field"><label>Meeting Point</label><input type="text" id="propMeetingPoint" placeholder="e.g. Main Gate, Security Office, GPS Pin (Optional)" /></div>
+                <div class="field"><label>Monthly Rent (USD) *</label><input type="number" id="propPrice" placeholder="e.g. 450" required min="1" /></div>
+                <div class="field"><label>Bedrooms *</label><input type="number" id="propRooms" placeholder="e.g. 2" required min="1" /></div>
+                <div class="field"><label>Density *</label><select id="propDensity" required><option value="">-- Select --</option><option value="high">High Density</option><option value="middle">Middle Density</option><option value="low">Low Density</option></select></div>
+                <div class="field"><label>Property Type *</label><select id="propType" required><option value="">-- Select --</option><option value="house">House</option><option value="apartment">Apartment</option><option value="cottage">Cottage</option><option value="townhouse">Townhouse</option><option value="room">Single Room</option><option value="estate">Estate Home</option></select></div>
+                <div class="field"><label>Furnished?</label><select id="propFurnished"><option value="no">No</option><option value="yes">Yes</option><option value="semi">Semi-furnished</option></select></div>
+                <div class="field"><label>Parking</label><input type="text" id="propParking" placeholder="e.g. 2 covered bays" /></div>
+                <div class="field"><label>Security Features</label><input type="text" id="propSecurity" placeholder="e.g. 24/7 guard, electric fence" /></div>
+                <div class="field"><label>Utilities Included</label><input type="text" id="propUtilities" placeholder="e.g. Water, WiFi" /></div>
+                <div class="field"><label>Status</label><select id="propStatus"><option value="vacant">Vacant</option><option value="occupied">Occupied</option></select></div>
+                <div class="field"><label>Description</label><textarea id="propDesc" placeholder="Full amenities, features, nearby landmarks, etc." rows="3"></textarea></div>
+                <div class="field">
+                    <label>Property Images *</label>
+                    <input type="file" id="propImages" multiple accept="image/*" required />
+                    <small style="color:var(--text-muted);font-size:0.75rem;">You must upload exactly 2 images per room.</small>
+                </div>
+                <div class="form-actions"><button type="button" class="btn btn-outline" onclick="closeAddProperty()">Cancel</button><button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Property</button></div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Request Viewing Form -->
+    <div id="viewingRequestModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeViewingRequestModal()">&times;</button>
+            <h2><i class="fas fa-calendar-alt"></i> Request House Viewing</h2>
+            <p style="color:var(--text-muted); margin-bottom:12px;">Fill in your preferred viewing details.</p>
+            <form id="viewingRequestForm" onsubmit="handleViewingRequestSubmit(event)">
+                <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="viewingPropertyName">—</span></div>
+                </div>
+                <div class="field-group">
+                    <div class="field"><label>Preferred Date *</label><input type="date" id="viewDate" required /></div>
+                    <div class="field"><label>Preferred Time *</label><input type="time" id="viewTime" required /></div>
+                </div>
+                <div class="field"><label>Number of Attendees (Optional)</label><input type="number" id="viewAttendees" min="1" placeholder="e.g. 2" /></div>
+                <div class="field"><label>Note for Landlord</label><textarea id="viewNote" placeholder="e.g. I will arrive right after work." rows="2"></textarea></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeViewingRequestModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Continue to Payment <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Viewing Payment -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closePaymentModal()">&times;</button>
+            <h2><i class="fas fa-credit-card"></i> Viewing Fee Payment</h2>
+            <p style="color:var(--text-muted); margin-bottom:12px;">Pay <strong>$2.00</strong> or use <strong>10 Points</strong> to secure your viewing request.</p>
+            <div style="background:var(--bg); padding:14px; border-radius:var(--radius-sm); margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; font-weight:500;"><span>Property:</span><span id="paymentPropertyName">—</span></div>
+                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:4px;"><span>Cost:</span><span style="color:var(--primary);">$2.00 <span style="font-size:0.8rem;">or</span> 10 Points</span></div>
+                <div style="display:flex; justify-content:space-between; font-weight:500; margin-top:2px;"><span>Your Points:</span><span style="color:var(--points-gold);" id="paymentYourPoints">0</span></div>
+            </div>
+            <div id="paymentPointsSection" style="margin-bottom:12px;">
+                <button class="btn btn-points btn-block btn-sm" id="usePointsBtn" onclick="processViewingPayment('points')" disabled>
+                    <i class="fas fa-star"></i> Use 10 Points to Pay (FREE)
+                </button>
+                <p style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:4px;">You need 10 points. Current balance: <span id="pointsBalanceLabel">0</span></p>
+            </div>
+            <div style="text-align:center;color:var(--text-muted);margin:8px 0;font-weight:600;">— OR pay $2 —</div>
+            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:10px;">Please send payments to PayPal: <strong>spudytv14@gmail.com</strong> or EcoCash: <strong>0776998296</strong></p>
+            <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:8px;">Select Payment Method</label>
+            <div class="payment-selector" id="paymentMethodSelector">
+                <div class="pm-option eco active" data-method="ecocash" onclick="selectPayment('ecocash')"><i class="fas fa-mobile-alt"></i>EcoCash</div>
+                <div class="pm-option one" data-method="onemoney" onclick="selectPayment('onemoney')"><i class="fas fa-mobile-alt"></i>OneMoney</div>
+                <div class="pm-option smile" data-method="smilecash" onclick="selectPayment('smilecash')"><i class="fas fa-mobile-alt"></i>SmileCash</div>
+                <div class="pm-option paypal" data-method="paypal" onclick="selectPayment('paypal')"><i class="fab fa-paypal"></i>PayPal</div>
+                <div class="pm-option inbucks" data-method="inbucks" onclick="selectPayment('inbucks')"><i class="fas fa-coins"></i>InBucks</div>
+            </div>
+            <div id="paymentEcoCashFields" style="margin-top:14px;"><div class="field"><label>EcoCash Number</label><input type="tel" id="ecoPhone" placeholder="e.g. 077 123 4567" /></div></div>
+            <div id="paymentOneMoneyFields" style="display:none; margin-top:14px;"><div class="field"><label>OneMoney Number</label><input type="tel" id="onePhone" placeholder="e.g. 071 123 4567" /></div></div>
+            <div id="paymentSmileCashFields" style="display:none; margin-top:14px;"><div class="field"><label>SmileCash Number</label><input type="tel" id="smilePhone" placeholder="e.g. 078 123 4567" /></div></div>
+            <div id="paymentPaypalFields" style="display:none; margin-top:14px;"><div class="field"><label>PayPal Email</label><input type="email" id="paypalEmail" placeholder="you@example.com" /></div></div>
+            <div id="paymentInbucksFields" style="display:none; margin-top:14px;"><div class="field"><label>InBucks Account</label><input type="text" id="inbucksAccount" placeholder="e.g. IB-1234-5678" /></div></div>
+            <button class="btn btn-primary btn-block" style="margin-top:18px;" onclick="processViewingPayment('cash')"><i class="fas fa-check-circle"></i> Pay $2.00 &amp; Submit Request</button>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-shield-alt"></i> Secure payment. Your viewing request will be sent to the landlord.</p>
+        </div>
+    </div>
+
+<!-- MODAL: Suggest Reschedule -->
+    <div id="rescheduleModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <button class="close" onclick="closeRescheduleModal()">&times;</button>
+            <h2><i class="fas fa-calendar-plus"></i> Suggest Reschedule</h2>
+            <form id="rescheduleForm" onsubmit="handleRescheduleSubmit(event)">
+                <input type="hidden" id="rescheduleRequestId" />
+                <div class="field"><label>New Date *</label><input type="date" id="rescheduleDate" required /></div>
+                <div class="field"><label>New Time *</label><input type="time" id="rescheduleTime" required /></div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" onclick="closeRescheduleModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Proposal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- MODAL: Notifications -->
+    <div id="notificationsModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <button class="close" onclick="closeNotificationsModal()">&times;</button>
+            <h2><i class="fas fa-bell"></i> Notifications</h2>
+            <div id="notificationsList" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px; max-height: 400px; overflow-y:auto;">
+                <!-- Populated via JS -->
+            </div>
+            <button class="btn btn-ghost btn-block btn-sm" style="margin-top: 10px;" onclick="markAllNotifsRead()"><i class="fas fa-check-double"></i> Mark all as read</button>
+        </div>
+    </div>
+
+<!-- MODAL: Landlord Chat List -->
+    <div id="chatListModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close" onclick="closeChatListModal()">&times;</button>
+            <h2><i class="fas fa-comments"></i> My Messages</h2>
+            <div id="chatListContainer" style="display:flex; flex-direction:column; gap:10px; margin-top: 15px;">
+                <!-- Chat list items will go here -->
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
 </body>
 </html>
