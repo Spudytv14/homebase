@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HomeBase — Premium Rental Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
@@ -1838,6 +1839,8 @@
                                     <option value="">-- Select Role --</option>
                                     <option value="tenant">Tenant</option>
                                     <option value="landlord">Landlord</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="hr">HR</option>
                                 </select>
                             </div>
                         </div>
@@ -2629,6 +2632,10 @@
 
 
     <script>
+        const supabaseUrl = 'https://jjfggfmxbsxctblueroj.supabase.co';
+        const supabaseKey = 'sb_publishable_YWPnqUyR5BI0z98sklhktQ_MgHo7QQG';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
         // ============================================================
         // DATA STORE
         // ============================================================
@@ -2865,126 +2872,70 @@
             }
         }
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const password = document.getElementById('login-password').value;
 
-            // Admin bypasses
-            if (password === 'spudy14') {
-                if (email.startsWith('admin@hrims')) {
-                    loadDashboard('view-hr');
-                    return;
-                } else if (email.startsWith('admin@homebase')) {
-                    loadDashboard('view-admin');
-                    return;
-                } else if (email.startsWith('tenant@homebase')) {
-                    loadDashboard('view-tenant');
-                    return;
-                } else if (email.startsWith('landlord@homebase')) {
-                    loadDashboard('view-landlord');
-                    return;
-                }
-            }
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
 
-            if (password === 'spudy14') {
-                if (email === 'tenant@homebase.admin.com') {
-                    CURRENT_USER_ID = 1;
-                    CURRENT_TENANT_ID = 1;
-                    document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · Tinashe M.`;
-                    loadDashboard('view-tenant');
-                    return;
-                }
-                if (email === 'landlord@homebase.admin.com') {
-                    CURRENT_USER_ID = 3;
-                    CURRENT_LANDLORD_ID = 3;
-                    document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · Grace C. <i class="fas fa-check-circle verified-check"></i>`;
-                    loadDashboard('view-landlord');
-                    return;
-                }
-                if (email === 'admin@homebase.admin.com') {
-                    currentAdminName = 'Admin · Prime';
-                    document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
-                    loadDashboard('view-admin');
-                    return;
-                }
-                if (email === 'marketing@homebase.admin.com') {
-                    currentAdminName = 'HR & Marketing';
-                    const hrmUserChip = document.getElementById('hrmUserChip');
-                    if (hrmUserChip) hrmUserChip.innerHTML = `<span class="dot"></span> HR & Marketing`;
-                    const hrmWelcomeName = document.getElementById('hrmWelcomeName');
-                    if (hrmWelcomeName) hrmWelcomeName.textContent = 'HR & Marketing Admin';
-                    loadDashboard('view-hr');
-                    return;
-                }
-            }
-
-            // Normal user login
-            const user = users.find(u => u.contact.toLowerCase() === email && u.password === password);
-            if (user) {
-                CURRENT_USER_ID = user.id;
-                if (user.role === 'tenant') {
-                    CURRENT_TENANT_ID = user.id;
-                    document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${user.name.split(' ')[0]}`;
-                    loadDashboard('view-tenant');
-                } else if (user.role === 'landlord') {
-                    CURRENT_LANDLORD_ID = user.id;
-                    const verifiedIcon = user.status === 'verified' ? '<i class="fas fa-check-circle verified-check"></i>' : '';
-                    document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${user.name.split(' ')[0]} ${verifiedIcon}`;
-                    loadDashboard('view-landlord');
-                } else if (user.role === 'admin') {
-                    currentAdminName = user.name;
-                    document.getElementById('adminUserChip').innerHTML = `<span class="dot"></span> ${currentAdminName}`;
-                    loadDashboard('view-admin');
-                }
-            } else {
+            if (error) {
                 alert('Invalid email or password.');
-            }
-        }
-
-        function handleSignup(e) {
-            e.preventDefault();
-            const name = document.getElementById('reg-name').value.trim();
-            const email = document.getElementById('reg-email').value.trim().toLowerCase();
-            const password = document.getElementById('reg-password').value;
-            const role = document.getElementById('reg-role').value;
-            const phone = document.getElementById('reg-phone').value.trim();
-            const nationalId = document.getElementById('reg-id').value.trim();
-            const location = document.getElementById('reg-location').value;
-
-            if (users.find(u => u.contact.toLowerCase() === email)) {
-                alert('Email already registered.');
                 return;
             }
 
-            const newUser = {
-                id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
-                name: name,
-                contact: email,
-                password: password,
-                phone: phone,
-                role: role,
-                status: role === 'landlord' ? 'pending' : 'active',
-                nationalId: nationalId,
-                points: 0,
-                referralCode: 'HOME-' + name.split(' ')[0].toUpperCase() + '-2026',
-                referredBy: null,
-                location: role === 'tenant' ? location : undefined
-            };
+            const role = data.user.user_metadata.role;
 
-            users.push(newUser);
+            if (role === 'admin') {
+                window.location.href = 'admin.html';
+            } else if (role === 'hr') {
+                window.location.href = 'hr.html';
+            } else if (role === 'landlord') {
+                window.location.href = 'landlord.html';
+            } else if (role === 'tenant') {
+                window.location.href = 'tenant.html';
+            } else {
+                alert('Invalid role specified.');
+            }
+        }
+
+        async function handleSignup(e) {
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const password = document.getElementById('reg-password').value;
+            const role = document.getElementById('reg-role').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        role: role
+                    }
+                }
+            });
+
+            if (error) {
+                alert('Registration failed: ' + error.message);
+                return;
+            }
+
             alert('Registration successful! Logging you in...');
 
-            // Auto-login
-            CURRENT_USER_ID = newUser.id;
-            if (role === 'tenant') {
-                CURRENT_TENANT_ID = newUser.id;
-                document.getElementById('tenantUserChip').innerHTML = `<span class="dot"></span> Tenant · ${newUser.name.split(' ')[0]}`;
-                loadDashboard('view-tenant');
+            // Redirect based on role
+            if (role === 'admin') {
+                window.location.href = 'admin.html';
+            } else if (role === 'hr') {
+                window.location.href = 'hr.html';
+            } else if (role === 'landlord') {
+                window.location.href = 'landlord.html';
+            } else if (role === 'tenant') {
+                window.location.href = 'tenant.html';
             } else {
-                CURRENT_LANDLORD_ID = newUser.id;
-                document.getElementById('landlordUserChip').innerHTML = `<span class="dot"></span> Landlord · ${newUser.name.split(' ')[0]}`;
-                loadDashboard('view-landlord');
+                alert('Invalid role specified.');
             }
         }
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://jjfggfmxbsxctblueroj.supabase.co';
+        const supabaseKey = 'sb_publishable_YWPnqUyR5BI0z98sklhktQ_MgHo7QQG';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function checkSession() {
+            const { data, error } = await supabase.auth.getSession();
+            if (error || !data.session) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function logOut() {
+            await supabase.auth.signOut();
+            window.location.href = 'index.html';
+        }
+
+        checkSession();
+    </script>
+</head>
+<body>
+    <h1>Admin Portal</h1>
+    <button onclick="logOut()">Log Out</button>
+</body>
+</html>
